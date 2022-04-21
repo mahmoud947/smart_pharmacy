@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 
 data class NewsListScreenState(
-   var news: Flow<PagingData<Article>> = emptyFlow()
+   val news: Flow<PagingData<Article>> = emptyFlow()
 )
 

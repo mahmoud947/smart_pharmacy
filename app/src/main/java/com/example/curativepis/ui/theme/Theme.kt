@@ -5,18 +5,22 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = babyBlue,
     primaryVariant = Purple700,
     secondary = Teal200,
+    background = LightGrey
 
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = babyBlue,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    background = LightGrey
+
 
     /* Other default colors to override
     background = Color.White,
@@ -34,6 +38,11 @@ fun CurativePISTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
         DarkColorPalette
     } else {
         LightColorPalette
+    }
+
+    CompositionLocalProvider(LocalSpacing provides  Spacing(),
+        ) {
+
     }
 
     MaterialTheme(

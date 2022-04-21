@@ -1,68 +1,118 @@
 package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.components
 
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.LocalTextStyle
+
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color.Companion
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
+import com.example.curativepis.ui.theme.spacing
 
 @Composable
-fun ExpandedText(
-    text: String,
-    expandedText: String,
-    expandedTextButton: String,
-    shrinkTextButton: String,
+fun ExpandableText(
     modifier: Modifier = Modifier,
-    softWrap: Boolean = true,
-    textStyle: TextStyle = LocalTextStyle.current,
-    expandedTextStyle: TextStyle = LocalTextStyle.current,
-    expandedTextButtonStyle: TextStyle = LocalTextStyle.current,
-    shrinkTextButtonStyle: TextStyle = LocalTextStyle.current,
+    text: String,
+    minimizedMaxLines: Int,
+    textColor: androidx.compose.ui.graphics.Color =Companion.Black,
+    alignment: Alignment= Alignment.BottomStart,
+    fontSize:TextUnit=16.sp
 ) {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+    val textLayoutResultState = remember {
+        mutableStateOf<TextLayoutResult?>(null)
+    }
+    var isClickable by remember {
+        mutableStateOf(false)
+    }
+    var finalText by remember {
+        mutableStateOf(text)
+    }
+    val textLayoutResult = textLayoutResultState.value
 
-    var isExpanded by remember { mutableStateOf(false) }
 
-    val textHandler = "${if (isExpanded) expandedText else text} ${if (isExpanded) shrinkTextButton else expandedTextButton}"
-
-    val annotatedString = buildAnnotatedString {
-        withStyle(
-            if (isExpanded) expandedTextStyle.toSpanStyle() else textStyle.toSpanStyle()
-        ) {
-            append(if (isExpanded) expandedText else text)
+    LaunchedEffect(
+        textLayoutResult
+    ) {
+        if (textLayoutResult == null)
+            return@LaunchedEffect
+        when {
+            isExpanded -> {
+                finalText = "$text Show Less"
+            }
+            !isExpanded && textLayoutResult.hasVisualOverflow -> {
+                val lastCharIndex = textLayoutResult.getLineEnd(minimizedMaxLines - 1)
+                val showMoreString = "...Show More"
+                val adjustedText = text
+                    .substring(startIndex = 0, endIndex = lastCharIndex)
+                    .dropLast(showMoreString.length)
+                    .dropLastWhile {
+                        it == ' ' || it == '.'
+                    }
+                finalText = "$adjustedText$showMoreString"
+                isClickable = true
+            }
         }
-
-        append("  ")
-
-        withStyle(
-            if (isExpanded) shrinkTextButtonStyle.toSpanStyle() else expandedTextButtonStyle.toSpanStyle()
-        ) {
-            append(if (isExpanded) shrinkTextButton else expandedTextButton)
-        }
-
-        addStringAnnotation(
-            tag = "expand_shrink_text_button",
-            annotation = if (isExpanded) shrinkTextButton else expandedTextButton,
-            start = textHandler.indexOf(if (isExpanded) shrinkTextButton else expandedTextButton),
-            end = textHandler.indexOf(if (isExpanded) shrinkTextButton else expandedTextButton) + if (isExpanded) expandedTextButton.length else shrinkTextButton.length
+    }
+    Box(
+        modifier = modifier.fillMaxSize()
+            .clickable(enabled = isClickable) {
+                isExpanded = !isExpanded
+            }
+            .animateContentSize(),
+        contentAlignment = alignment
+    ) {
+        Text(
+            text = finalText,
+            style = TextStyle(color = textColor, fontSize = fontSize),
+            maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
+            onTextLayout = {
+                textLayoutResultState.value = it
+            },
+            modifier = Modifier.padding(MaterialTheme.spacing.medium)
         )
+
     }
 
-    ClickableText(
-        text = annotatedString,
-        softWrap = softWrap,
-        modifier = modifier,
-        onClick = {
-            annotatedString
-                .getStringAnnotations(
-                    "expand_shrink_text_button",
-                    it,
-                    it
-                )
-                .firstOrNull()?.let { stringAnnotation ->
-                    isExpanded = stringAnnotation.item == expandedTextButton
-                }
-        }
-    )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
