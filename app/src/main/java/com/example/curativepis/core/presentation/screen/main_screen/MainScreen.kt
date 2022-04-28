@@ -1,8 +1,6 @@
-package com.example.curativepis.core.presentation.screen
+package com.example.curativepis.core.presentation.screen.main_screen
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -10,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,7 +29,12 @@ fun MainScreen() {
         bottomBar = { BottomBar(navController = navController) },
     ) {
 
-        BottomNavGraph(navController = navController)
+        Box(modifier = Modifier.padding(it).clip(
+            RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+        )) {
+            BottomNavGraph(navController = navController)
+        }
+
     }
 }
 
@@ -48,10 +52,13 @@ fun BottomBar(navController: NavHostController) {
     BottomNavigation(
         backgroundColor = Color(0xFF19D3DA),
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp)),
-        elevation = 12.dp,
-    ) {
+            .graphicsLayer {
+                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                clip = true
+            },
+
+
+        ) {
 
         screens.forEach { screen ->
             AddItem(screen = screen,

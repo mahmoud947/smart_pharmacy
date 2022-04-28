@@ -3,6 +3,7 @@ package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -30,14 +31,15 @@ import com.example.curativepis.ui.theme.spacing
 @Composable
 fun NewsCardWithOutImage(
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(15.dp),
+    shape: Shape = RoundedCornerShape(10.dp),
     cardElevation: Dp = 8.dp,
     borderStroke: BorderStroke = BorderStroke(width = 0.dp, color = MaterialTheme.colors.primary),
     titleOverImage: String,
     articleAuthor: String?,
     articleContent: String?,
     articlePublishedAt: String,
-    cardBackgroundColor:Color=Color.White
+    cardBackgroundColor:Color=Color.White,
+            onClick:()->Unit
 ) {
 
     Box(
@@ -54,7 +56,7 @@ fun NewsCardWithOutImage(
             border = borderStroke
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().clickable { onClick() }
             ) {
 
                 Box(modifier = Modifier

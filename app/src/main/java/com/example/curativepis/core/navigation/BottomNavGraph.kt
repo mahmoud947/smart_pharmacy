@@ -72,7 +72,7 @@ fun ScannerScreen() {
 fun NotificationsScreen() {
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White),
+        .background(Color.Red),
         contentAlignment = Alignment.Center
     ) {
         Text(

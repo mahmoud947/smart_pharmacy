@@ -1,7 +1,7 @@
 package com.example.curativepis.feature_news.data.remote
 
 import com.example.curativepis.core.util.network.Constants
-import com.example.curativepis.feature_news.data.remote.dto.NewsResponse
+import com.example.curativepis.feature_news.data.remote.dto.NewsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
@@ -19,5 +19,5 @@ interface NewsApi {
         category: String = "health",
         @Query("apiKey")
         apiKey: String = Constants.NEWS_API_KEY,
-        ):NewsResponse
+        ):NewsResponseDto
 }
