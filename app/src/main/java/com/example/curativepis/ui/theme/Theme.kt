@@ -6,20 +6,29 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.text.font.FontWeight.Companion.Black
 
 private val DarkColorPalette = darkColors(
     primary = babyBlue,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    background = LightGrey
+    primaryVariant = Teal300,
+    secondary = white,
+    background = LightGrey,
+    onBackground = white,
+    onPrimary = white,
+    onSecondary = black,
 
 )
 
 private val LightColorPalette = lightColors(
     primary = babyBlue,
     primaryVariant = Purple700,
-    secondary = Teal200,
-    background = LightGrey
+    secondary = white,
+    background = LightGrey,
+    onBackground = white,
+    onPrimary = white,
+    onSecondary = black
+
+
 
 
     /* Other default colors to override
@@ -40,8 +49,10 @@ fun CurativePISTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
         LightColorPalette
     }
 
-    CompositionLocalProvider(LocalSpacing provides  Spacing(),
-        ) {
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing(),
+        LocalElevation provides  Elevation()
+    ) {
 
     }
 

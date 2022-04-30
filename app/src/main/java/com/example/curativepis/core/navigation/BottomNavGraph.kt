@@ -3,6 +3,7 @@ package com.example.curativepis.core.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -11,25 +12,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.curativepis.feature_drugs.presntation.screen.DrugScreen
-import com.example.curativepis.feature_news.presntaion.screen.NewsScreen
+import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun BottomNavGraph(navController: NavHostController) {
+fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
         startDestination = BottomBarScreen.News.route
     ){
         composable(route = BottomBarScreen.News.route){
-           NewsScreen()
+           NewsScreen(scaffoldState = scaffoldState)
         }
         composable(route = BottomBarScreen.Drugs.route){
-            DrugScreen()
+            DrugScreen(scaffoldState = scaffoldState)
         }
         composable(route = BottomBarScreen.Scanner.route){
             ScannerScreen()

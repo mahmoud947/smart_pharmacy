@@ -95,8 +95,9 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.9.0'
 
-    //swipe to refresh
+    // Swipe to refresh
     implementation "com.google.accompanist:accompanist-swiperefresh:0.19.0"
-    //
+
+    // SystemController
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.6-alpha"
 }

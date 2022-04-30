@@ -2,6 +2,7 @@ package com.example.curativepis.feature_drugs.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.curativepis.core.util.network.Constants
 import com.example.curativepis.feature_drugs.data.remote.CurativePisApi
 import com.example.curativepis.feature_drugs.domain.model.Drug
 import com.example.curativepis.feature_drugs.data.mapper.toDrug
@@ -15,7 +16,7 @@ class DrugsPagingSource (
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Drug> {
        val currentPage=params.key ?:1
         return try {
-            val response=api.getDrugs(offset = 20, limit = 20, page = currentPage)
+            val response=api.getDrugs(offset = Constants.DRUGS_PAGE_SIZE, limit = Constants.DRUGS_PAGE_SIZE, page = currentPage)
             val endOfPaginationReached=response.data.isEmpty()
             if (response.data.isNotEmpty()){
                 LoadResult.Page(

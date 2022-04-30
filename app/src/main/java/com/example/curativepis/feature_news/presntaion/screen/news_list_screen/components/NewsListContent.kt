@@ -2,12 +2,15 @@ package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -27,10 +30,8 @@ fun NewsListContent(
     Log.d("Error", items.loadState.toString())
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-
-          ,
-        contentPadding = PaddingValues(horizontal = MaterialTheme.spacing.default.plus(2.dp)),
+            .fillMaxSize(),
+        contentPadding = PaddingValues(vertical = 60.dp),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small.plus(2.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -47,27 +48,33 @@ fun NewsListContent(
         }
 
         items.apply {
-            when{
-                loadState.refresh is LoadState.Loading->{
+            when {
+                loadState.refresh is LoadState.Loading -> {
                     item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
                 }
-                loadState.append is LoadState.Loading->{
+                loadState.append is LoadState.Loading -> {
                     item { LoadingView() }
                 }
-                loadState.refresh is LoadState.Error->{
+                loadState.refresh is LoadState.Error -> {
                     val e = items.loadState.refresh as LoadState.Error
-                    item{ ErrorView(
-                        modifier = Modifier.fillParentMaxSize(),
-                        onClickRetry = { retry() },
-                        message = "check your internet connection"
-                    )}
+                    item {
+                        ErrorView(
+                            modifier = Modifier.fillParentMaxSize(),
+                            onClickRetry = { retry() },
+                            message = "No internet connection"
+                        )
+                    }
                 }
-                loadState.append is LoadState.Error->{
-                    item{ ErrorView(
-                        onClickRetry = { retry()
-                            Log.d("click","clicked")},
-                        message = null
-                    )}
+                loadState.append is LoadState.Error -> {
+                    item {
+                        ErrorView(
+                            onClickRetry = {
+                                retry()
+                                Log.d("click", "clicked")
+                            },
+                            message = null
+                        )
+                    }
                 }
 
             }

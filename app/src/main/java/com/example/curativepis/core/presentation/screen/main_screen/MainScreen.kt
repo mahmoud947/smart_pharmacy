@@ -1,18 +1,24 @@
 package com.example.curativepis.core.presentation.screen.main_screen
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,20 +27,46 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.curativepis.core.navigation.BottomBarScreen
 import com.example.curativepis.core.navigation.BottomNavGraph
+import com.example.curativepis.ui.theme.spacing
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel()
+) {
+
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val state = viewModel.state.value
+    val scaffoldState = rememberScaffoldState(
+        drawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    )
+    val systemUiController = rememberSystemUiController()
+    val color = MaterialTheme.colors.primary
+
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = color,
+            darkIcons = false
+        )
+    }
+
     Scaffold(
+        scaffoldState = scaffoldState,
+        drawerBackgroundColor = MaterialTheme.colors.primary,
+        drawerElevation = MaterialTheme.spacing.medium,
+        drawerShape = RoundedCornerShape(20.dp),
+        drawerContent = {
+
+            Text("Drawer title", modifier = Modifier.padding(16.dp))
+        },
         bottomBar = { BottomBar(navController = navController) },
     ) {
-
-        Box(modifier = Modifier.padding(it).clip(
-            RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
-        )) {
-            BottomNavGraph(navController = navController)
-        }
-
+            BottomNavGraph(navController = navController, scaffoldState = scaffoldState)
     }
 }
 
@@ -52,8 +84,9 @@ fun BottomBar(navController: NavHostController) {
     BottomNavigation(
         backgroundColor = Color(0xFF19D3DA),
         modifier = Modifier
+            .height(60.dp)
             .graphicsLayer {
-                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
                 clip = true
             },
 
@@ -93,7 +126,7 @@ fun RowScope.AddItem(
                 Icon(
                     painterResource(id = screen.icon),
                     contentDescription = screen.title,
-                    Modifier.size(28.dp),
+                    Modifier.size(30.dp),
                     tint = Color.White,
                 )
             } else {
@@ -108,6 +141,7 @@ fun RowScope.AddItem(
         },
         selected = selected,
         onClick = {
+
             navController.navigate(screen.route) {
                 launchSingleTop = true
                 restoreState = true
@@ -117,6 +151,7 @@ fun RowScope.AddItem(
                 launchSingleTop = true
 
             }
+
 
         },
         alwaysShowLabel = false,
