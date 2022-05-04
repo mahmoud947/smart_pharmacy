@@ -1,6 +1,4 @@
-package com.example.curativepis.feature_news.domain.model
-
-import com.example.curativepis.feature_news.data.remote.dto.SourceDto
+package com.example.curativepis.feature_news.domian.model
 
 data class Article(
     val title: String,

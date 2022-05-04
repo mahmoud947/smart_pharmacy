@@ -1,15 +1,13 @@
 package com.example.curativepis.di
 
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.curativepis.core.presentation.screen.main_screen.MainViewModel
-import com.example.curativepis.feature_drugs.data.remote.CurativePisApi
+import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
-import com.example.curativepis.feature_drugs.domain.repository.DrugsRepository
-import com.example.curativepis.feature_drugs.domain.use_case.DrugsUseCase
-import com.example.curativepis.feature_drugs.domain.use_case.GetDrugsUseCase
+import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
+import com.example.curativepis.feature_drugs.domian.use_case.DrugsUseCase
+import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsUseCase
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_news.data.repository.NewsRepositoryImpl
-import com.example.curativepis.feature_news.domain.repository.NewsRepository
+import com.example.curativepis.feature_news.domian.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +26,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDrugsRepository(api:CurativePisApi):DrugsRepository=
+    fun provideDrugsRepository(api:DrugsCurativePisApi):DrugsRepository=
         DrugsRepositoryImpl(api = api)
 
 
@@ -36,7 +34,7 @@ object AppModule {
     @Singleton
     fun provideDrugsUseCase(repository: DrugsRepository):DrugsUseCase=
         DrugsUseCase(
-            getDrugsUseCase = GetDrugsUseCase(repository = repository)
+            getDrugsUseCase = GetDrugsUseCase(repository = repository),
         )
 
 

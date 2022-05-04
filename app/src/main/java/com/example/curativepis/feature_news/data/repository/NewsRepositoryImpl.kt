@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import com.example.curativepis.core.util.network.Constants
 import com.example.curativepis.feature_news.data.paging.NewsPagingSource
 import com.example.curativepis.feature_news.data.remote.NewsApi
-import com.example.curativepis.feature_news.domain.model.Article
-import com.example.curativepis.feature_news.domain.repository.NewsRepository
+import com.example.curativepis.feature_news.domian.model.Article
+import com.example.curativepis.feature_news.domian.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

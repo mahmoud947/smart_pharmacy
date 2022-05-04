@@ -1,7 +1,6 @@
 package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.components
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -18,7 +16,7 @@ import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
 import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
-import com.example.curativepis.feature_news.domain.model.Article
+import com.example.curativepis.feature_news.domian.model.Article
 import com.example.curativepis.ui.theme.spacing
 
 @OptIn(ExperimentalCoilApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)

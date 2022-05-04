@@ -15,7 +15,14 @@ data class Spacing(
     val medium: Dp = 16.dp,
     val large: Dp = 32.dp,
     val extraLarge: Dp = 64.dp,
+    val xLarge:Dp=86.dp,
     val bottomNavigationBar: Dp = 60.dp,
+    val toolbarHeight:Dp=48.dp,
+    val largeButtonH:Dp=50.dp,
+    val smallButtonH:Dp=50.dp,
+    val largeButtonX:Dp=500.dp,
+    val smallButtonX:Dp=250.dp,
+    val defaultDivider:Dp=80.dp
 )
 
 val LocalSpacing = compositionLocalOf { Spacing() }

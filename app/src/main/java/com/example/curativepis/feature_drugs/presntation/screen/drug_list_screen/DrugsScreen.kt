@@ -1,8 +1,7 @@
-package com.example.curativepis.feature_drugs.presntation.screen
+package com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -25,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.components.DrugsListContent
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.view_model.DrugsViewModel
 import com.example.curativepis.ui.theme.spacing
@@ -41,7 +38,6 @@ fun DrugScreen(
     viewModel: DrugsViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState,
 ) {
-    val drugs = viewModel.state.value.drugs.collectAsLazyPagingItems()
 
     val toolbarHeight = 48.dp
     val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
@@ -76,7 +72,7 @@ fun DrugScreen(
             var refreshing by remember { mutableStateOf(false) }
             LaunchedEffect(key1 = refreshing) {
                 if (refreshing) {
-                    delay(2000)
+                    delay(1000)
                     refreshing = false
                 }
             }
@@ -87,14 +83,15 @@ fun DrugScreen(
                     .fillMaxWidth(),
             ) {
                 SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing = refreshing),
+                    modifier = Modifier.padding(top = MaterialTheme.spacing.bottomNavigationBar),
                     onRefresh = {
                         refreshing = true
-                        drugs.refresh()
+                       viewModel.resetItems()
                     }
 
                 ) {
 
-                    DrugsListContent(items = drugs, modifier = Modifier.fillMaxSize())
+                    DrugsListContent( modifier = Modifier.fillMaxSize(), viewModel = viewModel)
                 }
             }
 

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,9 +14,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.curativepis.feature_drugs.presntation.screen.DrugScreen
+import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState) {
@@ -32,7 +31,7 @@ fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState
             DrugScreen(scaffoldState = scaffoldState)
         }
         composable(route = BottomBarScreen.Scanner.route){
-            ScannerScreen()
+            ScannerScreen(scaffoldState = scaffoldState)
         }
         composable(route = BottomBarScreen.Notifications.route){
             NotificationsScreen()
@@ -46,28 +45,7 @@ fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState
 
 
 
-@Composable
-fun ScannerScreen() {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setStatusBarColor(
-                color = Color(0XFF19D3DA),
-                darkIcons = false
-            )
-        }
-        Text(
-            text = "Scanner",
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-    }
-}
+
 @Composable
 fun NotificationsScreen() {
     Box(modifier = Modifier

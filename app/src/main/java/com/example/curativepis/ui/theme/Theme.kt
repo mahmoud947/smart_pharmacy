@@ -51,7 +51,8 @@ fun CurativePISTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
 
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),
-        LocalElevation provides  Elevation()
+        LocalElevation provides  Elevation(),
+        LocalAppShape provides  AppShape(),
     ) {
 
     }

@@ -4,11 +4,9 @@ import com.example.curativepis.feature_drugs.data.remote.dto.DrugsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface CurativePisApi {
+interface DrugsCurativePisApi {
     @GET("drugs")
-    suspend fun getDrugs(
-        @Query("offset")
-        offset: Int,
+    suspend fun getDrugsT(
         @Query("limit")
         limit: Int,
         @Query("page")

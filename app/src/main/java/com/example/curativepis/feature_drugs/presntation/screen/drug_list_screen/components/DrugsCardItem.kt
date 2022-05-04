@@ -99,8 +99,5 @@ fun DrugsCardItem(
 fun ComposablePreview() {
     val imagePainter = painterResource(id = R.drawable.dumy_drug_image)
 
-    CurativePISTheme {
-
-    }
 
 }

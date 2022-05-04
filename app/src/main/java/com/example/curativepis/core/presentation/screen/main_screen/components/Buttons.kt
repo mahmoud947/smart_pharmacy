@@ -1,0 +1,57 @@
+package com.example.curativepis.core.presentation.screen.main_screen.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.example.curativepis.ui.theme.AppShape
+import com.example.curativepis.ui.theme.spacing
+
+
+@Composable
+fun ButtonWithElevation(
+    modifier: Modifier = Modifier,
+    defaultElevation: Dp = 10.dp,
+    pressedElevation: Dp = 15.dp,
+    startIcon: Painter?,
+    endIcon: Painter?,
+    onClick: () -> Unit,
+    color: Color = MaterialTheme.colors.primary,
+    shape: Shape = MaterialTheme.AppShape.large,
+    text: String,
+    textStyle: TextStyle= MaterialTheme.typography.button,
+
+    ) {
+
+    Button(onClick = {
+        onClick()
+    }, elevation = ButtonDefaults.elevation(
+        defaultElevation = 10.dp,
+        pressedElevation = 15.dp,
+        disabledElevation = 0.dp
+    ),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = color
+        ),
+        shape = shape,
+        modifier = modifier
+    ) {
+        if (startIcon != null) {
+           Icon(painter = startIcon, contentDescription = null, tint = MaterialTheme.colors.onPrimary, modifier = Modifier.size(24.dp).padding(end = MaterialTheme.spacing.small))
+        }
+        Text(text = text, color = MaterialTheme.colors.onPrimary, style = textStyle)
+        if (endIcon != null) {
+            Icon(painter = endIcon, contentDescription = null, tint = MaterialTheme.colors.onPrimary, modifier = Modifier.size(24.dp).padding(start = MaterialTheme.spacing.small))
+        }
+    }
+}

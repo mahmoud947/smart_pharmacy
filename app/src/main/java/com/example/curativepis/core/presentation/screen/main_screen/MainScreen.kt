@@ -66,6 +66,7 @@ fun MainScreen(
         },
         bottomBar = { BottomBar(navController = navController) },
     ) {
+
             BottomNavGraph(navController = navController, scaffoldState = scaffoldState)
     }
 }

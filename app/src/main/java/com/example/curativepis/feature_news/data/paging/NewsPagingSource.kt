@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.example.curativepis.core.util.network.Constants
 import com.example.curativepis.feature_news.data.mapper.toArticle
 import com.example.curativepis.feature_news.data.remote.NewsApi
-import com.example.curativepis.feature_news.domain.model.Article
+import com.example.curativepis.feature_news.domian.model.Article
 import retrofit2.HttpException
 import java.io.IOException
 

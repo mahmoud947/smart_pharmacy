@@ -1,7 +1,7 @@
 package com.example.curativepis.di
 
 import com.example.curativepis.core.util.network.Constants
-import com.example.curativepis.feature_drugs.data.remote.CurativePisApi
+import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import dagger.Module
 import dagger.Provides
@@ -35,8 +35,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCurativePisApi(retrofit: Retrofit): CurativePisApi =
-        retrofit.create(CurativePisApi::class.java)
+    fun provideCurativePisApi(retrofit: Retrofit): DrugsCurativePisApi =
+        retrofit.create(DrugsCurativePisApi::class.java)
 
 
     @Provides

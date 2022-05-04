@@ -3,7 +3,7 @@ package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.curativepis.feature_news.domain.repository.NewsRepository
+import com.example.curativepis.feature_news.domian.repository.NewsRepository
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

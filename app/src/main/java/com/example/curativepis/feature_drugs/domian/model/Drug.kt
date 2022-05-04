@@ -1,4 +1,4 @@
-package com.example.curativepis.feature_drugs.domain.model
+package com.example.curativepis.feature_drugs.domian.model
 
 data class Drug(
     val _id: String,
