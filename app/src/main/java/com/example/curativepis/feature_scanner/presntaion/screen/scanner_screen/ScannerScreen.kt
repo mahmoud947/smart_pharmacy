@@ -20,11 +20,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.screen.main_screen.components.ButtonWithElevation
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.ScannerTopAppBar
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.TextBetweenDivider
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.view_model.ScannerScreenViewModel
+import com.example.curativepis.feature_scanner.presntaion.util.Screen
 import com.example.curativepis.ui.theme.spacing
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -38,6 +40,7 @@ import kotlinx.coroutines.launch
 fun ScannerScreen(
     scaffoldState: ScaffoldState,
     viewModel: ScannerScreenViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
     val scop = rememberCoroutineScope()
@@ -54,11 +57,7 @@ fun ScannerScreen(
             })
 
 
-    // Camera permission state
-    // todo remove it from this screen
-    val cameraPermissionState = rememberPermissionState(
-        android.Manifest.permission.CAMERA
-    )
+
 
 
     Box(modifier = Modifier
@@ -96,7 +95,9 @@ fun ScannerScreen(
             ButtonWithElevation(
                 startIcon = painterResource(id = R.drawable.ic_outline_camera_alt_24),
                 endIcon = null,
-                onClick = {/*TODO*/ },
+                onClick = {
+                          navController.navigate(Screen.CameraScreen.route)
+                },
                 modifier = Modifier
                     .width(MaterialTheme.spacing.smallButtonX)
                     .height(MaterialTheme.spacing.smallButtonH)
@@ -124,27 +125,33 @@ fun ScannerScreen(
             }
 
 
-
-
-            LaunchedEffect(key1 = state.isImagePackedFromGallery) {
-                if (state.isImagePackedFromGallery) {
-                    val source = state.imageUri?.let {
-                        Log.d("Error", it.toString())
-                        ImageDecoder
-                            .createSource(context.contentResolver, it)
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp),
+                contentAlignment = Alignment.Center) {
+                LaunchedEffect(key1 = state.imageUri) {
+                    if (state.isImagePackedFromGallery) {
+                        val source = state.imageUri?.let {
+                            Log.d("Error", it.toString())
+                            ImageDecoder
+                                .createSource(context.contentResolver, it)
+                        }
+                        bitmap.value = source?.let { ImageDecoder.decodeBitmap(it) }
                     }
-                    bitmap.value = source?.let { ImageDecoder.decodeBitmap(it) }
+
                 }
 
-            }
-            if (state.isImagePackedFromGallery) {
-                bitmap.value?.let {
-                    Log.d("Error", it.toString())
-                    Image(bitmap = it.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier.size(200.dp))
-                }
+                if (state.isImagePackedFromGallery) {
+                    bitmap.value?.let {
+                        Log.d("Error", it.toString())
+                        Image(bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(100.dp)
+                                .fillMaxWidth())
+                    }
 
+                }
             }
 
 

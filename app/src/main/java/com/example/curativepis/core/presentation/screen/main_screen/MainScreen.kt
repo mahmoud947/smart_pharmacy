@@ -1,18 +1,18 @@
 package com.example.curativepis.core.presentation.screen.main_screen
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,13 +29,12 @@ import com.example.curativepis.core.navigation.BottomBarScreen
 import com.example.curativepis.core.navigation.BottomNavGraph
 import com.example.curativepis.ui.theme.spacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.P)
 @SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
 ) {
 
     val navController = rememberNavController()
@@ -45,6 +44,7 @@ fun MainScreen(
     val scaffoldState = rememberScaffoldState(
         drawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     )
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.colors.primary
 
@@ -64,15 +64,26 @@ fun MainScreen(
 
             Text("Drawer title", modifier = Modifier.padding(16.dp))
         },
-        bottomBar = { BottomBar(navController = navController) },
+        bottomBar = {
+
+            BottomBar(navController = navController, bottomBarSate = bottomBarState)
+        },
     ) {
 
-            BottomNavGraph(navController = navController, scaffoldState = scaffoldState)
+        when (currentRoute) {
+            BottomBarScreen.Scanner.route -> bottomBarState.value = true
+            BottomBarScreen.News.route -> bottomBarState.value = true
+            BottomBarScreen.Cart.route -> bottomBarState.value = true
+            BottomBarScreen.Drugs.route -> bottomBarState.value = true
+            BottomBarScreen.Notifications.route -> bottomBarState.value = true
+            else -> bottomBarState.value = false
+        }
+        BottomNavGraph(navController = navController, scaffoldState = scaffoldState)
     }
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Boolean>) {
     val screens = listOf(
         BottomBarScreen.News,
         BottomBarScreen.Drugs,
@@ -82,25 +93,34 @@ fun BottomBar(navController: NavHostController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    BottomNavigation(
-        backgroundColor = Color(0xFF19D3DA),
-        modifier = Modifier
-            .height(60.dp)
-            .graphicsLayer {
-                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
-                clip = true
-            },
+    AnimatedVisibility(
+        visible = bottomBarSate.value,
+        enter = slideInVertically { it },
+        exit = slideOutVertically { it },
+        content = {
+            BottomNavigation(
+                backgroundColor = Color(0xFF19D3DA),
+                modifier = Modifier
+                    .height(60.dp)
+                    .graphicsLayer {
+                        shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
+                        clip = true
+                    },
+                elevation = MaterialTheme.spacing.regulator
 
 
-        ) {
+            ) {
 
-        screens.forEach { screen ->
-            AddItem(screen = screen,
-                currentDestination = currentDestination,
-                navController = navController)
+                screens.forEach { screen ->
+                    AddItem(screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navController)
+                }
+
+            }
         }
+    )
 
-    }
 }
 
 @Composable

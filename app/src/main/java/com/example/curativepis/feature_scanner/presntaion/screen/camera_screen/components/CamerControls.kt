@@ -29,7 +29,7 @@ fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
     ) {
 
         CameraControl(
-            R.drawable.ic_baseline_cancel_24 ,
+            R.drawable.ic_outline_arrow_circle_left_24 ,
             R.string.icn_camera_view_switch_camera_content_description,
             modifier= Modifier.size(64.dp),
             onClick = { cameraUIAction(CameraUIAction.OnCancleClick) }
@@ -44,6 +44,10 @@ fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
                 .border(1.dp, Color.White, CircleShape),
             onClick = { cameraUIAction(CameraUIAction.OnCameraClick) }
         )
+
+       Box(modifier = Modifier.size(24.dp)) {
+           
+       }
 
 
     }

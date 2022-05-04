@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import com.example.curativepis.R
+import com.example.curativepis.feature_scanner.presntaion.util.Screen
 
 sealed class BottomBarScreen(
     val route:String,
@@ -36,5 +37,6 @@ sealed class BottomBarScreen(
         title = "Notifications",
         icon = R.drawable.notifications_24dp
     )
+
 
 }

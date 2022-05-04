@@ -16,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DrugsViewModel @Inject constructor(
     private val drugsUseCase: DrugsUseCase,
-    private val repository: DrugsRepository,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(DrugsListScreenState())

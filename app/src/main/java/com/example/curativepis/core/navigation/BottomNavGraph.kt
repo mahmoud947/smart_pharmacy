@@ -1,5 +1,7 @@
 package com.example.curativepis.core.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,8 +18,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
+import com.example.curativepis.feature_scanner.presntaion.screen.camera_screen.CameraScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
+import com.example.curativepis.feature_scanner.presntaion.util.Screen
+import com.example.curativepis.feature_scanner.presntaion.util.scannerNavGraph
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState) {
     NavHost(
@@ -31,7 +37,7 @@ fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState
             DrugScreen(scaffoldState = scaffoldState)
         }
         composable(route = BottomBarScreen.Scanner.route){
-            ScannerScreen(scaffoldState = scaffoldState)
+            ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
         composable(route = BottomBarScreen.Notifications.route){
             NotificationsScreen()
@@ -39,6 +45,7 @@ fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState
         composable(route = BottomBarScreen.Cart.route){
             CartScreen()
         }
+        scannerNavGraph(scaffoldState = scaffoldState, navController = navController)
 
     }
 }

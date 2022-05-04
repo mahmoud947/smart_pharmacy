@@ -25,14 +25,12 @@ fun DrugsListContent(
     viewModel: DrugsViewModel,
 ) {
 
-
-
     val state = viewModel.uiState
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 60.dp),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small.plus(2.dp)),
+        contentPadding = PaddingValues(vertical = MaterialTheme.spacing.bottomNavigationBar),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Log.d("list",state.item.toString())

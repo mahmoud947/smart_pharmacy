@@ -51,7 +51,9 @@ fun CameraPreviewView(
             imageCapture
         )
         preview.setSurfaceProvider(previewView.surfaceProvider)
+
     }
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize()) {

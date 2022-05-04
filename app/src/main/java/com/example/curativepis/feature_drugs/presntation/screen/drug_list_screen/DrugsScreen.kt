@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.components.CustomTopAppBar
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.components.DrugsListContent
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.view_model.DrugsViewModel
 import com.example.curativepis.ui.theme.spacing
@@ -83,7 +84,7 @@ fun DrugScreen(
                     .fillMaxWidth(),
             ) {
                 SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing = refreshing),
-                    modifier = Modifier.padding(top = MaterialTheme.spacing.bottomNavigationBar),
+
                     onRefresh = {
                         refreshing = true
                        viewModel.resetItems()
@@ -96,57 +97,19 @@ fun DrugScreen(
             }
 
         }
-        TopAppBar(
-            modifier = Modifier
-                .height(toolbarHeight)
-                .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) },
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = Color.White,
-            title = { Text("Drugs") },
-            actions = {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .clip(shape = MaterialTheme.shapes.large)
-                    .clickable {
-
-                    }
-                    .background(MaterialTheme.colors.primaryVariant),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = "Search .....",
-                        color = MaterialTheme.colors.background.copy(alpha = 0.8f),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = MaterialTheme.spacing.large,
-                                top = MaterialTheme.spacing.small,
-                                bottom = MaterialTheme.spacing.small)
-                            .weight(4f),
-                        textAlign = TextAlign.Start
-                    )
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search icon", modifier = Modifier.weight(1f) )
-                    }
-
+        CustomTopAppBar(
+            toolbarHeight = toolbarHeight,
+            toolbarOffsetHeightPx = toolbarOffsetHeightPx.value,
+            menuIconOnClick = {
+                scop.launch {
+                    scaffoldState.drawerState.open()
                 }
             },
-
-            elevation = MaterialTheme.spacing.regulator,
-            navigationIcon = {
-                IconButton(
-                    onClick = {
-                        scop.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    },
-                ) {
-                    Icon(imageVector = Icons.Filled.Menu,
-                        contentDescription = "Menu Icon")
-
-                }
+            searchIconOnClick = {
+                /*
+                TODO: navigation to search screen
+                 */
             }
-
         )
 
     }
