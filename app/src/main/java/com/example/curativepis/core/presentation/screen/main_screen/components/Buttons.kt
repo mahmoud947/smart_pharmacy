@@ -21,8 +21,8 @@ import com.example.curativepis.ui.theme.spacing
 @Composable
 fun ButtonWithElevation(
     modifier: Modifier = Modifier,
-    defaultElevation: Dp = 10.dp,
-    pressedElevation: Dp = 15.dp,
+    defaultElevation: Dp = 4.dp,
+    pressedElevation: Dp = 8.dp,
     startIcon: Painter?,
     endIcon: Painter?,
     onClick: () -> Unit,
@@ -36,8 +36,8 @@ fun ButtonWithElevation(
     Button(onClick = {
         onClick()
     }, elevation = ButtonDefaults.elevation(
-        defaultElevation = 10.dp,
-        pressedElevation = 15.dp,
+        defaultElevation = defaultElevation,
+        pressedElevation = pressedElevation,
         disabledElevation = 0.dp
     ),
         colors = ButtonDefaults.buttonColors(

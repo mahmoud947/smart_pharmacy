@@ -22,7 +22,7 @@ data class Spacing(
     val smallButtonH:Dp=50.dp,
     val largeButtonX:Dp=500.dp,
     val smallButtonX:Dp=250.dp,
-    val defaultDivider:Dp=80.dp
+    val defaultDivider:Dp=80.dp,
 )
 
 val LocalSpacing = compositionLocalOf { Spacing() }

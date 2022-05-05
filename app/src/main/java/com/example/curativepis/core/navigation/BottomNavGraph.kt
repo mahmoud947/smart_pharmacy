@@ -17,40 +17,38 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
+import com.example.curativepis.feature_drugs.presntation.util.drugsNavGraph
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
-import com.example.curativepis.feature_scanner.presntaion.screen.camera_screen.CameraScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
-import com.example.curativepis.feature_scanner.presntaion.util.Screen
 import com.example.curativepis.feature_scanner.presntaion.util.scannerNavGraph
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun BottomNavGraph(navController: NavHostController,scaffoldState: ScaffoldState) {
+fun BottomNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
         startDestination = BottomBarScreen.News.route
-    ){
-        composable(route = BottomBarScreen.News.route){
-           NewsScreen(scaffoldState = scaffoldState)
+    ) {
+        composable(route = BottomBarScreen.News.route) {
+            NewsScreen(scaffoldState = scaffoldState)
         }
-        composable(route = BottomBarScreen.Drugs.route){
-            DrugScreen(scaffoldState = scaffoldState)
+        composable(route = BottomBarScreen.Drugs.route) {
+            DrugScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = BottomBarScreen.Scanner.route){
+        composable(route = BottomBarScreen.Scanner.route) {
             ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = BottomBarScreen.Notifications.route){
+        composable(route = BottomBarScreen.Notifications.route) {
             NotificationsScreen()
         }
-        composable(route = BottomBarScreen.Cart.route){
+        composable(route = BottomBarScreen.Cart.route) {
             CartScreen()
         }
         scannerNavGraph(scaffoldState = scaffoldState, navController = navController)
+        drugsNavGraph(scaffoldState = scaffoldState, navController = navController)
 
     }
 }
-
-
 
 
 @Composable
@@ -68,6 +66,7 @@ fun NotificationsScreen() {
         )
     }
 }
+
 @Composable
 fun CartScreen() {
     Box(modifier = Modifier

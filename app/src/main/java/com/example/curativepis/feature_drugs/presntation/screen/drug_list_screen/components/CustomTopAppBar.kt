@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +29,7 @@ fun CustomTopAppBar(
     toolbarHeight: Dp,
     toolbarOffsetHeightPx:Float,
     menuIconOnClick:()->Unit,
-    searchIconOnClick:()->Unit
+    searchBarOnClick:()->Unit
 ) {
     TopAppBar(
         modifier = androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ fun CustomTopAppBar(
         title = { Text("Drugs") },
         actions = {
             Box(modifier = Modifier
+                .alpha(0.8f)
                 .fillMaxWidth()
                 .height(40.dp)
                 .clip(shape = MaterialTheme.shapes.large)
@@ -49,7 +51,7 @@ fun CustomTopAppBar(
                 contentAlignment = Alignment.Center
             ) {
                 Row(modifier = Modifier.fillMaxWidth().clickable {
-                    searchIconOnClick()
+                    searchBarOnClick()
                 }) {
                     Text(
                         text = "Search .....",

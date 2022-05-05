@@ -1,11 +1,6 @@
 package com.example.curativepis.core.navigation
 
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import com.example.curativepis.R
-import com.example.curativepis.feature_scanner.presntaion.util.Screen
 
 sealed class BottomBarScreen(
     val route:String,

@@ -23,7 +23,7 @@ fun NavGraphBuilder.scannerNavGraph(
         composable(route = BottomBarScreen.Scanner.route) {
             ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = Screen.CameraScreen.route){
+        composable(route = ScannerScreens.CameraScreen.route){
             CameraScreen()
         }
     }

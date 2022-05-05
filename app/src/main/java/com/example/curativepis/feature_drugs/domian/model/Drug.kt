@@ -6,4 +6,6 @@ data class Drug(
     val drug_name: String,
     val price: Double,
     val strength: String,
+    val drugForm:List<DrugForm>,
+    val active_ingredients: List<String>,
 )

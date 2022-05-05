@@ -1,0 +1,31 @@
+package com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import com.example.curativepis.ui.theme.spacing
+
+@Composable
+fun TitleAndValueText(
+    modifier: Modifier=Modifier,
+    title: String,
+    value: String?,
+    isCenter:Boolean = false,
+) {
+    Row(modifier = modifier.fillMaxWidth()
+        .padding(start = MaterialTheme.spacing.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = if(isCenter)Arrangement.Center else Arrangement.Start) {
+        Text(text = "$title: ", style = MaterialTheme.typography.caption.copy(color = MaterialTheme.colors.onSecondary))
+        if (value != null) {
+            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+            Text(text = value, style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onSecondary))
+        }
+
+    }
+
+}

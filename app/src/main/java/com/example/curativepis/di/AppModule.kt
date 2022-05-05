@@ -4,6 +4,8 @@ import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
 import com.example.curativepis.feature_drugs.domian.use_case.DrugsUseCase
+import com.example.curativepis.feature_drugs.domian.use_case.GetDrugByIdUseCase
+import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsByNameUseCase
 import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsUseCase
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_news.data.repository.NewsRepositoryImpl
@@ -35,6 +37,8 @@ object AppModule {
     fun provideDrugsUseCase(repository: DrugsRepository):DrugsUseCase=
         DrugsUseCase(
             getDrugsUseCase = GetDrugsUseCase(repository = repository),
+            getDrugsByNameUseCase = GetDrugsByNameUseCase(repository = repository),
+            getDrugByIdUseCase = GetDrugByIdUseCase(repository = repository)
         )
 
 

@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
-import com.example.curativepis.ui.theme.CurativePISTheme
-import com.example.curativepis.ui.theme.elevation
 import com.example.curativepis.ui.theme.spacing
 
 
@@ -32,11 +30,11 @@ import com.example.curativepis.ui.theme.spacing
 @Composable
 fun DrugsCardItem(
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(8.dp),
     cardElevation: Dp = 8.dp,
-    borderStroke: BorderStroke = BorderStroke(width = 0.dp, color = MaterialTheme.colors.primary),
     drugImageUrl: String,
     drugName: String,
+    drugPrice:String,
     onClick: () -> Unit,
 
     ) {
@@ -51,40 +49,54 @@ fun DrugsCardItem(
             .fillMaxSize()
             .background(MaterialTheme.colors.secondary)
             .clickable { onClick() },
-        elevation = MaterialTheme.elevation.regulator,
-        shape = MaterialTheme.shapes.medium,
+        elevation = cardElevation,
+        shape = shape,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier
-                .height(150.dp)
-                .width(150.dp)
+                .height(100.dp)
+                .fillMaxWidth()
                 .background(MaterialTheme.colors.secondary)
             ) {
                 Image(
                     painter = imagePainter,
                     contentDescription = drugName,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
             }
             Box(modifier = Modifier
                 .background(MaterialTheme.colors.secondary)
                 .padding(vertical = MaterialTheme.spacing.regulator)
-                .fillMaxSize(),
+                .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = drugName,
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSecondary,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
-                )
+                Column(
+                    modifier=Modifier.padding(MaterialTheme.spacing.small),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = drugName,
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.onSecondary,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                    Text(
+                        text = "$drugPrice EL",
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.onSecondary,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+
+                }
+
             }
 
         }
@@ -93,11 +105,3 @@ fun DrugsCardItem(
 
 }
 
-@Preview(showBackground = true, showSystemUi = true, name = "light")
-@Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES, name = "dark")
-@Composable
-fun ComposablePreview() {
-    val imagePainter = painterResource(id = R.drawable.dumy_drug_image)
-
-
-}

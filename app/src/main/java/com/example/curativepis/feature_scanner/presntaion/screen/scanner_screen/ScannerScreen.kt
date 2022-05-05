@@ -26,10 +26,9 @@ import com.example.curativepis.core.presentation.screen.main_screen.components.B
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.ScannerTopAppBar
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.TextBetweenDivider
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.view_model.ScannerScreenViewModel
-import com.example.curativepis.feature_scanner.presntaion.util.Screen
+import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreens
 import com.example.curativepis.ui.theme.spacing
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
 
 
@@ -40,7 +39,7 @@ import kotlinx.coroutines.launch
 fun ScannerScreen(
     scaffoldState: ScaffoldState,
     viewModel: ScannerScreenViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
 
     val scop = rememberCoroutineScope()
@@ -62,13 +61,14 @@ fun ScannerScreen(
 
     Box(modifier = Modifier
         .fillMaxSize()
+        .padding(bottom = MaterialTheme.spacing.bottomNavigationBar)
         .background(MaterialTheme.colors.secondary),
         contentAlignment = Alignment.Center
     ) {
 
         Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = MaterialTheme.spacing.bottomNavigationBar),
+            .align(Alignment.TopCenter)
+            .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ScannerTopAppBar(
@@ -96,7 +96,7 @@ fun ScannerScreen(
                 startIcon = painterResource(id = R.drawable.ic_outline_camera_alt_24),
                 endIcon = null,
                 onClick = {
-                          navController.navigate(Screen.CameraScreen.route)
+                    navController.navigate(ScannerScreens.CameraScreen.route)
                 },
                 modifier = Modifier
                     .width(MaterialTheme.spacing.smallButtonX)
@@ -124,10 +124,10 @@ fun ScannerScreen(
                     modifier = Modifier.size(MaterialTheme.spacing.extraLarge))
             }
 
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
             Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp),
+                .fillMaxWidth(),
                 contentAlignment = Alignment.Center) {
                 LaunchedEffect(key1 = state.imageUri) {
                     if (state.isImagePackedFromGallery) {
@@ -150,25 +150,22 @@ fun ScannerScreen(
                                 .size(100.dp)
                                 .fillMaxWidth())
                     }
-
                 }
             }
-
-
-
-            ButtonWithElevation(
-                startIcon = painterResource(id = R.drawable.ic_baseline_arrow_forward_24),
-                endIcon = null,
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(MaterialTheme.spacing.largeButtonH)
-                    .padding(horizontal = 40.dp),
-                text = "Result"
-            )
-
-
         }
+
+        ButtonWithElevation(
+            startIcon = painterResource(id = R.drawable.ic_baseline_arrow_forward_24),
+            endIcon = null,
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = MaterialTheme.spacing.medium, start = MaterialTheme.spacing.regulator, end = MaterialTheme.spacing.regulator)
+                .fillMaxWidth()
+                .height(MaterialTheme.spacing.largeButtonH),
+            text = "Result",
+        )
+
 
     }
 
