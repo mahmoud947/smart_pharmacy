@@ -25,6 +25,7 @@ import com.example.curativepis.core.presentation.screen.main_screen.components.L
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components.DrugSearchedItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components.SearchAppBar
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.view_model.SearchScreenViewModel
+import com.example.curativepis.feature_drugs.presntation.util.DrugsScreens
 import com.example.curativepis.ui.theme.spacing
 import kotlinx.coroutines.launch
 
@@ -69,7 +70,10 @@ fun SearchScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(state.item) { drug ->
-                DrugSearchedItem(drug = drug)
+                DrugSearchedItem(drug = drug, onClick = {
+                    navController.navigate(DrugsScreens.DrugDetailScreen.passDrugId(drugID = drug._id))
+                    keyboardController?.hide()
+                })
             }
             state.item.apply {
                 when {
