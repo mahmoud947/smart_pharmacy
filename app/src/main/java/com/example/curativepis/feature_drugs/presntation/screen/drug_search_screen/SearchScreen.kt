@@ -42,7 +42,7 @@ fun SearchScreen(
     val state = viewModel.uiState.value
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colors.secondary)) {
+        .background(MaterialTheme.colors.background)) {
         SearchAppBar(text = viewModel.searchText.value,
             onTextChange = {
                 viewModel.setSearchText(it)
@@ -63,10 +63,10 @@ fun SearchScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.background)
                 .weight(1f),
-            contentPadding = PaddingValues(top = MaterialTheme.spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
+            contentPadding = PaddingValues(top = MaterialTheme.spacing.regulator),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(state.item) { drug ->

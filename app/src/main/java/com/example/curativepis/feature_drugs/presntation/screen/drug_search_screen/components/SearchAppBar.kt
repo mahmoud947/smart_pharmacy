@@ -1,14 +1,13 @@
 package com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components
 
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -40,7 +39,8 @@ fun SearchAppBar(
         .fillMaxWidth()
         .height(MaterialTheme.spacing.toolbarHeight),
         elevation = AppBarDefaults.TopAppBarElevation,
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colors.primary,
+        contentColor = MaterialTheme.colors.primary
     ) {
         TextField(
             modifier = textFieldModifier
@@ -50,14 +50,17 @@ fun SearchAppBar(
                 onTextChange(it)
             },
             placeholder = {
-                Text(
-                    modifier = Modifier.fillMaxSize(),
-                    style = MaterialTheme.typography.subtitle1.copy(
-                        color = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f),
-                        textAlign = TextAlign.Start
-                    ),
-                    text = stringResource(id = R.string.search_lable),
-                )
+                Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        style = MaterialTheme.typography.subtitle1.copy(
+                            color = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f),
+                            textAlign = TextAlign.Start
+                        ),
+                        text = stringResource(id = R.string.search_lable),
+                    )
+                    Spacer(modifier = Modifier.width(MaterialTheme.spacing.large))
+                    Icon(imageVector = Icons.Filled.Search, contentDescription =null , tint = MaterialTheme.colors.onPrimary)
+                }
             },
             leadingIcon = {
                 IconButton(onClick = {
@@ -70,7 +73,8 @@ fun SearchAppBar(
                 }
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                textColor = MaterialTheme.colors.onPrimary
             ),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search

@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun TextBetweenDivider(
     modifier: Modifier= Modifier,
-    textStyle: TextStyle=MaterialTheme.typography.caption,
+    textStyle: TextStyle=MaterialTheme.typography.subtitle1,
     text:String,
     color:Color=MaterialTheme.colors.primary
 ) {

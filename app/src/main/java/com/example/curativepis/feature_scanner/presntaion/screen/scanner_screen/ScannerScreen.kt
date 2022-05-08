@@ -56,13 +56,10 @@ fun ScannerScreen(
             })
 
 
-
-
-
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(bottom = MaterialTheme.spacing.bottomNavigationBar)
-        .background(MaterialTheme.colors.secondary),
+        .background(MaterialTheme.colors.background),
         contentAlignment = Alignment.Center
     ) {
 
@@ -109,7 +106,7 @@ fun ScannerScreen(
             TextBetweenDivider(text = "Or")
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             Text(text = "Select the documents from gallery",
-                style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.primary))
+                style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primary))
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             IconButton(onClick = {
                 // open gallery to select image
