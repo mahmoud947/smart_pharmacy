@@ -9,38 +9,32 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.font.FontWeight.Companion.Black
 
 private val DarkColorPalette = darkColors(
-    primary = babyBlue,
+    primary = darkGrey400,
+    secondary = darkGrey400,
     primaryVariant = babyBlue,
-    secondary = babyBlue,
-    background = whiteSmoke,
-    onBackground = darkGrey,
+    background = black,
+    onBackground = whiteSmoke,
     onPrimary = whiteSmoke,
     onSecondary = whiteSmoke,
     error = read,
-    surface = white,
+    surface = darkGrey300,
     onError = white,
-    onSurface = darkGrey200,
+    onSurface = whiteSmoke,
+    secondaryVariant = babyBlue,
 )
 
 private val LightColorPalette = lightColors(
     primary = babyBlue,
-    primaryVariant = Teal300,
-    secondary = white,
-    background = LightGrey,
-    onBackground = white,
-    onPrimary = white,
-    onSecondary = black,
-
-
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    onPrimary = whiteSmoke,
+    secondary = babyBlue,
+    onSecondary = whiteSmoke,
+    background = whiteSmoke,
+    onBackground = darkGrey,
+    surface = white,
+    onSurface = darkGrey200,
+    error = read,
+    onError = white,
+    primaryVariant = babyBlue,
 )
 
 @Composable

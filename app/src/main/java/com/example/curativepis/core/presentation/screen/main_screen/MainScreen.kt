@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -47,6 +48,7 @@ fun MainScreen(
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.colors.primary
+
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -99,7 +101,7 @@ fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Bool
         exit = slideOutVertically { it },
         content = {
             BottomNavigation(
-                backgroundColor = Color(0xFF19D3DA),
+                backgroundColor = MaterialTheme.colors.primary,
                 modifier = Modifier
                     .height(60.dp)
                     .graphicsLayer {
@@ -132,23 +134,25 @@ fun RowScope.AddItem(
     val selected = currentDestination?.hierarchy?.any {
         it.route == screen.route
     } == true
+    val dark = isSystemInDarkTheme()
     BottomNavigationItem(
         modifier = Modifier.fillMaxWidth(),
         label = {
             Text(text = screen.title,
                 overflow = TextOverflow.Visible,
                 maxLines = 1,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold,
+                color = if (dark) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.surface
+            )
 
         },
         icon = {
-
             if (selected) {
                 Icon(
                     painterResource(id = screen.icon),
                     contentDescription = screen.title,
                     Modifier.size(30.dp),
-                    tint = Color.White,
+                    tint = if (dark) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.surface,
                 )
             } else {
                 Icon(

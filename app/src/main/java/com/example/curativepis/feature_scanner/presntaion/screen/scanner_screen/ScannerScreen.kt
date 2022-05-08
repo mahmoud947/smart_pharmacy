@@ -106,7 +106,7 @@ fun ScannerScreen(
             TextBetweenDivider(text = "Or")
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             Text(text = "Select the documents from gallery",
-                style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primary))
+                style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primaryVariant))
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             IconButton(onClick = {
                 // open gallery to select image
@@ -117,7 +117,7 @@ fun ScannerScreen(
             ) {
                 Icon(painter = painterResource(id = R.drawable.ic_photo_library_24dp),
                     contentDescription = "gallery",
-                    tint = MaterialTheme.colors.primary,
+                    tint = MaterialTheme.colors.onBackground.copy(alpha = 0.8f),
                     modifier = Modifier.size(MaterialTheme.spacing.extraLarge))
             }
 

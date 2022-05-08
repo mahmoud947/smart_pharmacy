@@ -27,7 +27,7 @@ fun ButtonWithElevation(
     startIcon: Painter?,
     endIcon: Painter?,
     onClick: () -> Unit,
-    color: Color = MaterialTheme.colors.primary,
+    color: Color = MaterialTheme.colors.primaryVariant,
     shape: Shape = MaterialTheme.appShape.large,
     text: String,
     textStyle: TextStyle= MaterialTheme.typography.button,
@@ -42,10 +42,11 @@ fun ButtonWithElevation(
         disabledElevation = 0.dp
     ),
         colors = ButtonDefaults.buttonColors(
-            contentColor = color
+            contentColor = MaterialTheme.colors.onPrimary,
+            backgroundColor = color
         ),
         shape = shape,
-        modifier = modifier
+        modifier = modifier,
     ) {
         if (startIcon != null) {
            Icon(painter = startIcon, contentDescription = null, tint = MaterialTheme.colors.onPrimary, modifier = Modifier.size(24.dp).padding(end = MaterialTheme.spacing.small))

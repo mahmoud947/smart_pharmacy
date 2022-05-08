@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,7 +32,7 @@ import com.example.curativepis.ui.theme.spacing
 @Composable
 fun DrugsCardItem(
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.medium,
+    shape: Shape = MaterialTheme.shapes.large,
     cardElevation: Dp =  MaterialTheme.elevation.regulator,
     drugImageUrl: String,
     drugName: String,
@@ -46,8 +47,9 @@ fun DrugsCardItem(
 
     Card(
         modifier = modifier
-            .padding(MaterialTheme.spacing.small)
+            .padding(MaterialTheme.spacing.regulator)
             .fillMaxSize()
+            .clip(shape = shape)
             .background(MaterialTheme.colors.surface)
             .clickable { onClick() },
         elevation = cardElevation,
@@ -57,23 +59,27 @@ fun DrugsCardItem(
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .clip(shape = shape),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier
                 .height(100.dp)
                 .fillMaxWidth()
+                .clip(shape = shape),
+
             ) {
                 Image(
                     painter = imagePainter,
                     contentDescription = drugName,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.matchParentSize()
                 )
             }
             Box(modifier = Modifier
                 .padding(vertical = MaterialTheme.spacing.regulator)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clip(shape = shape),
                 contentAlignment = Alignment.Center
             ) {
                 Column(

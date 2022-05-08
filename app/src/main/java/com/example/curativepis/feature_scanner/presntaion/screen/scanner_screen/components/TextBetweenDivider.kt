@@ -17,7 +17,7 @@ fun TextBetweenDivider(
     modifier: Modifier= Modifier,
     textStyle: TextStyle=MaterialTheme.typography.subtitle1,
     text:String,
-    color:Color=MaterialTheme.colors.primary
+    color:Color=MaterialTheme.colors.primaryVariant
 ) {
     Row(modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
         Divider(modifier = Modifier.width(MaterialTheme.spacing.defaultDivider), color = color)

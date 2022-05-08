@@ -121,7 +121,7 @@ fun NewsCardWithOutImage(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_access_time_24),
                         contentDescription = null,
-                        tint = MaterialTheme.colors.primary,
+                        tint = MaterialTheme.colors.primaryVariant,
                         modifier = Modifier
                             .padding(start = MaterialTheme.spacing.small,
                                 end = MaterialTheme.spacing.small)

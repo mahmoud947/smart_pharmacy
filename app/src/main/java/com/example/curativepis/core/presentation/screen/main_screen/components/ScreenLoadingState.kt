@@ -33,12 +33,7 @@ fun ErrorView(
     onClickRetry: () -> Unit,
     message: String?,
     icon: Int = R.drawable.error_icon,
-    textStyle: TextStyle = TextStyle(
-        fontSize = 18.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colors.error,
-        textAlign = TextAlign.Center
-    ),
+    textStyle: TextStyle =MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground),
     iconColor: Color = MaterialTheme.colors.error,
 ) {
     Box(
@@ -59,17 +54,6 @@ fun ErrorView(
                 Text(text = message, style = textStyle)
             }
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
-//            Box(
-//                modifier = Modifier.padding(MaterialTheme.spacing.regulator)
-//                .clickable(indication = null, interactionSource = MutableInteractionSource()) {
-//                    onClickRetry()
-//                }){
-//                Text(
-//                    text = "Retry",
-//                    style = TextStyle(color = MaterialTheme.colors.primary,
-//                        fontWeight = FontWeight.ExtraBold)
-//                )
-//            }
 
             Button(onClick = { onClickRetry() }, modifier = Modifier.padding(bottom = MaterialTheme.spacing.regulator)) {
                 Text(

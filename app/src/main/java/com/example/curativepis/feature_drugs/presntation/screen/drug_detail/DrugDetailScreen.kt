@@ -1,11 +1,13 @@
 package com.example.curativepis.feature_drugs.presntation.screen.drug_detail
 
-import android.util.Log
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddShoppingCart
@@ -22,7 +24,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.screen.main_screen.components.DefaultTopAppBar
 import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
@@ -84,7 +85,7 @@ fun DrugDetailScreen(
                     Box(modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)) {
-                        val painter = rememberImagePainter(data = drug?.image ,builder = {
+                        val painter = rememberImagePainter(data = drug?.image, builder = {
                             placeholder(R.drawable.loading_waiting)
                             error(R.drawable.error_drug_image)
                         })
@@ -119,9 +120,11 @@ fun DrugDetailScreen(
                                             .weight(1f)
                                         ) {
                                             Surface(
-                                                modifier = Modifier.padding(12.dp)
-                                                    .background(MaterialTheme.colors.surface),
+                                                modifier = Modifier
+                                                    .padding(12.dp),
                                                 elevation = MaterialTheme.elevation.regulator,
+                                                color = MaterialTheme.colors.primaryVariant,
+                                                shape = MaterialTheme.shapes.large
                                             ) {
 
                                                 IconButton(
@@ -130,17 +133,16 @@ fun DrugDetailScreen(
                                                 {
                                                     Column(
                                                         modifier = Modifier
-                                                            .background(MaterialTheme.colors.surface)
                                                             .fillMaxSize(),
                                                         verticalArrangement = Arrangement.Center,
                                                         horizontalAlignment = Alignment.CenterHorizontally) {
                                                         Icon(imageVector = Icons.Default.AddShoppingCart,
                                                             contentDescription = null,
-                                                            tint = MaterialTheme.colors.primary)
+                                                            tint = MaterialTheme.colors.onPrimary)
                                                         Text(
                                                             text = "Add to Cart",
                                                             style = MaterialTheme.typography.caption.copy(
-                                                                color = MaterialTheme.colors.primary,
+                                                                color = MaterialTheme.colors.onPrimary,
                                                                 textAlign = TextAlign.Center),
                                                             maxLines = 1,
                                                             modifier = Modifier.fillMaxWidth(),
