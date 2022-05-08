@@ -20,10 +20,10 @@ fun TitleAndValueText(
         .padding(start = MaterialTheme.spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = if(isCenter)Arrangement.Center else Arrangement.Start) {
-        Text(text = "$title: ", style = MaterialTheme.typography.caption.copy(color = MaterialTheme.colors.onSecondary))
+        Text(text = "$title: ", style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground))
         if (value != null) {
             Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-            Text(text = value, style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onSecondary))
+            Text(text = value, style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground))
         }
 
     }

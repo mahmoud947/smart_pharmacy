@@ -13,10 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.curativepis.R
 import com.example.curativepis.ui.theme.spacing
 import kotlin.math.roundToInt
 /*
@@ -26,13 +28,13 @@ import kotlin.math.roundToInt
  */
 @Composable
 fun CustomTopAppBar(
-    toolbarHeight: Dp,
+    toolbarHeight: Dp=MaterialTheme.spacing.toolbarHeight,
     toolbarOffsetHeightPx:Float,
     menuIconOnClick:()->Unit,
     searchBarOnClick:()->Unit
 ) {
     TopAppBar(
-        modifier = androidx.compose.ui.Modifier
+        modifier = Modifier
             .height(toolbarHeight)
             .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.roundToInt()) },
         backgroundColor = MaterialTheme.colors.primary,
@@ -40,22 +42,21 @@ fun CustomTopAppBar(
         title = { Text("Drugs") },
         actions = {
             Box(modifier = Modifier
-                .alpha(0.8f)
                 .fillMaxWidth()
                 .height(40.dp)
-                .clip(shape = MaterialTheme.shapes.large)
-                .clickable {
-
-                }
-                .background(MaterialTheme.colors.primaryVariant),
+                .alpha(0.8f)
+                .clip(shape = MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colors.primary),
                 contentAlignment = Alignment.Center
             ) {
-                Row(modifier = Modifier.fillMaxWidth().clickable {
-                    searchBarOnClick()
-                }) {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        searchBarOnClick()
+                    }) {
                     Text(
-                        text = "Search .....",
-                        color = MaterialTheme.colors.background.copy(alpha = 0.8f),
+                        text = stringResource(id = R.string.search_lable),
+                        style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onPrimary),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = MaterialTheme.spacing.large,
@@ -64,7 +65,12 @@ fun CustomTopAppBar(
                             .weight(4f),
                         textAlign = TextAlign.Start
                     )
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search icon", modifier = Modifier.weight(1f) )
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search icon",
+                        modifier = Modifier.weight(1f),
+                        tint = MaterialTheme.colors.onPrimary
+                    )
                 }
 
             }

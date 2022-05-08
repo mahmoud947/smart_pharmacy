@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.curativepis.ui.theme.AppShape
+import com.example.curativepis.ui.theme.appShape
 import com.example.curativepis.ui.theme.spacing
 
 
@@ -27,7 +28,7 @@ fun ButtonWithElevation(
     endIcon: Painter?,
     onClick: () -> Unit,
     color: Color = MaterialTheme.colors.primary,
-    shape: Shape = MaterialTheme.AppShape.large,
+    shape: Shape = MaterialTheme.appShape.large,
     text: String,
     textStyle: TextStyle= MaterialTheme.typography.button,
 

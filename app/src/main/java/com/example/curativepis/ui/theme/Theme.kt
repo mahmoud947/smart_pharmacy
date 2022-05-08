@@ -10,24 +10,26 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Black
 
 private val DarkColorPalette = darkColors(
     primary = babyBlue,
+    primaryVariant = babyBlue,
+    secondary = babyBlue,
+    background = whiteSmoke,
+    onBackground = darkGrey,
+    onPrimary = whiteSmoke,
+    onSecondary = whiteSmoke,
+    error = read,
+    surface = white,
+    onError = white,
+    onSurface = darkGrey200,
+)
+
+private val LightColorPalette = lightColors(
+    primary = babyBlue,
     primaryVariant = Teal300,
     secondary = white,
     background = LightGrey,
     onBackground = white,
     onPrimary = white,
     onSecondary = black,
-
-)
-
-private val LightColorPalette = lightColors(
-    primary = babyBlue,
-    primaryVariant = Purple700,
-    secondary = white,
-    background = LightGrey,
-    onBackground = white,
-    onPrimary = white,
-    onSecondary = black
-
 
 
 

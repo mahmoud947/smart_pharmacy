@@ -22,12 +22,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import com.example.curativepis.R
 import com.example.curativepis.core.presentation.screen.main_screen.components.DefaultTopAppBar
 import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
 import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.DrugFormItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.TitleAndValueText
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.view_model.DrugDetailViewModel
+import com.example.curativepis.ui.theme.elevation
 import com.example.curativepis.ui.theme.spacing
 
 @OptIn(ExperimentalCoilApi::class)
@@ -45,11 +48,10 @@ fun DrugDetailScreen(
     val state = viewModel.uiState.value
     val scrollState = rememberScrollState()
     val drug = state.drug
-    Log.d("drugd", drug.toString())
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.secondary),
+            .background(MaterialTheme.colors.background),
         horizontalAlignment = Alignment.Start
     ) {
         DefaultTopAppBar(
@@ -77,12 +79,15 @@ fun DrugDetailScreen(
                     modifier = Modifier
                         .verticalScroll(scrollState)
                         .fillMaxSize()
-                        .background(MaterialTheme.colors.onSecondary),
+                        .background(MaterialTheme.colors.background),
                 ) {
                     Box(modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)) {
-                        val painter = rememberImagePainter(data = drug?.image)
+                        val painter = rememberImagePainter(data = drug?.image ,builder = {
+                            placeholder(R.drawable.loading_waiting)
+                            error(R.drawable.error_drug_image)
+                        })
                         Image(painter = painter,
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize(),
@@ -92,7 +97,7 @@ fun DrugDetailScreen(
                         .fillMaxWidth()) {
                         Column(modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.secondary),
+                            .background(MaterialTheme.colors.background),
                             horizontalAlignment = Alignment.CenterHorizontally) {
                             if (drug != null) {
                                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -114,11 +119,10 @@ fun DrugDetailScreen(
                                             .weight(1f)
                                         ) {
                                             Surface(
-                                                modifier = Modifier.padding(12.dp),
-                                                border = BorderStroke(1.dp,
-                                                    color = MaterialTheme.colors.primary),
-                                                elevation = 8.dp,
-                                                color = Color.White) {
+                                                modifier = Modifier.padding(12.dp)
+                                                    .background(MaterialTheme.colors.surface),
+                                                elevation = MaterialTheme.elevation.regulator,
+                                            ) {
 
                                                 IconButton(
                                                     modifier = Modifier.fillMaxWidth(),
@@ -126,7 +130,8 @@ fun DrugDetailScreen(
                                                 {
                                                     Column(
                                                         modifier = Modifier
-                                                            .fillMaxWidth(),
+                                                            .background(MaterialTheme.colors.surface)
+                                                            .fillMaxSize(),
                                                         verticalArrangement = Arrangement.Center,
                                                         horizontalAlignment = Alignment.CenterHorizontally) {
                                                         Icon(imageVector = Icons.Default.AddShoppingCart,

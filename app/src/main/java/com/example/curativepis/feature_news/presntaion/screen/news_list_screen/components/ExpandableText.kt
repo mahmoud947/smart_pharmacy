@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.Color.Companion
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.example.curativepis.ui.theme.spacing
@@ -24,9 +24,8 @@ fun ExpandableText(
     modifier: Modifier = Modifier,
     text: String,
     minimizedMaxLines: Int,
-    textColor: androidx.compose.ui.graphics.Color =Companion.Black,
     alignment: Alignment= Alignment.BottomStart,
-    fontSize:TextUnit=16.sp
+    textStyle: TextStyle=MaterialTheme.typography.body1
 ) {
     var isExpanded by remember {
         mutableStateOf(false)
@@ -76,7 +75,7 @@ fun ExpandableText(
     ) {
         Text(
             text = finalText,
-            style = TextStyle(color = textColor, fontSize = fontSize),
+            style = textStyle.copy(color = MaterialTheme.colors.onSurface),
             maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
             onTextLayout = {
                 textLayoutResultState.value = it

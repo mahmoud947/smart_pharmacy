@@ -32,11 +32,11 @@ import kotlin.math.roundToInt
 fun NewsScreen(
     homeViewModel: NewsViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState,
-    ) {
+) {
 
     val getAllNews = homeViewModel.state.value.news.collectAsLazyPagingItems()
 
-    val toolbarHeight = 48.dp
+    val toolbarHeight = MaterialTheme.spacing.toolbarHeight
     val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
     val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
 
@@ -78,7 +78,9 @@ fun NewsScreen(
                     onRefresh = {
                         refreshing = true
                         getAllNews.refresh()
-                    }
+                    },
+                    indicatorPadding= PaddingValues(top = MaterialTheme.spacing.toolbarHeight)
+
 
                 ) {
 

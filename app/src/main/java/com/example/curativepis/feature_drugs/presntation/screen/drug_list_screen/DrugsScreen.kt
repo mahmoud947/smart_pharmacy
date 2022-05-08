@@ -32,7 +32,7 @@ import kotlin.math.roundToInt
 fun DrugScreen(
     viewModel: DrugsViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState,
-    navController: NavController
+    navController: NavController,
 ) {
 
     val toolbarHeight = MaterialTheme.spacing.toolbarHeight
@@ -72,7 +72,10 @@ fun DrugScreen(
                     refreshing = false
                 }
             }
-            Spacer(modifier = Modifier.offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) })
+            Spacer(modifier = Modifier.offset {
+                IntOffset(x = 0,
+                    y = toolbarOffsetHeightPx.value.roundToInt())
+            })
             Box(
                 modifier = Modifier
                     .weight(10f)
@@ -82,12 +85,15 @@ fun DrugScreen(
 
                     onRefresh = {
                         refreshing = true
-                       viewModel.resetItems()
-                    }
+                        viewModel.resetItems()
+                    },
+                    indicatorPadding = PaddingValues(top = MaterialTheme.spacing.toolbarHeight)
 
                 ) {
 
-                    DrugsListContent( modifier = Modifier.fillMaxSize(), viewModel = viewModel, navController = navController)
+                    DrugsListContent(modifier = Modifier.fillMaxSize(),
+                        viewModel = viewModel,
+                        navController = navController)
                 }
             }
 
@@ -101,15 +107,10 @@ fun DrugScreen(
                 }
             },
             searchBarOnClick = {
-               navController.navigate(DrugsScreens.SearchScreen.route)
+                navController.navigate(DrugsScreens.SearchScreen.route)
             }
         )
 
     }
 }
 
-@Composable
-@Preview
-fun NewsScreenPreview() {
-
-}

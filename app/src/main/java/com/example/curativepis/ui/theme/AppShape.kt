@@ -19,7 +19,7 @@ data class AppShape(
 
 val LocalAppShape = compositionLocalOf { AppShape() }
 
-val MaterialTheme.AppShape: AppShape
+val MaterialTheme.appShape: AppShape
     @Composable
     @ReadOnlyComposable
     get() = LocalAppShape.current

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
+import com.example.curativepis.ui.theme.elevation
 import com.example.curativepis.ui.theme.spacing
 
 
@@ -30,8 +31,8 @@ import com.example.curativepis.ui.theme.spacing
 @Composable
 fun DrugsCardItem(
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(8.dp),
-    cardElevation: Dp = 8.dp,
+    shape: Shape = MaterialTheme.shapes.medium,
+    cardElevation: Dp =  MaterialTheme.elevation.regulator,
     drugImageUrl: String,
     drugName: String,
     drugPrice:String,
@@ -45,22 +46,23 @@ fun DrugsCardItem(
 
     Card(
         modifier = modifier
-            .padding(10.dp)
+            .padding(MaterialTheme.spacing.small)
             .fillMaxSize()
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.surface)
             .clickable { onClick() },
         elevation = cardElevation,
         shape = shape,
+        contentColor = MaterialTheme.colors.surface
     ) {
         Column(
             modifier = Modifier
+                .background(MaterialTheme.colors.surface)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier
                 .height(100.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.secondary)
             ) {
                 Image(
                     painter = imagePainter,
@@ -70,7 +72,6 @@ fun DrugsCardItem(
                 )
             }
             Box(modifier = Modifier
-                .background(MaterialTheme.colors.secondary)
                 .padding(vertical = MaterialTheme.spacing.regulator)
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -82,15 +83,13 @@ fun DrugsCardItem(
                 ) {
                     Text(
                         text = drugName,
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.onSecondary,
+                        style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onSurface),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
                     Text(
                         text = "$drugPrice EL",
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.onSecondary,
+                        style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onSurface),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )

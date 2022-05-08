@@ -1,6 +1,7 @@
 package com.example.curativepis.feature_news.presntaion.screen.news_list_screen.components
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,12 +26,12 @@ fun NewsListContent(
     items: LazyPagingItems<Article>,
     modifier: Modifier = Modifier,
 ) {
-    Log.d("Error", items.loadState.toString())
     LazyColumn(
         modifier = modifier
+            .background(MaterialTheme.colors.background)
             .fillMaxSize(),
         contentPadding = PaddingValues(vertical = 60.dp),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small.plus(2.dp)),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.regulator.plus(2.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 

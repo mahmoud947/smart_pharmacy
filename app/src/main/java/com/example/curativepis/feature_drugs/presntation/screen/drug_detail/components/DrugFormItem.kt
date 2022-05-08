@@ -32,14 +32,14 @@ fun DrugFormItem(
     Card(
         modifier = modifier.fillMaxSize(),
         elevation = MaterialTheme.spacing.regulator,
-        backgroundColor = MaterialTheme.colors.secondary,
+        backgroundColor = MaterialTheme.colors.surface,
     ) {
-        Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary,), verticalArrangement = Arrangement.Top) {
+        Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.surface,), verticalArrangement = Arrangement.Top) {
             Box(modifier = Modifier
                 .padding(0.dp)
                 .height(80.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.surface)
             ) {
                 Image(
                     painter = painter,
@@ -49,15 +49,14 @@ fun DrugFormItem(
                 )
             }
             Box(modifier = Modifier
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.surface)
                 .padding(vertical = MaterialTheme.spacing.regulator)
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = drugForm.form,
-                    style = MaterialTheme.typography.caption.copy(color = MaterialTheme.colors.onSecondary.copy(
-                        alpha = 0.7f), fontSize = 14.sp),
+                    style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.onSurface),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

@@ -1,6 +1,7 @@
 package com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -9,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
@@ -31,31 +33,37 @@ fun DrugSearchedItem(
             },
         elevation = MaterialTheme.spacing.regulator,
         shape = MaterialTheme.shapes.small,
-        backgroundColor = MaterialTheme.colors.background
+        backgroundColor = MaterialTheme.colors.surface,
+        contentColor = MaterialTheme.colors.surface
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                    .background(MaterialTheme.colors.surface)
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier
+                    .background(MaterialTheme.colors.surface)
                     .fillMaxWidth()
                     .padding(MaterialTheme.spacing.small),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = drug.drug_name,
-                    style = MaterialTheme.typography.caption.copy(color = MaterialTheme.colors.onSecondary.copy(
+                    style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.onSurface.copy(
                         0.8f), textAlign = TextAlign.Center),
                     modifier = Modifier.weight(4f),
                 )
                 Box(modifier = Modifier
-                    .size(40.dp)
+                    .width(50.dp)
+                    .height(50.dp)
                     .weight(1f)) {
                     Image(painter = painter,
+                        contentScale = ContentScale.Crop,
                         contentDescription = null,
-                        modifier = Modifier.fillMaxSize())
+                        modifier = Modifier.matchParentSize())
                 }
             }
 

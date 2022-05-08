@@ -18,7 +18,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import com.example.curativepis.R
 import com.example.curativepis.ui.theme.babyBlue
 import com.example.curativepis.ui.theme.spacing
 
@@ -37,7 +40,7 @@ fun SearchAppBar(
         .fillMaxWidth()
         .height(MaterialTheme.spacing.toolbarHeight),
         elevation = AppBarDefaults.TopAppBarElevation,
-        color = babyBlue
+        color = MaterialTheme.colors.primary
     ) {
         TextField(
             modifier = textFieldModifier
@@ -49,9 +52,12 @@ fun SearchAppBar(
             placeholder = {
                 Text(
                     modifier = Modifier.fillMaxSize(),
-                    text = "Search...",
-                    color = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f),
-                    style = MaterialTheme.typography.body1)
+                    style = MaterialTheme.typography.subtitle1.copy(
+                        color = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f),
+                        textAlign = TextAlign.Start
+                    ),
+                    text = stringResource(id = R.string.search_lable),
+                )
             },
             leadingIcon = {
                 IconButton(onClick = {
