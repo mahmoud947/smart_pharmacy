@@ -31,6 +31,7 @@ fun ButtonWithElevation(
     shape: Shape = MaterialTheme.appShape.large,
     text: String,
     textStyle: TextStyle= MaterialTheme.typography.button,
+    isEnable:Boolean=true
 
     ) {
 
@@ -47,6 +48,7 @@ fun ButtonWithElevation(
         ),
         shape = shape,
         modifier = modifier,
+        enabled = isEnable
     ) {
         if (startIcon != null) {
            Icon(painter = startIcon, contentDescription = null, tint = MaterialTheme.colors.onPrimary, modifier = Modifier.size(24.dp).padding(end = MaterialTheme.spacing.small))

@@ -10,6 +10,11 @@ import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsUseCase
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_news.data.repository.NewsRepositoryImpl
 import com.example.curativepis.feature_news.domian.repository.NewsRepository
+import com.example.curativepis.feature_scanner.data.remote.ScannerCurativePisApi
+import com.example.curativepis.feature_scanner.data.repository.ScannerReposetoryImpl
+import com.example.curativepis.feature_scanner.domian.repository.ScannerReposetory
+import com.example.curativepis.feature_scanner.domian.use_case.ScannerUseCase
+import com.example.curativepis.feature_scanner.domian.use_case.UploadImageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +36,11 @@ object AppModule {
     fun provideDrugsRepository(api:DrugsCurativePisApi):DrugsRepository=
         DrugsRepositoryImpl(api = api)
 
+    @Provides
+    @Singleton
+    fun provideScannerRepository(api:ScannerCurativePisApi):ScannerReposetory=
+        ScannerReposetoryImpl(api = api)
+
 
     @Provides
     @Singleton
@@ -40,6 +50,13 @@ object AppModule {
             getDrugsByNameUseCase = GetDrugsByNameUseCase(repository = repository),
             getDrugByIdUseCase = GetDrugByIdUseCase(repository = repository)
         )
+
+    @Provides
+    @Singleton
+    fun provideScannerUseCase(reposetory: ScannerReposetory):ScannerUseCase=
+    ScannerUseCase(
+        uploadImageUseCase = UploadImageUseCase(reposetory = reposetory)
+    )
 
 
 }
