@@ -43,11 +43,8 @@ fun LoginScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is LoginScreenViewModel.ValidationEvent.Success -> {
-                    navController.navigate(route = BottomBarScreen.News.route) {
-                        popUpTo(BottomBarScreen.News.route) {
-                            inclusive = true
-                        }
-                    }
+                    navController.popBackStack()
+                    navController.navigate(route = "HOME_ROOT")
                 }
             }
         }

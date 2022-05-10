@@ -30,34 +30,10 @@ import com.example.curativepis.feature_scanner.presntaion.util.scannerNavGraph
 fun BottomNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
-        startDestination = AuthScreens.LoginScreen.rout
+        startDestination = "Auth_ROOT"
     ) {
-        composable(route = AuthScreens.LoginScreen.rout){
-            LoginScreen(scaffoldState = scaffoldState, navController = navController)
-        }
         authNavGraph(scaffoldState = scaffoldState,navController=navController)
-
-
-
-
-        composable(route = BottomBarScreen.News.route) {
-            NewsScreen(scaffoldState = scaffoldState)
-        }
-        composable(route = BottomBarScreen.Drugs.route) {
-            DrugScreen(scaffoldState = scaffoldState, navController = navController)
-        }
-        composable(route = BottomBarScreen.Scanner.route) {
-            ScannerScreen(scaffoldState = scaffoldState, navController = navController)
-        }
-        composable(route = BottomBarScreen.Notifications.route) {
-            NotificationsScreen()
-        }
-        composable(route = BottomBarScreen.Cart.route) {
-            CartScreen()
-        }
-
-        scannerNavGraph(scaffoldState = scaffoldState, navController = navController)
-        drugsNavGraph(scaffoldState = scaffoldState, navController = navController)
+        homeNavGraph(scaffoldState = scaffoldState, navController = navController)
 
     }
 }
