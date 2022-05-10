@@ -55,6 +55,7 @@ fun BottomNavGraph(navController: NavHostController, scaffoldState: ScaffoldStat
         composable(route = BottomBarScreen.Cart.route) {
             CartScreen()
         }
+
         scannerNavGraph(scaffoldState = scaffoldState, navController = navController)
         drugsNavGraph(scaffoldState = scaffoldState, navController = navController)
 

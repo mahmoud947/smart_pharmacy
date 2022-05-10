@@ -1,5 +1,8 @@
 package com.example.curativepis.di
 
+import com.example.curativepis.feature_ath.domian.use_case.LoginUseCase
+import com.example.curativepis.feature_ath.domian.use_case.VaidatPasswordUseCase
+import com.example.curativepis.feature_ath.domian.use_case.VaidteUserNameUseCase
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
@@ -28,23 +31,23 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(api:NewsApi):NewsRepository=
+    fun provideNewsRepository(api: NewsApi): NewsRepository =
         NewsRepositoryImpl(api = api)
 
     @Provides
     @Singleton
-    fun provideDrugsRepository(api:DrugsCurativePisApi):DrugsRepository=
+    fun provideDrugsRepository(api: DrugsCurativePisApi): DrugsRepository =
         DrugsRepositoryImpl(api = api)
 
     @Provides
     @Singleton
-    fun provideScannerRepository(api:ScannerCurativePisApi):ScannerReposetory=
+    fun provideScannerRepository(api: ScannerCurativePisApi): ScannerReposetory =
         ScannerReposetoryImpl(api = api)
 
 
     @Provides
     @Singleton
-    fun provideDrugsUseCase(repository: DrugsRepository):DrugsUseCase=
+    fun provideDrugsUseCase(repository: DrugsRepository): DrugsUseCase =
         DrugsUseCase(
             getDrugsUseCase = GetDrugsUseCase(repository = repository),
             getDrugsByNameUseCase = GetDrugsByNameUseCase(repository = repository),
@@ -53,10 +56,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideScannerUseCase(reposetory: ScannerReposetory):ScannerUseCase=
-    ScannerUseCase(
-        uploadImageUseCase = UploadImageUseCase(reposetory = reposetory)
-    )
+    fun provideScannerUseCase(reposetory: ScannerReposetory): ScannerUseCase =
+        ScannerUseCase(
+            uploadImageUseCase = UploadImageUseCase(reposetory = reposetory)
+        )
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(): LoginUseCase =
+        LoginUseCase(
+            validUserNameUseCase = VaidteUserNameUseCase(),
+            validPasswordUseCase = VaidatPasswordUseCase()
+        )
 
 
 }

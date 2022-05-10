@@ -20,5 +20,5 @@ val whiteSmoke=Color(0XFFFEFEFE)
 //dark palette
 val darkGrey400=Color(0xFF181818)
 val darkGrey300=Color(0xFF313131)
-
+val darckGreyBackground= Color(0xFF1D1F22)
 

@@ -6,4 +6,6 @@
     <string name="search_lable">Search.....</string>
     <string name="app_label">Curative</string>
     <string name="sub_label">pharmacy</string>
+    <string name="app_sub_lable">pharmacy</string>
+    <string name="username_validation_error_message">username can\'t be blank</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 import com.example.curativepis.R
 
 // Set of Material typography styles to start with
-val pacifico= FontFamily(
+val pacifico = FontFamily(
     Font(resId = R.font.pacifico_regular, weight = FontWeight.Normal)
 )
 
@@ -52,6 +52,11 @@ val Typography = Typography(
         fontSize = 48.sp,
         letterSpacing = 0.sp,
         fontFamily = pacifico
+    ),
+    button = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        letterSpacing = 1.25.sp
     )
 
 //    overline = TextStyle(
