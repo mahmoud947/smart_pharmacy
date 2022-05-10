@@ -2,12 +2,18 @@ package com.example.curativepis.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.example.curativepis.R
 
 // Set of Material typography styles to start with
+val pacifico= FontFamily(
+    Font(resId = R.font.pacifico_regular, weight = FontWeight.Normal)
+)
+
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = FontFamily.Default,
@@ -40,7 +46,14 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         letterSpacing = 0.4.sp
+    ),
+    h3 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 48.sp,
+        letterSpacing = 0.sp,
+        fontFamily = pacifico
     )
+
 //    overline = TextStyle(
 //        fontWeight = FontWeight.Normal,
 //        fontSize = 10.sp,

@@ -16,6 +16,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreen
+import com.example.curativepis.feature_ath.presntation.util.AuthScreens
+import com.example.curativepis.feature_ath.presntation.util.authNavGraph
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.util.drugsNavGraph
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
@@ -27,8 +30,16 @@ import com.example.curativepis.feature_scanner.presntaion.util.scannerNavGraph
 fun BottomNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
-        startDestination = BottomBarScreen.News.route
+        startDestination = AuthScreens.LoginScreen.rout
     ) {
+        composable(route = AuthScreens.LoginScreen.rout){
+            LoginScreen(scaffoldState = scaffoldState, navController = navController)
+        }
+        authNavGraph(scaffoldState = scaffoldState,navController=navController)
+
+
+
+
         composable(route = BottomBarScreen.News.route) {
             NewsScreen(scaffoldState = scaffoldState)
         }

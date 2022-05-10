@@ -4,4 +4,6 @@
     <string name="icn_camera_view_camera_shutter_content_description">shutter</string>
     <string name="icn_camera_view_view_gallery_content_description">gallery</string>
     <string name="search_lable">Search.....</string>
+    <string name="app_label">Curative</string>
+    <string name="sub_label">pharmacy</string>
 </resources>
