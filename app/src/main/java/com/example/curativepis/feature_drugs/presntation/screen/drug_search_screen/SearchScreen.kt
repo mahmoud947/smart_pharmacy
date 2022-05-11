@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,18 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
-import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
+import com.example.curativepis.core.presentation.components.ErrorView
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components.DrugSearchedItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.components.SearchAppBar
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.view_model.SearchScreenViewModel
 import com.example.curativepis.feature_drugs.presntation.util.DrugsScreens
 import com.example.curativepis.ui.theme.spacing
-import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @ExperimentalComposeUiApi

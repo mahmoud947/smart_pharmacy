@@ -1,4 +1,4 @@
-package com.example.curativepis.core.presentation.screen.main_screen.components
+package com.example.curativepis.core.presentation.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon

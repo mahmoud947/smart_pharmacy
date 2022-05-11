@@ -1,6 +1,6 @@
 package com.example.curativepis.feature_news.data.remote
 
-import com.example.curativepis.core.util.network.Constants
+import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.feature_news.data.remote.dto.NewsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query

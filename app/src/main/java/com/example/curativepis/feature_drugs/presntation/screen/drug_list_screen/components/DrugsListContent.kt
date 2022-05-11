@@ -8,13 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
-import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
-import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
-import com.example.curativepis.feature_drugs.domian.model.Drug
+import com.example.curativepis.core.presentation.components.ErrorView
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.view_model.DrugsViewModel
 import com.example.curativepis.ui.theme.spacing
 

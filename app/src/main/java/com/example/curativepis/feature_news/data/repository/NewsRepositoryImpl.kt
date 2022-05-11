@@ -3,7 +3,7 @@ package com.example.curativepis.feature_news.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.curativepis.core.util.network.Constants
+import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.feature_news.data.paging.NewsPagingSource
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_news.domian.model.Article

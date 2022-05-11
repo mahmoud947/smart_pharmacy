@@ -1,6 +1,6 @@
 package com.example.curativepis.di
 
-import com.example.curativepis.core.util.network.Constants
+import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_scanner.data.remote.ScannerCurativePisApi

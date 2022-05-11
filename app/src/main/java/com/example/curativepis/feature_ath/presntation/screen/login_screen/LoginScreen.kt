@@ -20,10 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.curativepis.R
-import com.example.curativepis.core.navigation.BottomBarScreen
-import com.example.curativepis.core.presentation.screen.main_screen.components.ButtonWithElevation
-import com.example.curativepis.core.presentation.screen.main_screen.components.DefaultTextField
+import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.core.presentation.components.ButtonWithElevation
+import com.example.curativepis.core.presentation.components.DefaultTextField
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.view_model.LoginScreenViewModel
+import com.example.curativepis.feature_ath.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.darckGreyBackground
 import com.example.curativepis.ui.theme.spacing
 import com.example.curativepis.ui.theme.whiteSmoke
@@ -43,8 +45,11 @@ fun LoginScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is LoginScreenViewModel.ValidationEvent.Success -> {
-                    navController.popBackStack()
-                    navController.navigate(route = "HOME_ROOT")
+                    navController.navigate(Constants.HOME_NAVGRAPH_ROOT) {
+                        popUpTo(Constants.AUTH_NAVGRAPH_ROOT) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }

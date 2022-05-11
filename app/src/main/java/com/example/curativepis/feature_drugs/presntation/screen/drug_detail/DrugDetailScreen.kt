@@ -25,9 +25,9 @@ import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
-import com.example.curativepis.core.presentation.screen.main_screen.components.DefaultTopAppBar
-import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
-import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
+import com.example.curativepis.core.presentation.components.DefaultTopAppBar
+import com.example.curativepis.core.presentation.components.ErrorView
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.DrugFormItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.TitleAndValueText
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.view_model.DrugDetailViewModel

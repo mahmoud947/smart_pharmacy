@@ -28,8 +28,8 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.curativepis.R
-import com.example.curativepis.core.presentation.screen.main_screen.components.ButtonWithElevation
-import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
+import com.example.curativepis.core.presentation.components.ButtonWithElevation
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.ScannerTopAppBar
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.TextBetweenDivider
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.view_model.ScannerScreenViewModel

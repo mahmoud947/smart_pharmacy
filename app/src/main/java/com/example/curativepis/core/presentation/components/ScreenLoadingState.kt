@@ -1,4 +1,4 @@
-package com.example.curativepis.core.presentation.screen.main_screen.components
+package com.example.curativepis.core.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -8,9 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.example.curativepis.R
 import com.example.curativepis.ui.theme.spacing
 

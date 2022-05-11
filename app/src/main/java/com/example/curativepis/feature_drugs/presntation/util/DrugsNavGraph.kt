@@ -4,7 +4,8 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.curativepis.core.navigation.BottomBarScreen
+import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.SearchScreen
@@ -15,10 +16,10 @@ fun NavGraphBuilder.drugsNavGraph(
     navController: NavController,
 ) {
     navigation(
-        startDestination = BottomBarScreen.Drugs.route,
-        route = "DRUGS_SCREEN"
+        startDestination = HomeScreens.Drugs.route,
+        route = Constants.DRUGS_NAVGRAPH_ROOT
     ) {
-        composable(route = BottomBarScreen.Drugs.route) {
+        composable(route = HomeScreens.Drugs.route) {
             DrugScreen(scaffoldState = scaffoldState, navController = navController)
         }
         composable(route = DrugsScreens.SearchScreen.route){

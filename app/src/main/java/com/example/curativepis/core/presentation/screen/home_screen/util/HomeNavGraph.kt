@@ -1,4 +1,4 @@
-package com.example.curativepis.core.navigation
+package com.example.curativepis.core.presentation.screen.home_screen.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -7,6 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.core.navigation.CartScreen
+import com.example.curativepis.core.navigation.NotificationsScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.util.drugsNavGraph
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
@@ -18,22 +21,22 @@ fun NavGraphBuilder.homeNavGraph(
     navController: NavHostController, scaffoldState: ScaffoldState
 ){
     navigation(
-        startDestination = BottomBarScreen.News.route,
-        route = "HOME_ROOT"
+        startDestination = HomeScreens.News.route,
+        route = Constants.HOME_NAVGRAPH_ROOT
     ){
-        composable(route = BottomBarScreen.News.route) {
+        composable(route = HomeScreens.News.route) {
             NewsScreen(scaffoldState = scaffoldState)
         }
-        composable(route = BottomBarScreen.Drugs.route) {
+        composable(route = HomeScreens.Drugs.route) {
             DrugScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = BottomBarScreen.Scanner.route) {
+        composable(route = HomeScreens.Scanner.route) {
             ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = BottomBarScreen.Notifications.route) {
+        composable(route = HomeScreens.Notifications.route) {
             NotificationsScreen()
         }
-        composable(route = BottomBarScreen.Cart.route) {
+        composable(route = HomeScreens.Cart.route) {
             CartScreen()
         }
 

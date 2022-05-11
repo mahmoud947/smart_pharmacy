@@ -7,7 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.curativepis.core.navigation.BottomBarScreen
+import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_scanner.presntaion.screen.camera_screen.CameraScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
 
@@ -17,10 +18,10 @@ fun NavGraphBuilder.scannerNavGraph(
     navController: NavController,
 ) {
     navigation(
-        startDestination = BottomBarScreen.Scanner.route,
-        route = "SCANNER_ROUTE"
+        startDestination = HomeScreens.Scanner.route,
+        route = Constants.SCANNER_NAVGRAPH_ROOT
     ) {
-        composable(route = BottomBarScreen.Scanner.route) {
+        composable(route = HomeScreens.Scanner.route) {
             ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
         composable(route = ScannerScreens.CameraScreen.route){

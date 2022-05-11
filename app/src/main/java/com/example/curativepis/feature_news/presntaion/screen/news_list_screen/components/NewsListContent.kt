@@ -15,8 +15,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
-import com.example.curativepis.core.presentation.screen.main_screen.components.ErrorView
-import com.example.curativepis.core.presentation.screen.main_screen.components.LoadingView
+import com.example.curativepis.core.presentation.components.ErrorView
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.feature_news.domian.model.Article
 import com.example.curativepis.ui.theme.spacing
 

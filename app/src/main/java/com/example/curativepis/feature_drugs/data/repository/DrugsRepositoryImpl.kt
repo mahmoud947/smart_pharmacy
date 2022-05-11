@@ -1,6 +1,6 @@
 package com.example.curativepis.feature_drugs.data.repository
 
-import com.example.curativepis.core.util.network.Constants
+import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.feature_drugs.data.mapper.toDrug
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.remote.dto.DrugDto
