@@ -1,8 +1,6 @@
 package com.example.curativepis.di
 
-import com.example.curativepis.feature_ath.domian.use_case.LoginUseCase
-import com.example.curativepis.feature_ath.domian.use_case.VaidatPasswordUseCase
-import com.example.curativepis.feature_ath.domian.use_case.VaidteUserNameUseCase
+import com.example.curativepis.feature_ath.domian.use_case.*
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
@@ -63,10 +61,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginUseCase(): LoginUseCase =
-        LoginUseCase(
-            validUserNameUseCase = VaidteUserNameUseCase(),
-            validPasswordUseCase = VaidatPasswordUseCase()
+    fun provideLoginUseCase(): AuthUseCase =
+        AuthUseCase(
+            validEmailUseCase = VaidteEmailUseCase(),
+            validPasswordUseCase = VaidatPasswordUseCase(),
+            validConfirmPasswordUseCase = VaidatConfirmPasswordUseCase(),
+            validPhoneUseCase = VaidtePhoneUseCase()
         )
 
 

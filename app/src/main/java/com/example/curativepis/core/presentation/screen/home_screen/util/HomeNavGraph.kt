@@ -25,7 +25,7 @@ fun NavGraphBuilder.homeNavGraph(
         route = Constants.HOME_NAVGRAPH_ROOT
     ){
         composable(route = HomeScreens.News.route) {
-            NewsScreen(scaffoldState = scaffoldState)
+            NewsScreen(scaffoldState = scaffoldState, navController = navController)
         }
         composable(route = HomeScreens.Drugs.route) {
             DrugScreen(scaffoldState = scaffoldState, navController = navController)

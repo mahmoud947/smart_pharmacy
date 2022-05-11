@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.curativepis.feature_ath.domian.use_case.LoginUseCase
+import com.example.curativepis.feature_ath.domian.use_case.AuthUseCase
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreenEvent
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-   private val useCase: LoginUseCase,
+    private val useCase: AuthUseCase,
 ) : ViewModel() {
     private val _uiState = mutableStateOf(LoginScreenState())
     val uiState: State<LoginScreenState> = _uiState
@@ -42,7 +42,7 @@ class LoginScreenViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val validatUsernameUseCase = useCase.validUserNameUseCase(_uiState.value.username)
+        val validatUsernameUseCase = useCase.validEmailUseCase(_uiState.value.username)
         val validatPasswordUseCase = useCase.validPasswordUseCase(_uiState.value.password)
         val hasError = listOf(
             validatUsernameUseCase,

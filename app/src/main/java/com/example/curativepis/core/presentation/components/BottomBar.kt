@@ -1,5 +1,7 @@
 package com.example.curativepis.core.presentation.components
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -31,6 +34,7 @@ import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScr
 import com.example.curativepis.feature_ath.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.spacing
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Boolean>) {
     val screens = listOf(
@@ -40,8 +44,9 @@ fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Bool
         HomeScreens.Cart,
         HomeScreens.Notifications,
     )
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+
+
+
     AnimatedVisibility(
         visible = bottomBarSate.value,
         enter = slideInVertically { it },
@@ -59,7 +64,9 @@ fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Bool
 
 
             ) {
-
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                Log.d("nav",navBackStackEntry.toString())
                 screens.forEach { screen ->
                     AddItem(screen = screen,
                         currentDestination = currentDestination,
@@ -79,7 +86,7 @@ fun RowScope.AddItem(
     navController: NavHostController,
 ) {
 
-
+    currentDestination?.route?.startsWith(screen.route)
     val selected = currentDestination?.hierarchy?.any {
         it.route == screen.route
     } == true
@@ -117,16 +124,13 @@ fun RowScope.AddItem(
         onClick = {
 
             navController.navigate(screen.route) {
-                launchSingleTop = true
-                restoreState = true
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
                 launchSingleTop = true
+                restoreState = true
 
             }
-
-
         },
         alwaysShowLabel = false,
         enabled = true,

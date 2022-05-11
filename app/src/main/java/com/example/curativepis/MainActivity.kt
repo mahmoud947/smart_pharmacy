@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.navigation.compose.rememberNavController
 import com.example.curativepis.core.presentation.screen.home_screen.HomeScreen
 import com.example.curativepis.ui.theme.CurativePISTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CurativePISTheme {
-                HomeScreen()
+                val navController = rememberNavController()
+                HomeScreen(navController = navController)
             }
         }
     }

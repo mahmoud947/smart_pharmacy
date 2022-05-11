@@ -1,10 +1,7 @@
 package com.example.curativepis.feature_ath.presntation.screen.login_screen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -36,6 +33,8 @@ fun LoginScreen(
     scaffoldState: ScaffoldState,
     navController: NavController,
     viewModel: LoginScreenViewModel = hiltViewModel(),
+    onLogin:()->Unit={},
+    onNavigate: (String) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -45,11 +44,7 @@ fun LoginScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is LoginScreenViewModel.ValidationEvent.Success -> {
-                    navController.navigate(Constants.HOME_NAVGRAPH_ROOT) {
-                        popUpTo(Constants.AUTH_NAVGRAPH_ROOT) {
-                            inclusive = true
-                        }
-                    }
+                       onLogin()
                 }
             }
         }
@@ -138,7 +133,10 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.width(MaterialTheme.spacing.regulator))
                 Text(
                     text = "Create Now !",
-                    style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primaryVariant)
+                    style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primaryVariant),
+                    modifier = Modifier.clickable {
+                        onNavigate(AuthScreens.SignUpScreen.route)
+                    }
                 )
 
             }

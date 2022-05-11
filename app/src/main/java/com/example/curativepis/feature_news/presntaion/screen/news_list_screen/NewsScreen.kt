@@ -17,7 +17,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.components.NewsListContent
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.view_model.NewsViewModel
 import com.example.curativepis.ui.theme.spacing
@@ -32,7 +34,12 @@ import kotlin.math.roundToInt
 fun NewsScreen(
     homeViewModel: NewsViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState,
+    navController: NavController
 ) {
+//    LaunchedEffect(key1 = true){
+//
+//    navController.graph.setStartDestination(startDestRoute = HomeScreens.News.route)
+//    }
 
     val getAllNews = homeViewModel.state.value.news.collectAsLazyPagingItems()
 
