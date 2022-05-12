@@ -1,6 +1,8 @@
 package com.example.curativepis.feature_ath.presntation.screen.signup_screen
 
 data class SignUpScreenState(
+    val username:String="",
+    val usernameErrorMessage:String?=null,
     val email:String="",
     val emailErrorMessage:String?=null,
     val phone:String="",
@@ -12,5 +14,6 @@ data class SignUpScreenState(
     val dateOfBirth:String="20/5/2022",
     val dateOfBirthErrorMessage:String?=null,
     val isMale:Boolean=true,
+    val userObjectAsJson: String="",
     val isLoading:Boolean=false
 )

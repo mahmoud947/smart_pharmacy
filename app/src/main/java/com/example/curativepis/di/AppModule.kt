@@ -16,6 +16,7 @@ import com.example.curativepis.feature_scanner.data.repository.ScannerReposetory
 import com.example.curativepis.feature_scanner.domian.repository.ScannerReposetory
 import com.example.curativepis.feature_scanner.domian.use_case.ScannerUseCase
 import com.example.curativepis.feature_scanner.domian.use_case.UploadImageUseCase
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,11 +64,22 @@ object AppModule {
     @Singleton
     fun provideLoginUseCase(): AuthUseCase =
         AuthUseCase(
+            validUsernameUseCase = VaidatUsernameUseCase(),
             validEmailUseCase = VaidteEmailUseCase(),
             validPasswordUseCase = VaidatPasswordUseCase(),
             validConfirmPasswordUseCase = VaidatConfirmPasswordUseCase(),
-            validPhoneUseCase = VaidtePhoneUseCase()
+            validPhoneUseCase = VaidtePhoneUseCase(),
+            validOTPCodeUseCase = VaidteOTPCodeUseCase()
         )
+
+
+
+
+
+    // usage
+    @Provides
+    @Singleton
+    fun provideGsonAdapter()=Gson()
 
 
 }

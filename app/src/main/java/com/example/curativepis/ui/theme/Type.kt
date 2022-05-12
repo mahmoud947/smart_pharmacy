@@ -57,6 +57,11 @@ val Typography = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         letterSpacing = 1.25.sp
+    ),
+    h5 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp,
+        letterSpacing = 30.sp
     )
 
 //    overline = TextStyle(

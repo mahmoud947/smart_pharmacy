@@ -1,14 +1,12 @@
 package com.example.curativepis.feature_ath.presntation.util
 
 import androidx.compose.material.ScaffoldState
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreen
+import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreen
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreen
 import com.example.curativepis.feature_ath.presntation.screen.splash_screen.SplashScreen
 
@@ -39,6 +37,15 @@ fun NavGraphBuilder.authNavGraph(
         composable(route = AuthScreens.SignUpScreen.route){
             SignUpScreen(scaffoldState = scaffoldState, navController = navController)
         }
+        composable(route = AuthScreens.OTPScreen.route,
+            arguments = listOf(navArgument(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY){
+                type= NavType.StringType
+            })
+        ){
+            val userDetails=it.arguments?.getString(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY)
+            OTPScreen(navController = navController,onNavigate = navController::navigate,userDetails=userDetails)
+        }
+
 
     }
 

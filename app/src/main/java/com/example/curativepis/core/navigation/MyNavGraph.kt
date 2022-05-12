@@ -26,8 +26,10 @@ import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.core.presentation.screen.home_screen.util.homeNavGraph
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreen
+import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreen
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreen
 import com.example.curativepis.feature_ath.presntation.screen.splash_screen.SplashScreen
+import com.example.curativepis.feature_ath.presntation.util.AuthScreenArguments
 import com.example.curativepis.feature_ath.presntation.util.AuthScreens
 import com.example.curativepis.feature_ath.presntation.util.authNavGraph
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
@@ -73,8 +75,22 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
             )
         }
         composable(route = AuthScreens.SignUpScreen.route){
-            SignUpScreen(scaffoldState = scaffoldState, navController = navController)
+            SignUpScreen(scaffoldState = scaffoldState, navController = navController, onNavigate = navController::navigate)
         }
+        composable(route = AuthScreens.OTPScreen.route,
+            arguments = listOf(navArgument(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY){
+            type= NavType.StringType
+        })
+        ){
+            val userDetails=it.arguments?.getString(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY)
+            OTPScreen(navController = navController,onNavigate = navController::navigate,userDetails=userDetails)
+        }
+
+
+
+
+
+
         composable(route = HomeScreens.News.route) {
             NewsScreen(scaffoldState = scaffoldState, navController = navController)
         }

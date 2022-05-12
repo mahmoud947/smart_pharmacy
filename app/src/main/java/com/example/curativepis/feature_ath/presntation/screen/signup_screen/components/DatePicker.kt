@@ -54,7 +54,7 @@ fun DataPicker(
         )
         IconButton(onClick = {
             mDatePickerDialog.show()
-            getDateValue(mDate.toString())
+            getDateValue(mDate.value)
         }) {
             Icon(
                 imageVector = Icons.Default.CalendarToday,

@@ -17,13 +17,14 @@ import com.example.curativepis.ui.theme.spacing
 fun DefaultTopAppBar(
     navigationIcon: ImageVector = Icons.Filled.Menu,
     onClick: () -> Unit,
+    title:String=""
 ) {
     androidx.compose.material.TopAppBar(
         modifier = Modifier
             .height(MaterialTheme.spacing.toolbarHeight),
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = Color.White,
-        title = { Text("Scanner") },
+        title = { Text(title) },
         elevation = MaterialTheme.spacing.regulator,
         navigationIcon = {
             IconButton(

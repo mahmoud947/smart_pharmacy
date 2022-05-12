@@ -31,6 +31,7 @@ import com.example.curativepis.feature_ath.presntation.screen.login_screen.view_
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.components.DataPicker
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.components.GenderSection
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.view_model.SignUpScreenViewModel
+import com.example.curativepis.feature_ath.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.spacing
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -38,7 +39,6 @@ import com.example.curativepis.ui.theme.spacing
 fun SignUpScreen(
     scaffoldState: ScaffoldState,
     navController: NavController,
-    onLogin: () -> Unit = {},
     onNavigate: (String) -> Unit = {},
     viewModel: SignUpScreenViewModel = hiltViewModel(),
 ) {
@@ -51,6 +51,10 @@ fun SignUpScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is SignUpScreenViewModel.ValidationEvent.Success -> {
+                    viewModel.onEvent(SignUpScreenEvent.PassUserObject)
+                   if (viewModel.userAsJson.value!=null){
+                       onNavigate(AuthScreens.OTPScreen.passUserDetails(userDetails = viewModel.userAsJson.value.toString()))
+                   }
 
                 }
             }
@@ -75,13 +79,26 @@ fun SignUpScreen(
                     contentDescription = null,
                     modifier = Modifier.matchParentSize())
             }
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.xLarge))
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
+                DefaultTextField(value = state.username, label = "Username", onTextChange = {
+                    viewModel.onEvent(SignUpScreenEvent.UsernameChanged(it))
+                }, isError = false)
+                if (state.usernameErrorMessage != null) {
+                    Text(
+                        text = state.usernameErrorMessage,
+                        color = MaterialTheme.colors.error,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = MaterialTheme.spacing.medium)
+                            .align(Alignment.End)
+                    )
+                }
                 DefaultTextField(value = state.email, label = "E-Mail", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.EmailChanged(it))
                 }, isError = false)
