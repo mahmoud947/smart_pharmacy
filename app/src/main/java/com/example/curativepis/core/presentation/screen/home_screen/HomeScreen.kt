@@ -1,6 +1,7 @@
 package com.example.curativepis.core.presentation.screen.home_screen
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -30,6 +31,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
+    activity: Activity
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -72,7 +74,7 @@ fun HomeScreen(
             HomeScreens.Notifications.route -> bottomBarState.value = true
             else -> bottomBarState.value = false
         }
-        MyNavGraph(navController = navController, scaffoldState = scaffoldState)
+        MyNavGraph(navController = navController, scaffoldState = scaffoldState, activity = activity)
     }
 }
 

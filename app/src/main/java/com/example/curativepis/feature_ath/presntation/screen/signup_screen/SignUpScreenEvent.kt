@@ -1,5 +1,6 @@
 package com.example.curativepis.feature_ath.presntation.screen.signup_screen
 
+import android.app.Activity
 import com.firebase.ui.auth.data.model.User
 
 sealed class SignUpScreenEvent{

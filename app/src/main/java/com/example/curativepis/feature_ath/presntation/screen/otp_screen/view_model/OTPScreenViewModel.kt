@@ -8,6 +8,7 @@ import com.example.curativepis.feature_ath.domian.model.PisUser
 import com.example.curativepis.feature_ath.domian.use_case.AuthUseCase
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreenEvent
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreenState
+import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreenEvent
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -43,11 +44,21 @@ class OTPScreenViewModel @Inject constructor(
             }
 
             is OTPScreenEvent.VirifyCode -> {
+               val isVerifiy= useCase.verificationOtpUseCase(otp = event.code, activity = event.activity)
+                if (isVerifiy){
                 submitData()
+                }else{
+                    _uiState.value=uiState.value.copy(
+                        otpCodeErrorMessage = "please enter correct code"
+                    )
+                }
             }
             is OTPScreenEvent.GetUserData -> {
                 val user = gson.fromJson(event.userAsJson, PisUser::class.java)
                 userObject.value=user
+            }
+            is OTPScreenEvent.SendOtpMessage->{
+                useCase.sendOtpMessageUseCase(event.phone, activity = event.activity)
             }
         }
     }

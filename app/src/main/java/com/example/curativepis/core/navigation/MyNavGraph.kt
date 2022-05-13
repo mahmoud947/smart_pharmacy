@@ -1,7 +1,7 @@
 package com.example.curativepis.core.navigation
 
+import android.app.Activity
 import android.os.Build
-import android.window.SplashScreen
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,32 +20,27 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
-import com.example.curativepis.core.presentation.screen.home_screen.util.homeNavGraph
 import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreen
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreen
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreen
 import com.example.curativepis.feature_ath.presntation.screen.splash_screen.SplashScreen
 import com.example.curativepis.feature_ath.presntation.util.AuthScreenArguments
 import com.example.curativepis.feature_ath.presntation.util.AuthScreens
-import com.example.curativepis.feature_ath.presntation.util.authNavGraph
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.SearchScreen
 import com.example.curativepis.feature_drugs.presntation.util.DrugScreenArguments
 import com.example.curativepis.feature_drugs.presntation.util.DrugsScreens
-import com.example.curativepis.feature_drugs.presntation.util.drugsNavGraph
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.camera_screen.CameraScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
 import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreens
-import com.example.curativepis.feature_scanner.presntaion.util.scannerNavGraph
 
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
+fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState,activity: Activity) {
 
     NavHost(
         navController = navController,
@@ -75,15 +68,15 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
             )
         }
         composable(route = AuthScreens.SignUpScreen.route){
-            SignUpScreen(scaffoldState = scaffoldState, navController = navController, onNavigate = navController::navigate)
+            SignUpScreen(scaffoldState = scaffoldState, navController = navController, onNavigate = navController::navigate, activity = activity)
         }
         composable(route = AuthScreens.OTPScreen.route,
-            arguments = listOf(navArgument(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY){
+            arguments = listOf(navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY){
             type= NavType.StringType
         })
         ){
-            val userDetails=it.arguments?.getString(AuthScreenArguments.User_DETAIL_SCREEN_ARGUMENT_KEY)
-            OTPScreen(navController = navController,onNavigate = navController::navigate,userDetails=userDetails)
+            val phone=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY)
+            OTPScreen(navController = navController,onNavigate = navController::navigate, phone=phone, activite = activity)
         }
 
 

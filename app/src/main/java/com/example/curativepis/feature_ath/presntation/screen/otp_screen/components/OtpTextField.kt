@@ -13,7 +13,7 @@ import androidx.compose.ui.text.input.KeyboardType
 fun OtpTextField(
     value: String,
     onTextChange: (String) -> Unit,
-    onFill: () -> Unit,
+    onFill: (String) -> Unit,
     isError: Boolean = false,
     modifier:Modifier=Modifier
 ) {
@@ -31,7 +31,7 @@ fun OtpTextField(
                 onTextChange(it)
             }
             if (it.length == 6) {
-                onFill()
+                onFill(it)
             }
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(

@@ -25,6 +25,9 @@ class SignUpScreenViewModel @Inject constructor(
     val uiState: State<SignUpScreenState> = _uiState
     val userAsJson= mutableStateOf<String?>(null)
 
+
+    var phone=""
+
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
@@ -110,6 +113,7 @@ class SignUpScreenViewModel @Inject constructor(
             )
             return
         }
+        phone=_uiState.value.phone
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
         }

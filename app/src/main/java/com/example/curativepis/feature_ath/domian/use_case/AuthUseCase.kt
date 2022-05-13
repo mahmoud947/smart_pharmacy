@@ -7,4 +7,6 @@ data class AuthUseCase(
     val validPhoneUseCase: VaidtePhoneUseCase,
     val validConfirmPasswordUseCase: VaidatConfirmPasswordUseCase,
     val validOTPCodeUseCase: VaidteOTPCodeUseCase,
+    val sendOtpMessageUseCase: SendOtpMessageUseCase,
+    val verificationOtpUseCase: VerificationOtpUseCase
 )

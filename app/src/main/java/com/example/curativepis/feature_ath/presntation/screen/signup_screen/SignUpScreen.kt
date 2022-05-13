@@ -1,5 +1,6 @@
 package com.example.curativepis.feature_ath.presntation.screen.signup_screen
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,6 +42,7 @@ fun SignUpScreen(
     navController: NavController,
     onNavigate: (String) -> Unit = {},
     viewModel: SignUpScreenViewModel = hiltViewModel(),
+    activity:Activity
 ) {
     val scrollState = rememberScrollState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -52,10 +54,8 @@ fun SignUpScreen(
             when (event) {
                 is SignUpScreenViewModel.ValidationEvent.Success -> {
                     viewModel.onEvent(SignUpScreenEvent.PassUserObject)
-                   if (viewModel.userAsJson.value!=null){
-                       onNavigate(AuthScreens.OTPScreen.passUserDetails(userDetails = viewModel.userAsJson.value.toString()))
-                   }
-
+                    val phone=viewModel.phone
+                    onNavigate(AuthScreens.OTPScreen.passPhone(phone))
                 }
             }
         }

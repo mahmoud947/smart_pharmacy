@@ -1,5 +1,5 @@
 package com.example.curativepis.feature_ath.presntation.util
 
 object AuthScreenArguments {
-    const val User_DETAIL_SCREEN_ARGUMENT_KEY="user_oject"
+    const val OTP_SCREEN_ARGUMENT_PHONE_KEY="phone"
 }

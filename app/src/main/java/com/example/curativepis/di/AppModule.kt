@@ -60,26 +60,6 @@ object AppModule {
             uploadImageUseCase = UploadImageUseCase(reposetory = reposetory)
         )
 
-    @Provides
-    @Singleton
-    fun provideLoginUseCase(): AuthUseCase =
-        AuthUseCase(
-            validUsernameUseCase = VaidatUsernameUseCase(),
-            validEmailUseCase = VaidteEmailUseCase(),
-            validPasswordUseCase = VaidatPasswordUseCase(),
-            validConfirmPasswordUseCase = VaidatConfirmPasswordUseCase(),
-            validPhoneUseCase = VaidtePhoneUseCase(),
-            validOTPCodeUseCase = VaidteOTPCodeUseCase()
-        )
-
-
-
-
-
-    // usage
-    @Provides
-    @Singleton
-    fun provideGsonAdapter()=Gson()
 
 
 }

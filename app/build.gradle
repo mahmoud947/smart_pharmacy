@@ -134,6 +134,9 @@ dependencies {
 
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
+    implementation 'androidx.browser:browser:1.4.0'
+
+
 
 
 }

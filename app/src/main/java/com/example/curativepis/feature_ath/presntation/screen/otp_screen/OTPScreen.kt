@@ -1,5 +1,8 @@
 package com.example.curativepis.feature_ath.presntation.screen.otp_screen
 
+import android.app.Activity
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,34 +21,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.curativepis.MainActivity
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.components.OtpTextField
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.view_model.OTPScreenViewModel
 import com.example.curativepis.ui.theme.spacing
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun OTPScreen(
     navController: NavController,
     onNavigate: (String) -> Unit = {},
     viewModel: OTPScreenViewModel = hiltViewModel(),
-    userDetails:String?
+    phone:String?,
+    activite:Activity
 ) {
     val context = LocalContext.current
     val state = viewModel.uiState.value
+
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is OTPScreenViewModel.ValidationEvent.Success -> {
-                    Toast.makeText(context, "it work", Toast.LENGTH_LONG).show()
-                    if (userDetails!=null){
-                        Toast.makeText(context, userDetails.toString(), Toast.LENGTH_LONG).show()
-                    }
+
                 }
                 is OTPScreenViewModel.ValidationEvent.ConverUserFromJsonToObject->{
-                    if (userDetails!=null)
-                    viewModel.onEvent(OTPScreenEvent.GetUserData(userDetails))
+                    if (phone!=null){
+                        send(phone, context = context)
+                    }
                 }
             }
 
@@ -74,7 +85,7 @@ fun OTPScreen(
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
         Text(
-            text = "Code is sent to ${viewModel.userObject.value?.phoneNumber}",
+            text = "Code is sent to $phone",
             style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground)
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -85,7 +96,9 @@ fun OTPScreen(
             onTextChange = {
                 viewModel.onEvent(OTPScreenEvent.OtpCodeChanged(it))
             },
-            onFill = { viewModel.onEvent(OTPScreenEvent.VirifyCode) }
+            onFill = {
+                otpVerification(otp = it, context = context)
+            }
         )
         if (state.otpCodeErrorMessage != null) {
             Text(
@@ -120,4 +133,56 @@ fun OTPScreen(
 
     }
 
+}
+val turnOffPhoneVerify = FirebaseAuth.getInstance().firebaseAuthSettings
+    .setAppVerificationDisabledForTesting(false)
+private val mAuth = FirebaseAuth.getInstance()
+var verificationOtp = ""
+
+private fun send(mobileNum: String,context: Context) {
+    val options = PhoneAuthOptions.newBuilder(mAuth)
+        .setPhoneNumber("+20$mobileNum")
+        .setTimeout(60L, TimeUnit.SECONDS)
+        .setActivity(context as Activity)
+        .setCallbacks(object :
+            PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+                Toast.makeText(context,
+                    "Verification Completed",
+                    Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onVerificationFailed(p0: FirebaseException) {
+                Toast.makeText(context,
+                    "Verification Failed",
+                    Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCodeSent(
+                otp: String,
+                p1: PhoneAuthProvider.ForceResendingToken,
+            ) {
+                super.onCodeSent(otp, p1)
+                verificationOtp = otp
+                Log.d("ver", verificationOtp)
+                Toast.makeText(context,
+                    "Otp Send Successfully",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }).build()
+    PhoneAuthProvider.verifyPhoneNumber(options)
+}
+
+private fun otpVerification(otp: String,context: Context) {
+    val credential = PhoneAuthProvider.getCredential(verificationOtp, otp)
+    FirebaseAuth.getInstance().signInWithCredential(credential)
+        .addOnCompleteListener(context as Activity) { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context,
+                    "Verification Successful",
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Wrong Otp", Toast.LENGTH_SHORT).show()
+            }
+        }
 }
