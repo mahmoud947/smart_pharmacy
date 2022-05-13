@@ -1,14 +1,19 @@
 package com.example.curativepis.feature_ath.data.repository
 
 import com.example.curativepis.core.util.network.Resource
+import com.example.curativepis.feature_ath.data.AuthApi
+import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
+import com.example.curativepis.feature_ath.data.remote.response.CreateUserResponse
 import com.example.curativepis.feature_ath.domian.repository.AuthRepository
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
+    private val api:AuthApi
 ) : AuthRepository {
     override fun isUserAuthenticatedInFirebase(): Boolean {
         return firebaseAuth.currentUser != null
@@ -30,6 +35,22 @@ class AuthRepositoryImpl @Inject constructor(
             Resource.Error(message = e.localizedMessage ?: "check your internt connection")
         } catch (e: FirebaseException) {
             Resource.Error(message = e.localizedMessage ?: "an error occurred")
+        }
+    }
+
+
+    override suspend fun pushNewUser(userRequestObject: UserRequestObject,token:String): Resource<Unit> {
+        return try {
+        api.pushNewUser(userRequestObject = userRequestObject, token = "Bearer $token")
+           Resource.Success(Unit)
+        }catch (e:IOException){
+            Resource.Error(
+                message = "Oops! Couldn't reach server. Check your internet connection."
+            )
+        }catch (e:HttpException){
+            Resource.Error(
+                message = "Oops! Something went wrong. Please try again."
+            )
         }
     }
 

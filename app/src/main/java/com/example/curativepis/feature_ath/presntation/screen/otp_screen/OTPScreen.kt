@@ -21,7 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.curativepis.MainActivity
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.components.OtpTextField
@@ -32,7 +31,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 
 @Composable
@@ -40,8 +38,8 @@ fun OTPScreen(
     navController: NavController,
     onNavigate: (String) -> Unit = {},
     viewModel: OTPScreenViewModel = hiltViewModel(),
-    phone:String?,
-    activite:Activity
+    phone: String?,
+    activite: Activity,
 ) {
     val context = LocalContext.current
     val state = viewModel.uiState.value
@@ -53,8 +51,8 @@ fun OTPScreen(
                 is OTPScreenViewModel.ValidationEvent.Success -> {
 
                 }
-                is OTPScreenViewModel.ValidationEvent.ConverUserFromJsonToObject->{
-                    if (phone!=null){
+                is OTPScreenViewModel.ValidationEvent.ConverUserFromJsonToObject -> {
+                    if (phone != null) {
                         send(phone, context = context)
                     }
                 }
@@ -134,12 +132,13 @@ fun OTPScreen(
     }
 
 }
+
 val turnOffPhoneVerify = FirebaseAuth.getInstance().firebaseAuthSettings
     .setAppVerificationDisabledForTesting(false)
 private val mAuth = FirebaseAuth.getInstance()
 var verificationOtp = ""
 
-private fun send(mobileNum: String,context: Context) {
+private fun send(mobileNum: String, context: Context) {
     val options = PhoneAuthOptions.newBuilder(mAuth)
         .setPhoneNumber("+20$mobileNum")
         .setTimeout(60L, TimeUnit.SECONDS)
@@ -173,7 +172,7 @@ private fun send(mobileNum: String,context: Context) {
     PhoneAuthProvider.verifyPhoneNumber(options)
 }
 
-private fun otpVerification(otp: String,context: Context) {
+private fun otpVerification(otp: String, context: Context) {
     val credential = PhoneAuthProvider.getCredential(verificationOtp, otp)
     FirebaseAuth.getInstance().signInWithCredential(credential)
         .addOnCompleteListener(context as Activity) { task ->
@@ -181,8 +180,23 @@ private fun otpVerification(otp: String,context: Context) {
                 Toast.makeText(context,
                     "Verification Successful",
                     Toast.LENGTH_SHORT).show()
+              val token=  getToken(context = context)
             } else {
                 Toast.makeText(context, "Wrong Otp", Toast.LENGTH_SHORT).show()
             }
         }
+}
+
+
+private fun getToken(context: Context): String {
+    var myToken=""
+    val phone = mAuth.currentUser?.phoneNumber
+    Toast.makeText(context, phone.toString(), Toast.LENGTH_SHORT).show()
+
+    val token = mAuth.currentUser?.getIdToken(true)?.addOnSuccessListener {
+        Toast.makeText(context, it.token.toString(), Toast.LENGTH_LONG).show()
+        myToken=it.token.toString()
+        Log.d("token", it.token.toString())
+    }
+    return myToken
 }

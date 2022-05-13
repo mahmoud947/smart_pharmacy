@@ -4,11 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_ath.domian.model.PisUser
 import com.example.curativepis.feature_ath.domian.use_case.AuthUseCase
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreenEvent
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreenState
-import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreenEvent
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -31,7 +31,7 @@ class OTPScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-        validationEventChannel.send(ValidationEvent.ConverUserFromJsonToObject)
+            validationEventChannel.send(ValidationEvent.ConverUserFromJsonToObject)
         }
     }
 
@@ -44,21 +44,28 @@ class OTPScreenViewModel @Inject constructor(
             }
 
             is OTPScreenEvent.VirifyCode -> {
-               val isVerifiy= useCase.verificationOtpUseCase(otp = event.code, activity = event.activity)
-                if (isVerifiy){
-                submitData()
-                }else{
-                    _uiState.value=uiState.value.copy(
+                val isVerifiy =
+                    useCase.verificationOtpUseCase(otp = event.code, activity = event.activity)
+                if (isVerifiy) {
+                    submitData()
+                } else {
+                    _uiState.value = uiState.value.copy(
                         otpCodeErrorMessage = "please enter correct code"
                     )
                 }
             }
             is OTPScreenEvent.GetUserData -> {
                 val user = gson.fromJson(event.userAsJson, PisUser::class.java)
-                userObject.value=user
+                userObject.value = user
             }
-            is OTPScreenEvent.SendOtpMessage->{
+            is OTPScreenEvent.SendOtpMessage -> {
                 useCase.sendOtpMessageUseCase(event.phone, activity = event.activity)
+            }
+            is OTPScreenEvent.SignUp -> {
+//                val userRequestObject=UserRequestObject(
+//
+//                )
+//                useCase.pushNewUserUseCase(userRequestObject = , toke = )
             }
         }
     }

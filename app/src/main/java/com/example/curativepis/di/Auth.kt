@@ -3,9 +3,12 @@ package com.example.curativepis.di
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.feature_ath.data.AuthApi
 import com.example.curativepis.feature_ath.data.repository.AuthRepositoryImpl
 import com.example.curativepis.feature_ath.domian.repository.AuthRepository
 import com.example.curativepis.feature_ath.domian.use_case.*
+import com.example.curativepis.feature_scanner.data.remote.ScannerCurativePisApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import dagger.Module
@@ -14,6 +17,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -38,8 +44,20 @@ object Auth {
 
     @Provides
     @Singleton
-    fun provideScannerRepository(firebaseAuth: FirebaseAuth): AuthRepository =
-        AuthRepositoryImpl(firebaseAuth = firebaseAuth)
+    fun provideScannerRepository(firebaseAuth: FirebaseAuth,api: AuthApi): AuthRepository =
+        AuthRepositoryImpl(firebaseAuth = firebaseAuth,api=api)
+
+    @Provides
+    @Singleton
+    fun provideScannerCurativePisApi(client: OkHttpClient): AuthApi =
+        Retrofit.Builder()
+            .baseUrl(Constants.CURATIVE_API_BASES_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AuthApi::class.java)
+
+
 
 
     @Provides
@@ -47,6 +65,7 @@ object Auth {
     fun provideLoginUseCase(
         firebaseAuth: FirebaseAuth,
         sharedPreferences: SharedPreferences,
+        repository: AuthRepository
     ): AuthUseCase =
         AuthUseCase(
             validUsernameUseCase = VaidatUsernameUseCase(),
@@ -62,6 +81,7 @@ object Auth {
             sendOtpMessageUseCase = SendOtpMessageUseCase(
                 firebaseAuth = firebaseAuth,
                 sharedPreferences = sharedPreferences,
-            )
+            ),
+            pushNewUserUseCase = PushNewUserUseCase(repository = repository)
         )
 }
