@@ -12,5 +12,6 @@ sealed class SignUpScreenEvent{
     data class ConfirmPasswordChanged(val password:String,val confirmPassword:String,):SignUpScreenEvent()
     data class BirthDateChanged(val dateOfBirth:String):SignUpScreenEvent()
     data class GenderChanged(val isMale:Boolean):SignUpScreenEvent()
+    data class OnNavigate(val root:String):SignUpScreenEvent()
     object SignUp:SignUpScreenEvent()
 }

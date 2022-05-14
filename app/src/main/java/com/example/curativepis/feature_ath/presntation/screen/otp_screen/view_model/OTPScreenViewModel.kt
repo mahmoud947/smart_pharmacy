@@ -1,9 +1,11 @@
 package com.example.curativepis.feature_ath.presntation.screen.otp_screen.view_model
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.curativepis.core.util.network.Resource
 import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_ath.domian.model.PisUser
 import com.example.curativepis.feature_ath.domian.use_case.AuthUseCase
@@ -12,6 +14,8 @@ import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScre
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -62,10 +66,31 @@ class OTPScreenViewModel @Inject constructor(
                 useCase.sendOtpMessageUseCase(event.phone, activity = event.activity)
             }
             is OTPScreenEvent.SignUp -> {
-//                val userRequestObject=UserRequestObject(
-//
-//                )
-//                useCase.pushNewUserUseCase(userRequestObject = , toke = )
+                useCase.pushNewUserUseCase(userRequestObject = event.userRequestObject, toke = event.token).onEach { result->
+                    when(result){
+                        is Resource.Success->{
+                            _uiState.value=uiState.value.copy(
+                                isLoading = false,
+                                createUserIsError = result.data?.is_error?:false,
+                                createUserIsErrorMessage = result.data?.message?:"user created"
+                            )
+                            Log.d("userMina",result.data.toString())
+                        }
+                        is Resource.Error->{
+                            _uiState.value=uiState.value.copy(
+                                createUserIsError = result.message!=null,
+                                createUserIsErrorMessage = result.message
+                            )
+                            Log.d("userMina",result.message.toString())
+                        }
+                        is Resource.Loading->{
+                            _uiState.value=uiState.value.copy(
+                                isLoading = true
+                            )
+                            Log.d("userMina",result.message.toString())
+                        }
+                    }
+                }.launchIn(viewModelScope)
             }
         }
     }

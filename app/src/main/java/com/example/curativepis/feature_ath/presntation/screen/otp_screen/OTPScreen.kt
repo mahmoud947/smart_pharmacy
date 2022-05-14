@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
+import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.components.OtpTextField
 import com.example.curativepis.feature_ath.presntation.screen.otp_screen.view_model.OTPScreenViewModel
 import com.example.curativepis.ui.theme.spacing
@@ -39,11 +40,15 @@ fun OTPScreen(
     onNavigate: (String) -> Unit = {},
     viewModel: OTPScreenViewModel = hiltViewModel(),
     phone: String?,
+    email: String?,
+    isMale: Boolean?,
+    username: String?,
+    password: String?,
+    dto: String?,
     activite: Activity,
 ) {
     val context = LocalContext.current
     val state = viewModel.uiState.value
-
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
@@ -53,6 +58,7 @@ fun OTPScreen(
                 }
                 is OTPScreenViewModel.ValidationEvent.ConverUserFromJsonToObject -> {
                     if (phone != null) {
+
                         send(phone, context = context)
                     }
                 }
@@ -95,7 +101,39 @@ fun OTPScreen(
                 viewModel.onEvent(OTPScreenEvent.OtpCodeChanged(it))
             },
             onFill = {
-                otpVerification(otp = it, context = context)
+                //otpVerification(otp = it, context = context)
+
+
+                val credential = PhoneAuthProvider.getCredential(verificationOtp, it)
+                FirebaseAuth.getInstance().signInWithCredential(credential)
+                    .addOnCompleteListener(context as Activity) { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(context,
+                                "Verification Successful",
+                                Toast.LENGTH_SHORT).show()
+                            val token = getToken(context = context)
+                            val user = FirebaseAuth.getInstance().currentUser
+                            user?.getIdToken(true)?.addOnSuccessListener { token ->
+                                val userRequestObject = UserRequestObject(
+                                    username = username ?: "",
+                                    phoneNumber = phone ?: "",
+                                    isMale = isMale ?: true,
+                                    password = password ?: "",
+                                    dob = dto ?: "",
+                                    deviceToken = "",
+                                    uid = user.uid
+                                )
+                                viewModel.onEvent(OTPScreenEvent.SignUp(userRequestObject = userRequestObject,
+                                    token = token.token.toString()))
+                            }
+
+                        } else {
+                            Toast.makeText(context, "Wrong Otp", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+
             }
         )
         if (state.otpCodeErrorMessage != null) {
@@ -125,6 +163,21 @@ fun OTPScreen(
                 },
                 text = "Request again",
                 style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primaryVariant)
+            )
+        }
+        if (state.createUserIsError) {
+            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+            state.createUserIsErrorMessage?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.error)
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+            Text(
+                text = state.createUserIsErrorMessage ?: "",
+                style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground)
             )
         }
 
@@ -172,7 +225,8 @@ private fun send(mobileNum: String, context: Context) {
     PhoneAuthProvider.verifyPhoneNumber(options)
 }
 
-private fun otpVerification(otp: String, context: Context) {
+private fun otpVerification(otp: String, context: Context): String {
+    var meessage = ""
     val credential = PhoneAuthProvider.getCredential(verificationOtp, otp)
     FirebaseAuth.getInstance().signInWithCredential(credential)
         .addOnCompleteListener(context as Activity) { task ->
@@ -180,22 +234,25 @@ private fun otpVerification(otp: String, context: Context) {
                 Toast.makeText(context,
                     "Verification Successful",
                     Toast.LENGTH_SHORT).show()
-              val token=  getToken(context = context)
+                val token = getToken(context = context)
+                meessage = token
+
             } else {
                 Toast.makeText(context, "Wrong Otp", Toast.LENGTH_SHORT).show()
             }
         }
+    return meessage
 }
 
 
 private fun getToken(context: Context): String {
-    var myToken=""
+    var myToken = ""
     val phone = mAuth.currentUser?.phoneNumber
     Toast.makeText(context, phone.toString(), Toast.LENGTH_SHORT).show()
 
     val token = mAuth.currentUser?.getIdToken(true)?.addOnSuccessListener {
         Toast.makeText(context, it.token.toString(), Toast.LENGTH_LONG).show()
-        myToken=it.token.toString()
+        myToken = it.token.toString()
         Log.d("token", it.token.toString())
     }
     return myToken

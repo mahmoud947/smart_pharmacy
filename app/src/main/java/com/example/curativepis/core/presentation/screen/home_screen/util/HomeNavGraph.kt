@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.curativepis.core.commn.Constants
-import com.example.curativepis.core.navigation.CartScreen
 import com.example.curativepis.core.navigation.NotificationsScreen
+import com.example.curativepis.feature_cart.presntation.cart_screen.CartScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.util.drugsNavGraph
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
@@ -37,7 +37,7 @@ fun NavGraphBuilder.homeNavGraph(
             NotificationsScreen()
         }
         composable(route = HomeScreens.Cart.route) {
-            CartScreen()
+            CartScreen(scaffoldState = scaffoldState)
         }
 
         scannerNavGraph(scaffoldState = scaffoldState, navController = navController)

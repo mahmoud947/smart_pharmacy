@@ -1,6 +1,7 @@
 package com.example.curativepis.feature_ath.data
 
 import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
+import com.example.curativepis.feature_ath.data.remote.response.PushUserResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -10,5 +11,5 @@ interface AuthApi {
     suspend fun pushNewUser(
         @Header("Authorization") token:String,
         @Body userRequestObject: UserRequestObject
-    ):Any
+    ):PushUserResponse
 }

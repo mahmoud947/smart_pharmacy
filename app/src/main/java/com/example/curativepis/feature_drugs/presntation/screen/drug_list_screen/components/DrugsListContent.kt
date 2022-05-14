@@ -44,7 +44,6 @@ fun DrugsListContent(
                 viewModel.loadNextItems()
             }
                 DrugRowItem(rowIndex = index, drugs =state.item , navController = navController)
-
         }
 
 

@@ -3,7 +3,7 @@ package com.example.curativepis.feature_ath.data.repository
 import com.example.curativepis.core.util.network.Resource
 import com.example.curativepis.feature_ath.data.AuthApi
 import com.example.curativepis.feature_ath.data.remote.request.UserRequestObject
-import com.example.curativepis.feature_ath.data.remote.response.CreateUserResponse
+import com.example.curativepis.feature_ath.data.remote.response.PushUserResponse
 import com.example.curativepis.feature_ath.domian.repository.AuthRepository
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +28,6 @@ class AuthRepositoryImpl @Inject constructor(
                     token = it.token.toString()
                 }
                 Resource.Success(data = token)
-
             }
             return Resource.Error(message = "user not found")
         } catch (e: IOException) {
@@ -39,19 +38,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun pushNewUser(userRequestObject: UserRequestObject,token:String): Resource<Unit> {
-        return try {
-        api.pushNewUser(userRequestObject = userRequestObject, token = "Bearer $token")
-           Resource.Success(Unit)
-        }catch (e:IOException){
-            Resource.Error(
-                message = "Oops! Couldn't reach server. Check your internet connection."
-            )
-        }catch (e:HttpException){
-            Resource.Error(
-                message = "Oops! Something went wrong. Please try again."
-            )
-        }
+    override suspend fun pushNewUser(userRequestObject: UserRequestObject,token:String):PushUserResponse {
+       return api.pushNewUser(userRequestObject = userRequestObject, token = token)
     }
 
 

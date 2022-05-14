@@ -23,10 +23,6 @@ class SignUpScreenViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = mutableStateOf(SignUpScreenState())
     val uiState: State<SignUpScreenState> = _uiState
-    val userAsJson= mutableStateOf<String?>(null)
-
-
-    var phone=""
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
@@ -68,22 +64,15 @@ class SignUpScreenViewModel @Inject constructor(
                   username = event.username
                 )
             }
-            is SignUpScreenEvent.PassUserObject->{
-                val user=PisUser(
-                    phoneNumber = uiState.value.phone,
-                    dob = uiState.value.dateOfBirth,
-                    password = uiState.value.password,
-                    username = uiState.value.username,
-                    isMale = uiState.value.isMale,
-                    email = uiState.value.email
-                )
-               val userObjectAsJson= gson.toJson(user)
-              userAsJson.value=userObjectAsJson
-            }
+
             is SignUpScreenEvent.SignUp->{
                 submitData()
             }
+            is SignUpScreenEvent.OnNavigate->{
 
+            }
+
+            else -> {}
         }
     }
 
@@ -93,13 +82,15 @@ class SignUpScreenViewModel @Inject constructor(
         val validatPhonelUseCase = useCase.validPhoneUseCase(_uiState.value.phone)
         val validatPasswordUseCase = useCase.validPasswordUseCase(_uiState.value.password)
         val validatConfirmPasswordUseCase = useCase.validConfirmPasswordUseCase(_uiState.value.password,_uiState.value.confirmPassword)
+        val validatPhoneUseCase=useCase.validPhoneUseCase(_uiState.value.phone)
 
         val hasError = listOf(
             validUsernameUseCase,
             validatEmailUseCase,
             validatPasswordUseCase,
             validatPhonelUseCase,
-            validatConfirmPasswordUseCase
+            validatConfirmPasswordUseCase,
+            validatPhoneUseCase
         ).any {
             !it.isValid
         }
@@ -113,7 +104,7 @@ class SignUpScreenViewModel @Inject constructor(
             )
             return
         }
-        phone=_uiState.value.phone
+
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
         }

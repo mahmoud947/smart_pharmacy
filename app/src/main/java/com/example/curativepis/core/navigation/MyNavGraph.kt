@@ -27,6 +27,7 @@ import com.example.curativepis.feature_ath.presntation.screen.signup_screen.Sign
 import com.example.curativepis.feature_ath.presntation.screen.splash_screen.SplashScreen
 import com.example.curativepis.feature_ath.presntation.util.AuthScreenArguments
 import com.example.curativepis.feature_ath.presntation.util.AuthScreens
+import com.example.curativepis.feature_cart.presntation.cart_screen.CartScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.SearchScreen
@@ -40,22 +41,22 @@ import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreens
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState,activity: Activity) {
+fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, activity: Activity) {
 
     NavHost(
         navController = navController,
-        startDestination = AuthScreens.SpalshScreen.route
+        startDestination =  AuthScreens.SignUpScreen.route
     ) {
-        composable(route = AuthScreens.SpalshScreen.route){
+        composable(route = AuthScreens.SpalshScreen.route) {
             SplashScreen(
                 onPopBackStack = navController::popBackStack,
                 onNavigate = navController::navigate,
             )
         }
-        composable(route = AuthScreens.LoginScreen.route){
+        composable(route = AuthScreens.LoginScreen.route) {
             LoginScreen(
-                scaffoldState=scaffoldState,
-                navController=navController,
+                scaffoldState = scaffoldState,
+                navController = navController,
                 onNavigate = navController::navigate,
                 onLogin = {
                     navController.popBackStack(
@@ -65,18 +66,52 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState,ac
                     navController.navigate(route = HomeScreens.News.route)
                 },
 
-            )
+                )
         }
-        composable(route = AuthScreens.SignUpScreen.route){
-            SignUpScreen(scaffoldState = scaffoldState, navController = navController, onNavigate = navController::navigate, activity = activity)
+        composable(route = AuthScreens.SignUpScreen.route) {
+            SignUpScreen(scaffoldState = scaffoldState,
+                navController = navController,
+                onNavigate = navController::navigate,
+                activity = activity)
         }
         composable(route = AuthScreens.OTPScreen.route,
-            arguments = listOf(navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY){
-            type= NavType.StringType
-        })
-        ){
-            val phone=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY)
-            OTPScreen(navController = navController,onNavigate = navController::navigate, phone=phone, activite = activity)
+            arguments = listOf(
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY) {
+                    type = NavType.StringType
+                },
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_EMAIL_KEY) {
+                    type = NavType.StringType
+                },
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_ISMALE_KEY) {
+                    type = NavType.BoolType
+                },
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_USERNAME_KEY) {
+                    type = NavType.StringType
+                },
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PASSWORD_KEY) {
+                    type = NavType.StringType
+                },
+                navArgument(AuthScreenArguments.OTP_SCREEN_ARGUMENT_DTOD_KEY) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val phone = it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY)
+            val email=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_EMAIL_KEY)
+            val isMale=it.arguments?.getBoolean(AuthScreenArguments.OTP_SCREEN_ARGUMENT_ISMALE_KEY)
+            val username=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_USERNAME_KEY)
+            val password=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PASSWORD_KEY)
+            val dto=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_DTOD_KEY)
+            OTPScreen(navController = navController,
+                onNavigate = navController::navigate,
+                phone = phone,
+                email=email,
+                isMale=isMale,
+                username=username,
+                password=password,
+                dto=dto,
+                activite = activity,
+            )
         }
 
 
@@ -97,28 +132,29 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState,ac
             NotificationsScreen()
         }
         composable(route = HomeScreens.Cart.route) {
-            CartScreen()
+            CartScreen(scaffoldState = scaffoldState)
         }
 
         composable(route = HomeScreens.Scanner.route) {
             ScannerScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = ScannerScreens.CameraScreen.route){
+        composable(route = ScannerScreens.CameraScreen.route) {
             CameraScreen()
         }
         composable(route = HomeScreens.Drugs.route) {
             DrugScreen(scaffoldState = scaffoldState, navController = navController)
         }
-        composable(route = DrugsScreens.SearchScreen.route){
+        composable(route = DrugsScreens.SearchScreen.route) {
             SearchScreen(navController = navController)
         }
         composable(
             route = DrugsScreens.DrugDetailScreen.route,
-            arguments = listOf(navArgument(DrugScreenArguments.DRUG_DETAIL_SCREEN_ARGUMENT_KEY){
-                type= NavType.StringType
+            arguments = listOf(navArgument(DrugScreenArguments.DRUG_DETAIL_SCREEN_ARGUMENT_KEY) {
+                type = NavType.StringType
             })
-        ){
-            val drugID=it.arguments?.getString(DrugScreenArguments.DRUG_DETAIL_SCREEN_ARGUMENT_KEY)
+        ) {
+            val drugID =
+                it.arguments?.getString(DrugScreenArguments.DRUG_DETAIL_SCREEN_ARGUMENT_KEY)
             DrugDetailScreen(drugID = drugID, navController = navController)
         }
     }
@@ -141,18 +177,3 @@ fun NotificationsScreen() {
     }
 }
 
-@Composable
-fun CartScreen() {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Cart",
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-    }
-}

@@ -1,11 +1,9 @@
 package com.example.curativepis.feature_ath.presntation.screen.signup_screen
 
 import android.app.Activity
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -15,6 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,7 +28,7 @@ import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.ButtonWithElevation
 import com.example.curativepis.core.presentation.components.DefaultTextField
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
-import com.example.curativepis.feature_ath.presntation.screen.login_screen.view_model.LoginScreenViewModel
+import com.example.curativepis.feature_ath.domian.model.PisUser
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.components.DataPicker
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.components.GenderSection
 import com.example.curativepis.feature_ath.presntation.screen.signup_screen.view_model.SignUpScreenViewModel
@@ -49,13 +49,36 @@ fun SignUpScreen(
     val context = LocalContext.current
     val state = viewModel.uiState.value
 
+    val password= remember {
+        mutableStateOf("")
+    }
+    val email= remember {
+        mutableStateOf("")
+    }
+    val isMale= remember {
+        mutableStateOf(true)
+    }
+    val userName= remember {
+        mutableStateOf("")
+    }
+    val phone= remember {
+        mutableStateOf("")
+    }
+    val dto= remember {
+        mutableStateOf("")
+    }
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is SignUpScreenViewModel.ValidationEvent.Success -> {
-                    viewModel.onEvent(SignUpScreenEvent.PassUserObject)
-                    val phone=viewModel.phone
-                    onNavigate(AuthScreens.OTPScreen.passPhone(phone))
+                    onNavigate(AuthScreens.OTPScreen.passUserDetails(
+                        password = password.value,
+                        email = email.value,
+                        isMale = isMale.value,
+                        userName = userName.value,
+                        phone = phone.value,
+                        dto = dto.value
+                    ))
                 }
             }
         }
@@ -88,7 +111,8 @@ fun SignUpScreen(
 
                 DefaultTextField(value = state.username, label = "Username", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.UsernameChanged(it))
-                }, isError = false)
+                    userName.value=it
+                }, isError = state.usernameErrorMessage!=null)
                 if (state.usernameErrorMessage != null) {
                     Text(
                         text = state.usernameErrorMessage,
@@ -101,7 +125,8 @@ fun SignUpScreen(
                 }
                 DefaultTextField(value = state.email, label = "E-Mail", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.EmailChanged(it))
-                }, isError = false)
+                    email.value=it
+                }, isError = state.emailErrorMessage!=null)
                 if (state.emailErrorMessage != null) {
                     Text(
                         text = state.emailErrorMessage,
@@ -115,7 +140,8 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DefaultTextField(value =state.phone, label = "Phone number", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.PhoneChanged(it))
-                }, isError = false)
+                    phone.value=it
+                }, isError = state.phoneErrorMessage!=null)
                 if (state.phoneErrorMessage != null) {
                     Text(
                         text = state.phoneErrorMessage,
@@ -129,7 +155,8 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DefaultTextField(value = state.password, label = "Password", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.PasswordChanged(it))
-                }, isError = false)
+                    password.value=it
+                }, isError = state.passwordErrorMessage!=null)
                 if (state.passwordErrorMessage != null) {
                     Text(
                         text = state.passwordErrorMessage,
@@ -144,7 +171,7 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DefaultTextField(value =state.confirmPassword, label = "Confirm Password", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.ConfirmPasswordChanged(state.password,it))
-                }, isError = false)
+                }, isError = state.confirmPasswordErrorMessage!=null)
                 if (state.confirmPasswordErrorMessage != null) {
                     Text(
                         text = state.confirmPasswordErrorMessage,
@@ -159,9 +186,11 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DataPicker(context = context, getDateValue = {
                     viewModel.onEvent(SignUpScreenEvent.BirthDateChanged(it))
+                    dto.value=it
                 })
                 GenderSection(isMale = {
                     viewModel.onEvent(SignUpScreenEvent.GenderChanged(it))
+                    isMale.value=it
                 })
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.xLarge))
                 ButtonWithElevation(
