@@ -31,7 +31,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
-    activity: Activity
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -74,7 +73,7 @@ fun HomeScreen(
             HomeScreens.Notifications.route -> bottomBarState.value = true
             else -> bottomBarState.value = false
         }
-        MyNavGraph(navController = navController, scaffoldState = scaffoldState, activity = activity)
+        MyNavGraph( scaffoldState = scaffoldState, navController = navController)
     }
 }
 

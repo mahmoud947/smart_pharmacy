@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
             CurativePISTheme {
                 val context= LocalContext.current
                 val navController = rememberNavController()
-                HomeScreen(navController = navController, activity = this)
+                HomeScreen(navController = navController)
 
 
 

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,13 +24,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.curativepis.core.commn.Constants
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
-import com.example.curativepis.feature_ath.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.spacing
 
 @SuppressLint("UnrememberedGetBackStackEntry")
@@ -124,7 +120,7 @@ fun RowScope.AddItem(
         onClick = {
 
             navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
+                popUpTo(HomeScreens.News.route) {
                     saveState = true
                 }
                 launchSingleTop = true

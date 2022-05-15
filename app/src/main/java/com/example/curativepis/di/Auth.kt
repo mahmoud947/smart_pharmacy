@@ -1,20 +1,17 @@
 package com.example.curativepis.di
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.curativepis.core.commn.Constants
-import com.example.curativepis.feature_ath.data.AuthApi
-import com.example.curativepis.feature_ath.data.repository.AuthRepositoryImpl
-import com.example.curativepis.feature_ath.domian.repository.AuthRepository
-import com.example.curativepis.feature_ath.domian.use_case.*
-import com.example.curativepis.feature_scanner.data.remote.ScannerCurativePisApi
+import com.example.curativepis.feature_auth.data.AuthApi
+import com.example.curativepis.feature_auth.data.repository.AuthRepositoryImpl
+import com.example.curativepis.feature_auth.domian.repository.AuthRepository
+import com.example.curativepis.feature_auth.domian.use_case.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
@@ -82,6 +79,7 @@ object Auth {
                 firebaseAuth = firebaseAuth,
                 sharedPreferences = sharedPreferences,
             ),
-            pushNewUserUseCase = PushNewUserUseCase(repository = repository)
+            pushNewUserUseCase = PushNewUserUseCase(repository = repository),
+            getFirebaseCurrentUser = GetFirebaseCurrentUser(firebaseAuth = firebaseAuth)
         )
 }

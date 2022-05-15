@@ -19,14 +19,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
-import com.example.curativepis.feature_ath.presntation.screen.login_screen.LoginScreen
-import com.example.curativepis.feature_ath.presntation.screen.otp_screen.OTPScreen
-import com.example.curativepis.feature_ath.presntation.screen.signup_screen.SignUpScreen
-import com.example.curativepis.feature_ath.presntation.screen.splash_screen.SplashScreen
-import com.example.curativepis.feature_ath.presntation.util.AuthScreenArguments
-import com.example.curativepis.feature_ath.presntation.util.AuthScreens
+import com.example.curativepis.feature_auth.presntation.screen.login_screen.LoginScreen
+import com.example.curativepis.feature_auth.presntation.screen.otp_screen.OTPScreen
+import com.example.curativepis.feature_auth.presntation.screen.signup_screen.SignUpScreen
+import com.example.curativepis.feature_auth.presntation.screen.splash_screen.SplashScreen
+import com.example.curativepis.feature_auth.presntation.util.AuthScreenArguments
+import com.example.curativepis.feature_auth.presntation.util.AuthScreens
 import com.example.curativepis.feature_cart.presntation.cart_screen.CartScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
@@ -41,16 +42,17 @@ import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreens
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, activity: Activity) {
+fun MyNavGraph(scaffoldState: ScaffoldState,navController:NavHostController) {
 
     NavHost(
         navController = navController,
-        startDestination = HomeScreens.News.route
+        startDestination = AuthScreens.SpalshScreen.route
     ) {
         composable(route = AuthScreens.SpalshScreen.route) {
             SplashScreen(
                 onPopBackStack = navController::popBackStack,
                 onNavigate = navController::navigate,
+                navController = navController
             )
         }
         composable(route = AuthScreens.LoginScreen.route) {
@@ -71,8 +73,7 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, a
         composable(route = AuthScreens.SignUpScreen.route) {
             SignUpScreen(scaffoldState = scaffoldState,
                 navController = navController,
-                onNavigate = navController::navigate,
-                activity = activity)
+                onNavigate = navController::navigate)
         }
         composable(route = AuthScreens.OTPScreen.route,
             arguments = listOf(
@@ -114,7 +115,6 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, a
                 username = username,
                 password = password,
                 dto = dto,
-                activite = activity,
             )
         }
 

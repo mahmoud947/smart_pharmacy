@@ -1,6 +1,5 @@
 package com.example.curativepis.di
 
-import com.example.curativepis.feature_ath.domian.use_case.*
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
@@ -14,7 +13,6 @@ import com.example.curativepis.feature_scanner.domian.repository.ScannerReposeto
 import com.example.curativepis.feature_scanner.domian.use_case.ScannerUseCase
 import com.example.curativepis.feature_scanner.domian.use_case.UploadImageUseCase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
