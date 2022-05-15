@@ -45,7 +45,7 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, a
 
     NavHost(
         navController = navController,
-        startDestination =  AuthScreens.SignUpScreen.route
+        startDestination = HomeScreens.News.route
     ) {
         composable(route = AuthScreens.SpalshScreen.route) {
             SplashScreen(
@@ -97,24 +97,26 @@ fun MyNavGraph(navController: NavHostController, scaffoldState: ScaffoldState, a
             )
         ) {
             val phone = it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PHONE_KEY)
-            val email=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_EMAIL_KEY)
-            val isMale=it.arguments?.getBoolean(AuthScreenArguments.OTP_SCREEN_ARGUMENT_ISMALE_KEY)
-            val username=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_USERNAME_KEY)
-            val password=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PASSWORD_KEY)
-            val dto=it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_DTOD_KEY)
-            OTPScreen(navController = navController,
+            val email = it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_EMAIL_KEY)
+            val isMale =
+                it.arguments?.getBoolean(AuthScreenArguments.OTP_SCREEN_ARGUMENT_ISMALE_KEY)
+            val username =
+                it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_USERNAME_KEY)
+            val password =
+                it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_PASSWORD_KEY)
+            val dto = it.arguments?.getString(AuthScreenArguments.OTP_SCREEN_ARGUMENT_DTOD_KEY)
+            OTPScreen(
+                navController = navController,
                 onNavigate = navController::navigate,
                 phone = phone,
-                email=email,
-                isMale=isMale,
-                username=username,
-                password=password,
-                dto=dto,
+                email = email,
+                isMale = isMale,
+                username = username,
+                password = password,
+                dto = dto,
                 activite = activity,
             )
         }
-
-
 
 
 

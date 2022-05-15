@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.curativepis.ui.theme.spacing
 
 @Composable
@@ -23,9 +24,12 @@ fun CartTitleAndValueText(
         Text(text = "$title: ", style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onBackground))
         if (value != null) {
             Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-            Text(text = value, style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground))
+            Text(
+                text = value,
+                style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
         }
-
     }
-
 }

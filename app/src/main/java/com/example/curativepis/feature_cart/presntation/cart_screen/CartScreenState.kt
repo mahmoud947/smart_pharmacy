@@ -7,4 +7,6 @@ data class CartScreenState(
     val isLoading: Boolean = false,
     val item: Cart= Cart("","", emptyList(), purchased = false, subTotal = 0.0,"", user_uid = ""),
     val error: String? = null,
+    val isItemDeleted:Boolean=false,
+    val itemDeletedErrorMessage:String?=null
 )

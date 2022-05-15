@@ -2,13 +2,12 @@ package com.example.curativepis.feature_cart.presntation.cart_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -22,6 +21,7 @@ fun CartItemCard(
     modifier: Modifier,
     cartItem: CartItem,
     onClick: () -> Unit = {},
+    onDleteIconClicked:()->Unit
 ) {
     val imagePainter = rememberImagePainter(data = cartItem.image, builder = {
         placeholder(R.drawable.loading_waiting)
@@ -48,8 +48,14 @@ fun CartItemCard(
             ) {
                 CartTitleAndValueText(title = "Drug name", value = cartItem.drug_name)
                 CartTitleAndValueText(title = "Quantity", value = cartItem.quantity.toString())
-                CartTitleAndValueText(title = "Price", value = cartItem.price.toString())
+                CartTitleAndValueText(title = "Price", value = cartItem.price.toString() + " L.E.")
                 CartTitleAndValueText(title = "Total", value = cartItem.drug_name)
+            }
+            IconButton(onClick = {
+                onDleteIconClicked()
+
+            }, modifier = Modifier.weight(1f)) {
+                Icon(imageVector = Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colors.onSurface)
             }
         }
 

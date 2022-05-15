@@ -62,7 +62,7 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,
         letterSpacing = 30.sp
-    )
+    ),
 
 //    overline = TextStyle(
 //        fontWeight = FontWeight.Normal,

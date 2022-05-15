@@ -8,7 +8,9 @@ import com.example.curativepis.feature_cart.data.CartApi
 import com.example.curativepis.feature_cart.data.repository.CartRepositoryImpl
 import com.example.curativepis.feature_cart.domian.repository.CartRepository
 import com.example.curativepis.feature_cart.domian.use_case.CartUseCase
+import com.example.curativepis.feature_cart.domian.use_case.DeleteCartItemUseCase
 import com.example.curativepis.feature_cart.domian.use_case.GetCartUseCase
+import com.example.curativepis.feature_cart.domian.use_case.GetUserToken
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -34,6 +36,8 @@ object CartModule {
             .create(CartApi::class.java)
     }
 
+
+
     @Provides
     @Singleton
     fun provideCartRepository(api: CartApi): CartRepository =
@@ -41,8 +45,10 @@ object CartModule {
 
     @Provides
     @Singleton
-    fun provideCartUseCase(repository: CartRepository):CartUseCase=
+    fun provideCartUseCase(repository: CartRepository,firebaseAuth: FirebaseAuth):CartUseCase=
         CartUseCase(
-            getCartUseCase = GetCartUseCase(repository = repository)
+            getCartUseCase = GetCartUseCase(repository = repository),
+            getUserToken = GetUserToken(firebaseAuth = firebaseAuth),
+            deleteCartItemUseCase = DeleteCartItemUseCase(repository = repository)
         )
 }
