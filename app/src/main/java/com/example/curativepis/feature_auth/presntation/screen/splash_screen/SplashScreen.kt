@@ -34,10 +34,20 @@ fun SplashScreen(
         viewModel.actionEventChannel.collect{event->
             when(event){
                 is SplashScreenViewModel.ActionEvent.NavigateToHome->{
-                   // navController.graph.setStartDestination(HomeScreens.News.route)
                     navController.navigate(HomeScreens.News.route){
                         popUpTo(navController.graph.findStartDestination().id){
                         inclusive=true
+                        }
+                        launchSingleTop = true
+                        popUpToId
+                        restoreState = true
+
+                    }
+                }
+                is SplashScreenViewModel.ActionEvent.NavigateToLogin->{
+                    navController.navigate(AuthScreens.LoginScreen.route){
+                        popUpTo(navController.graph.findStartDestination().id){
+                            inclusive=true
                         }
                         launchSingleTop = true
                         popUpToId

@@ -21,8 +21,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_auth.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_auth.presntation.screen.otp_screen.components.OtpTextField
 import com.example.curativepis.feature_auth.presntation.screen.otp_screen.view_model.OTPScreenViewModel
@@ -50,19 +52,27 @@ fun OTPScreen(
     val state = viewModel.uiState.value
 
     LaunchedEffect(key1 = context) {
-        viewModel.validationEvents.collect { event ->
+        viewModel.actionEvents.collect { event ->
             when (event) {
-                is OTPScreenViewModel.ValidationEvent.Success -> {
+                is OTPScreenViewModel.ActionEvent.ValidateSuccess -> {
 
                 }
-                is OTPScreenViewModel.ValidationEvent.ConverUserFromJsonToObject -> {
+                is OTPScreenViewModel.ActionEvent.ConverUserFromJsonToObject -> {
                     if (phone != null) {
-
                         send(phone, context = context)
                     }
                 }
+                is OTPScreenViewModel.ActionEvent.Navigate -> {
+                    navController.navigate(HomeScreens.News.route){
+                        popUpTo(navController.graph.findStartDestination().id){
+                            inclusive=true
+                        }
+                        launchSingleTop = true
+                        popUpToId
+                        restoreState = true
+                    }
+                }
             }
-
         }
     }
     Column(

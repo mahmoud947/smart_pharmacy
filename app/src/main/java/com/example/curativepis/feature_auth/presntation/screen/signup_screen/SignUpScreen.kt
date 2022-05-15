@@ -45,7 +45,7 @@ fun SignUpScreen(
     val scrollState = rememberScrollState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
-    val state = viewModel.uiState.value
+    val state = viewModel.uiState
 
     val password= remember {
         mutableStateOf("")
@@ -65,17 +65,17 @@ fun SignUpScreen(
     val dto= remember {
         mutableStateOf("")
     }
-    LaunchedEffect(key1 = context) {
+    LaunchedEffect(key1 = viewModel.uiState) {
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is SignUpScreenViewModel.ValidationEvent.Success -> {
                     onNavigate(AuthScreens.OTPScreen.passUserDetails(
-                        password = password.value,
-                        email = email.value,
-                        isMale = isMale.value,
-                        userName = userName.value,
-                        phone = phone.value,
-                        dto = dto.value
+                        password = state.password,
+                        email = state.email,
+                        isMale = state.isMale,
+                        userName =state.username,
+                        phone = state.phone,
+                        dto = state.dateOfBirth
                     ))
                 }
             }

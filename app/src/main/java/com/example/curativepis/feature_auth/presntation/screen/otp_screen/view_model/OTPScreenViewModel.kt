@@ -1,6 +1,5 @@
 package com.example.curativepis.feature_auth.presntation.screen.otp_screen.view_model
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,14 +26,14 @@ class OTPScreenViewModel @Inject constructor(
     private val _uiState = mutableStateOf(OTPScreenState())
     val uiState: State<OTPScreenState> = _uiState
 
-    private val validationEventChannel = Channel<ValidationEvent>()
-    val validationEvents = validationEventChannel.receiveAsFlow()
+    private val _actionEventChannel = Channel<ActionEvent>()
+    val actionEvents = _actionEventChannel.receiveAsFlow()
 
     val userObject = mutableStateOf<PisUser?>(null)
 
     init {
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.ConverUserFromJsonToObject)
+            _actionEventChannel.send(ActionEvent.ConverUserFromJsonToObject)
         }
     }
 
@@ -73,20 +72,20 @@ class OTPScreenViewModel @Inject constructor(
                                 createUserIsError = result.data?.is_error?:false,
                                 createUserIsErrorMessage = result.data?.message?:"user created"
                             )
-                            Log.d("userMina",result.data.toString())
+                            onNavigate()
                         }
                         is Resource.Error->{
                             _uiState.value=uiState.value.copy(
                                 createUserIsError = result.message!=null,
                                 createUserIsErrorMessage = result.message
                             )
-                            Log.d("userMina",result.message.toString())
+
                         }
                         is Resource.Loading->{
                             _uiState.value=uiState.value.copy(
                                 isLoading = true
                             )
-                            Log.d("userMina",result.message.toString())
+
                         }
                     }
                 }.launchIn(viewModelScope)
@@ -106,13 +105,20 @@ class OTPScreenViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
+            _actionEventChannel.send(ActionEvent.ValidateSuccess)
         }
     }
 
-    sealed class ValidationEvent {
-        object Success : ValidationEvent()
-        object ConverUserFromJsonToObject : ValidationEvent()
+    private fun onNavigate(){
+        viewModelScope.launch {
+            _actionEventChannel.send(ActionEvent.Navigate)
+        }
+    }
+
+    sealed class ActionEvent {
+        object ValidateSuccess : ActionEvent()
+        object ConverUserFromJsonToObject : ActionEvent()
+        object Navigate:ActionEvent()
     }
 }
 

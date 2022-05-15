@@ -1,9 +1,13 @@
 package com.example.curativepis.feature_auth.presntation.screen.signup_screen.view_model
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.curativepis.core.presentation.PasswordTextFieldState
+import com.example.curativepis.core.presentation.StandardTextFieldState
 import com.example.curativepis.feature_auth.domian.use_case.AuthUseCase
 import com.example.curativepis.feature_auth.presntation.screen.signup_screen.SignUpScreenEvent
 import com.example.curativepis.feature_auth.presntation.screen.signup_screen.SignUpScreenState
@@ -19,8 +23,12 @@ class SignUpScreenViewModel @Inject constructor(
     private val useCase: AuthUseCase,
     private val gson: Gson
 ) : ViewModel() {
-    private val _uiState = mutableStateOf(SignUpScreenState())
-    val uiState: State<SignUpScreenState> = _uiState
+
+    var uiState by mutableStateOf(SignUpScreenState())
+
+
+
+
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
@@ -28,38 +36,39 @@ class SignUpScreenViewModel @Inject constructor(
     fun onEvent(event: SignUpScreenEvent) {
         when (event) {
             is SignUpScreenEvent.EmailChanged->{
-                _uiState.value=uiState.value.copy(
-                    email = event.email,
+                uiState=uiState.copy(
+                    email = event.email
+
                 )
             }
             is SignUpScreenEvent.PhoneChanged->{
-                _uiState.value=uiState.value.copy(
-                    phone = event.phone,
+                uiState=uiState.copy(
+                    phone = event.phone
                 )
             }
             is SignUpScreenEvent.PasswordChanged->{
-                _uiState.value=uiState.value.copy(
-                    password = event.password,
+                uiState=uiState.copy(
+                    password = event.password
                 )
             }
             is SignUpScreenEvent.ConfirmPasswordChanged->{
-                _uiState.value=uiState.value.copy(
-                    confirmPassword = event.confirmPassword,
+                uiState=uiState.copy(
+                    confirmPassword = event.confirmPassword
                 )
             }
             is SignUpScreenEvent.BirthDateChanged->{
-                _uiState.value=uiState.value.copy(
-                    dateOfBirth = event.dateOfBirth,
+                uiState=uiState.copy(
+                    dateOfBirth = event.dateOfBirth
                 )
             }
             is SignUpScreenEvent.GenderChanged->{
-                _uiState.value=uiState.value.copy(
-                    isMale = event.isMale,
+                uiState=uiState.copy(
+                    isMale = event.isMale
                 )
             }
             is SignUpScreenEvent.UsernameChanged->{
-                _uiState.value=uiState.value.copy(
-                  username = event.username
+                uiState=uiState.copy(
+                    username = event.username
                 )
             }
 
@@ -75,12 +84,11 @@ class SignUpScreenViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val validUsernameUseCase=useCase.validUsernameUseCase(_uiState.value.username)
-        val validatEmailUseCase = useCase.validEmailUseCase(_uiState.value.email)
-        val validatPhonelUseCase = useCase.validPhoneUseCase(_uiState.value.phone)
-        val validatPasswordUseCase = useCase.validPasswordUseCase(_uiState.value.password)
-        val validatConfirmPasswordUseCase = useCase.validConfirmPasswordUseCase(_uiState.value.password,_uiState.value.confirmPassword)
-        val validatPhoneUseCase=useCase.validPhoneUseCase(_uiState.value.phone)
+        val validUsernameUseCase=useCase.validUsernameUseCase(uiState.username)
+        val validatEmailUseCase = useCase.validEmailUseCase(uiState.email)
+        val validatPhonelUseCase = useCase.validPhoneUseCase(uiState.phone)
+        val validatPasswordUseCase = useCase.validPasswordUseCase(uiState.password)
+        val validatConfirmPasswordUseCase = useCase.validConfirmPasswordUseCase(uiState.password,uiState.confirmPassword)
 
         val hasError = listOf(
             validUsernameUseCase,
@@ -88,12 +96,11 @@ class SignUpScreenViewModel @Inject constructor(
             validatPasswordUseCase,
             validatPhonelUseCase,
             validatConfirmPasswordUseCase,
-            validatPhoneUseCase
         ).any {
             !it.isValid
         }
         if (hasError) {
-            _uiState.value = uiState.value.copy(
+            uiState = uiState.copy(
                 usernameErrorMessage = validUsernameUseCase.errorMessage,
                 emailErrorMessage = validatEmailUseCase.errorMessage,
                 phoneErrorMessage = validatPasswordUseCase.errorMessage,
