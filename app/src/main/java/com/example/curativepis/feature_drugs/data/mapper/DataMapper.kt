@@ -1,7 +1,7 @@
 package com.example.curativepis.feature_drugs.data.mapper
 
-import com.example.curativepis.feature_drugs.data.remote.dto.DrugDto
-import com.example.curativepis.feature_drugs.data.remote.dto.DrugFormDto
+import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugDto
+import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugFormDto
 import com.example.curativepis.feature_drugs.domian.model.Drug
 import com.example.curativepis.feature_drugs.domian.model.DrugForm
 

@@ -4,10 +4,7 @@ import com.example.curativepis.feature_ath.domian.use_case.*
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
-import com.example.curativepis.feature_drugs.domian.use_case.DrugsUseCase
-import com.example.curativepis.feature_drugs.domian.use_case.GetDrugByIdUseCase
-import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsByNameUseCase
-import com.example.curativepis.feature_drugs.domian.use_case.GetDrugsUseCase
+import com.example.curativepis.feature_drugs.domian.use_case.*
 import com.example.curativepis.feature_news.data.remote.NewsApi
 import com.example.curativepis.feature_news.data.repository.NewsRepositoryImpl
 import com.example.curativepis.feature_news.domian.repository.NewsRepository
@@ -16,6 +13,7 @@ import com.example.curativepis.feature_scanner.data.repository.ScannerReposetory
 import com.example.curativepis.feature_scanner.domian.repository.ScannerReposetory
 import com.example.curativepis.feature_scanner.domian.use_case.ScannerUseCase
 import com.example.curativepis.feature_scanner.domian.use_case.UploadImageUseCase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -46,11 +44,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDrugsUseCase(repository: DrugsRepository): DrugsUseCase =
+    fun provideDrugsUseCase(repository: DrugsRepository,firebaseAuth: FirebaseAuth): DrugsUseCase =
         DrugsUseCase(
             getDrugsUseCase = GetDrugsUseCase(repository = repository),
             getDrugsByNameUseCase = GetDrugsByNameUseCase(repository = repository),
-            getDrugByIdUseCase = GetDrugByIdUseCase(repository = repository)
+            getDrugByIdUseCase = GetDrugByIdUseCase(repository = repository),
+            drugsGetUserTokenUseCase = DrugsGetUserTokenUseCase(firebaseAuth = firebaseAuth),
+            addItemToCartUseCase = AddItemToCartUseCase(repository = repository)
         )
 
     @Provides

@@ -1,9 +1,11 @@
 package com.example.curativepis.feature_drugs.data.repository
 
 import com.example.curativepis.core.commn.Constants
+import com.example.curativepis.feature_cart.data.remote.response.dto.CartDto
 import com.example.curativepis.feature_drugs.data.mapper.toDrug
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
-import com.example.curativepis.feature_drugs.data.remote.dto.DrugDto
+import com.example.curativepis.feature_drugs.data.remote.request.AddItemToCartReq
+import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugDto
 import com.example.curativepis.feature_drugs.domian.model.Drug
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
 import retrofit2.HttpException
@@ -34,4 +36,7 @@ class DrugsRepositoryImpl @Inject constructor(
     override suspend fun getDrugsById(drugId: String): DrugDto {
        return api.getDrugsById(drugId = drugId)
     }
+
+    override suspend fun addItemToCart(token: String,addItemToCartReq: AddItemToCartReq): CartDto? =
+        api.addItemToCart(token = token, addItemToCartReq = addItemToCartReq)
 }

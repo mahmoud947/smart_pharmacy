@@ -1,4 +1,4 @@
-package com.example.curativepis.feature_cart.data
+package com.example.curativepis.feature_cart.data.remote
 
 import com.example.curativepis.feature_cart.data.remote.request.DeleteCartItemRequest
 import com.example.curativepis.feature_cart.data.remote.response.CartBaseResponse
@@ -17,4 +17,7 @@ interface CartApi {
         @Header("Authorization") token: String,
         @Path("itemId") deleteCartItemId: String
     ): CartBaseResponse?
+
+
+
 }

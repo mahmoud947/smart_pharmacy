@@ -23,18 +23,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
 import com.example.curativepis.core.presentation.components.ErrorView
 import com.example.curativepis.core.presentation.components.LoadingView
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.BottomSheetContent
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.DrugFormItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.TitleAndValueText
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.view_model.DrugDetailViewModel
 import com.example.curativepis.ui.theme.elevation
 import com.example.curativepis.ui.theme.spacing
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoilApi::class, ExperimentalMaterialApi::class)
@@ -54,195 +57,244 @@ fun DrugDetailScreen(
     val drug = state.drug
     val sheettState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val scop = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
     val painter = rememberImagePainter(data = drug?.image, builder = {
         placeholder(R.drawable.loading_waiting)
         error(R.drawable.error_drug_image)
     })
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.Start
-        ) {
-            DefaultTopAppBar(
-                navigationIcon = Icons.Filled.ArrowBack,
-                onClick = {
-                    navController.popBackStack()
-                }
+
+    LaunchedEffect(key1 = state.itemAddMessage){
+        if (!state.itemAddMessage.isNullOrEmpty()) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = state.itemAddMessage.toString()
             )
-
-            when {
-                !state.error.isNullOrEmpty() -> {
-                    ErrorView(onClickRetry = {
-                        if (drugID != null) {
-                            viewModel.getDrugDetail(drugID = drugID)
-                        }
-                    },
-                        message = state.error,
-                        modifier = Modifier.fillMaxSize())
+            navController.navigate(HomeScreens.Cart.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
                 }
-                state.isLoading -> {
-                    LoadingView(modifier = Modifier.fillMaxSize())
-                }
-                state.drug != null -> {
-                    Column(
-                        modifier = Modifier
-                            .verticalScroll(scrollState)
-                            .fillMaxSize()
-                            .background(MaterialTheme.colors.background),
-                    ) {
-                        Box(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)) {
+            }
+        }
+    }
 
-                            Image(painter = painter,
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop)
-                        }
-                        Box(modifier = Modifier
-                            .fillMaxWidth()) {
-                            Column(modifier = Modifier
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(it) {
+                Snackbar(
+                    contentColor = Color.Black,
+                    snackbarData = it,
+                    backgroundColor = Color.DarkGray,
+                    elevation = 10.dp
+                )
+
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+
+
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background),
+                horizontalAlignment = Alignment.Start
+            ) {
+                DefaultTopAppBar(
+                    navigationIcon = Icons.Filled.ArrowBack,
+                    onClick = {
+                        navController.popBackStack()
+                    }
+                )
+
+                when {
+                    !state.error.isNullOrEmpty() -> {
+                        ErrorView(onClickRetry = {
+                            if (drugID != null) {
+                                viewModel.getDrugDetail(drugID = drugID)
+                            }
+                        },
+                            message = state.error,
+                            modifier = Modifier.fillMaxSize())
+                    }
+                    state.isLoading -> {
+                        LoadingView(modifier = Modifier.fillMaxSize())
+                    }
+                    state.drug != null -> {
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(scrollState)
                                 .fillMaxSize()
                                 .background(MaterialTheme.colors.background),
-                                horizontalAlignment = Alignment.CenterHorizontally) {
-                                if (drug != null) {
-                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-                                    TitleAndValueText(title = "Drug name", value = drug.drug_name)
-                                }
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Row(modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(100.dp),
-                                        horizontalArrangement = Arrangement.Center,
-                                        verticalAlignment = Alignment.CenterVertically) {
-                                        if (drug != null) {
-                                            TitleAndValueText(title = "Price",
-                                                value = "${drug.price} EL",
-                                                modifier = Modifier.weight(2f))
-                                            Box(modifier = Modifier
-                                                .fillMaxWidth()
-                                                .weight(1f)
-                                            ) {
-                                                Surface(
-                                                    modifier = Modifier
-                                                        .padding(12.dp),
-                                                    elevation = MaterialTheme.elevation.regulator,
-                                                    color = MaterialTheme.colors.primaryVariant,
-                                                    shape = MaterialTheme.shapes.large
-                                                ) {
+                        ) {
+                            Box(modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp)) {
 
-                                                    IconButton(
-                                                        modifier = Modifier.fillMaxWidth(),
-                                                        onClick = {
-                                                            scop.launch {
-                                                                sheettState.show()
+                                Image(painter = painter,
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop)
+                            }
+                            Box(modifier = Modifier
+                                .fillMaxWidth()) {
+                                Column(modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(MaterialTheme.colors.background),
+                                    horizontalAlignment = Alignment.CenterHorizontally) {
+                                    if (drug != null) {
+                                        Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                                        TitleAndValueText(title = "Drug name",
+                                            value = drug.drug_name)
+                                    }
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+                                    Box(modifier = Modifier.fillMaxSize()) {
+                                        Row(modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(100.dp),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically) {
+                                            if (drug != null) {
+                                                TitleAndValueText(title = "Price",
+                                                    value = "${drug.price} EL",
+                                                    modifier = Modifier.weight(2f))
+                                                Box(modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .weight(1f)
+                                                ) {
+                                                    Surface(
+                                                        modifier = Modifier
+                                                            .padding(12.dp),
+                                                        elevation = MaterialTheme.elevation.regulator,
+                                                        color = MaterialTheme.colors.primaryVariant,
+                                                        shape = MaterialTheme.shapes.large
+                                                    ) {
+
+                                                        IconButton(
+                                                            modifier = Modifier.fillMaxWidth(),
+                                                            onClick = {
+                                                                scop.launch {
+                                                                    sheettState.show()
+                                                                }
+                                                            })
+                                                        {
+                                                            Column(
+                                                                modifier = Modifier
+                                                                    .fillMaxSize(),
+                                                                verticalArrangement = Arrangement.Center,
+                                                                horizontalAlignment = Alignment.CenterHorizontally) {
+                                                                Icon(imageVector = Icons.Default.AddShoppingCart,
+                                                                    contentDescription = null,
+                                                                    tint = MaterialTheme.colors.onPrimary)
+                                                                Text(
+                                                                    text = "Add to Cart",
+                                                                    style = MaterialTheme.typography.caption.copy(
+                                                                        color = MaterialTheme.colors.onPrimary,
+                                                                        textAlign = TextAlign.Center),
+                                                                    maxLines = 1,
+                                                                    modifier = Modifier.fillMaxWidth(),
+                                                                )
                                                             }
-                                                        })
-                                                    {
-                                                        Column(
-                                                            modifier = Modifier
-                                                                .fillMaxSize(),
-                                                            verticalArrangement = Arrangement.Center,
-                                                            horizontalAlignment = Alignment.CenterHorizontally) {
-                                                            Icon(imageVector = Icons.Default.AddShoppingCart,
-                                                                contentDescription = null,
-                                                                tint = MaterialTheme.colors.onPrimary)
-                                                            Text(
-                                                                text = "Add to Cart",
-                                                                style = MaterialTheme.typography.caption.copy(
-                                                                    color = MaterialTheme.colors.onPrimary,
-                                                                    textAlign = TextAlign.Center),
-                                                                maxLines = 1,
-                                                                modifier = Modifier.fillMaxWidth(),
-                                                            )
+
                                                         }
+
 
                                                     }
 
 
                                                 }
+                                            }
 
+                                        }
 
+                                    }
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                                    TitleAndValueText(title = "Forms", value = null)
+                                    LazyRow(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
+                                        contentPadding = PaddingValues(MaterialTheme.spacing.large)
+                                    ) {
+                                        if (drug != null) {
+                                            items(items = drug.drugForm) { drugForm ->
+                                                DrugFormItem(drugForm = drugForm,
+                                                    modifier = Modifier.width(100.dp))
                                             }
                                         }
-
                                     }
-
-                                }
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-                                TitleAndValueText(title = "Forms", value = null)
-                                LazyRow(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
-                                    contentPadding = PaddingValues(MaterialTheme.spacing.large)
-                                ) {
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
                                     if (drug != null) {
-                                        items(items = drug.drugForm) { drugForm ->
-                                            DrugFormItem(drugForm = drugForm,
-                                                modifier = Modifier.width(100.dp))
+                                        TitleAndValueText(title = "Strength", value = drug.strength)
+                                    }
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                                    TitleAndValueText(title = "Active ingredients", value = null)
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                                    LazyColumn(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(150.dp),
+                                        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
+                                        horizontalAlignment = Alignment.Start,
+                                        contentPadding = PaddingValues(start = MaterialTheme.spacing.large)
+                                    ) {
+                                        val activeIngredients = drug!!.active_ingredients
+                                        items(items = activeIngredients) { activeIngredient ->
+                                            Text(text = "${
+                                                activeIngredients.indexOf(activeIngredient) + 1
+                                            }. " +
+                                                    "$activeIngredient",
+                                                style = MaterialTheme.typography.body1.copy(color = Color.Black))
                                         }
                                     }
-                                }
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-                                if (drug != null) {
-                                    TitleAndValueText(title = "Strength", value = drug.strength)
-                                }
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-                                TitleAndValueText(title = "Active ingredients", value = null)
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(150.dp),
-                                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
-                                    horizontalAlignment = Alignment.Start,
-                                    contentPadding = PaddingValues(start = MaterialTheme.spacing.large)
-                                ) {
-                                    val activeIngredients = drug!!.active_ingredients
-                                    items(items = activeIngredients) { activeIngredient ->
-                                        Text(text = "${activeIngredients.indexOf(activeIngredient) + 1}. " +
-                                                "$activeIngredient",
-                                            style = MaterialTheme.typography.body1.copy(color = Color.Black))
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
+                                }
                             }
+
                         }
+
 
                     }
-
-
+                    else -> {
+                        ErrorView(onClickRetry = {
+                            if (drugID != null) {
+                                viewModel.getDrugDetail(drugID = drugID)
+                            }
+                        }, message = state.error, modifier = Modifier.fillMaxSize())
+                    }
                 }
-                else -> {
-                    ErrorView(onClickRetry = {
-                        if (drugID != null) {
-                            viewModel.getDrugDetail(drugID = drugID)
-                        }
-                    }, message = state.error, modifier = Modifier.fillMaxSize())
+
+
+            }
+            ModalBottomSheetLayout(sheetContent = {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)) {
+                    state.drug?.price?.let {
+                        BottomSheetContent(
+                            modifier = Modifier,
+                            painter = painter,
+                            drugPrice = it,
+                            drugName = state.drug.drug_name ?: "",
+                            onAddToCartClicked = { quantity ->
+                                viewModel.onEvent(event = DrugDetaillScreenEvent.AddItemToCart(
+                                    drugId = state.drug._id,
+                                    quantity = quantity))
+                                scop.launch {
+                                    sheettState.hide()
+                                }
+                            }
+                        )
+                    }
                 }
-            }
-
-
-        }
-        ModalBottomSheetLayout(sheetContent = {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)) {
-                    BottomSheetContent(modifier = Modifier, painter = painter)
-            }
-        },
-            sheetState = sheettState,
-            content = {
-
             },
-            sheetBackgroundColor = MaterialTheme.colors.background
+                sheetState = sheettState,
+                content = {
 
-        )
+                },
+                sheetBackgroundColor = MaterialTheme.colors.background
+
+            )
+        }
     }
 
 }

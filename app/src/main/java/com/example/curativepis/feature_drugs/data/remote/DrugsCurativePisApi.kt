@@ -1,11 +1,10 @@
 package com.example.curativepis.feature_drugs.data.remote
 
-import com.example.curativepis.feature_drugs.data.remote.dto.DrugDto
-import com.example.curativepis.feature_drugs.data.remote.dto.DrugsResponseDto
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.example.curativepis.feature_cart.data.remote.response.dto.CartDto
+import com.example.curativepis.feature_drugs.data.remote.request.AddItemToCartReq
+import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugDto
+import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugsResponseDto
+import retrofit2.http.*
 
 interface DrugsCurativePisApi {
     @GET("drugs")
@@ -27,4 +26,10 @@ interface DrugsCurativePisApi {
        @Path("drugId")
         drugId:String,
     ):DrugDto
+
+    @PATCH("cart")
+    suspend fun addItemToCart(
+        @Header("Authorization") token: String,
+        @Body addItemToCartReq: AddItemToCartReq
+    ): CartDto?
 }

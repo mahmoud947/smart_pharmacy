@@ -1,4 +1,4 @@
-package com.example.curativepis.feature_drugs.data.remote.dto
+package com.example.curativepis.feature_drugs.data.remote.response.dto
 
 import com.google.gson.annotations.SerializedName
 

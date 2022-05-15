@@ -6,4 +6,6 @@ data class DrugDetailState(
     val isLoading: Boolean = false,
     val drug: Drug? = null,
     val error: String? = null,
+    val isItemAddToCart: Boolean = false,
+    val itemAddMessage: String? = null,
 )
