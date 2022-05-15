@@ -1,6 +1,8 @@
 package com.example.curativepis.feature_auth.data
 
+import com.example.curativepis.feature_auth.data.remote.request.GetCustomTokenRequestObject
 import com.example.curativepis.feature_auth.data.remote.request.UserRequestObject
+import com.example.curativepis.feature_auth.data.remote.response.CusttomTokenResponse
 import com.example.curativepis.feature_auth.data.remote.response.PushUserResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -12,4 +14,10 @@ interface AuthApi {
         @Header("Authorization") token:String,
         @Body userRequestObject: UserRequestObject
     ):PushUserResponse
+
+    @POST("user/token")
+    suspend fun getCustomToken(
+        @Body getCustomTokenRequestObject: GetCustomTokenRequestObject
+    ):CusttomTokenResponse
+
 }

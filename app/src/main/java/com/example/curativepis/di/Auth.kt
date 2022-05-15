@@ -30,7 +30,7 @@ object Auth {
 
     @Provides
     @Singleton
-    fun provideGsonAdapter():Gson= Gson()
+    fun provideGsonAdapter(): Gson = Gson()
 
 
     @Singleton
@@ -41,8 +41,8 @@ object Auth {
 
     @Provides
     @Singleton
-    fun provideScannerRepository(firebaseAuth: FirebaseAuth,api: AuthApi): AuthRepository =
-        AuthRepositoryImpl(firebaseAuth = firebaseAuth,api=api)
+    fun provideScannerRepository(firebaseAuth: FirebaseAuth, api: AuthApi): AuthRepository =
+        AuthRepositoryImpl(firebaseAuth = firebaseAuth, api = api)
 
     @Provides
     @Singleton
@@ -55,14 +55,12 @@ object Auth {
             .create(AuthApi::class.java)
 
 
-
-
     @Provides
     @Singleton
     fun provideLoginUseCase(
         firebaseAuth: FirebaseAuth,
         sharedPreferences: SharedPreferences,
-        repository: AuthRepository
+        repository: AuthRepository,
     ): AuthUseCase =
         AuthUseCase(
             validUsernameUseCase = VaidatUsernameUseCase(),
@@ -80,6 +78,7 @@ object Auth {
                 sharedPreferences = sharedPreferences,
             ),
             pushNewUserUseCase = PushNewUserUseCase(repository = repository),
-            getFirebaseCurrentUser = GetFirebaseCurrentUser(firebaseAuth = firebaseAuth)
+            getFirebaseCurrentUser = GetFirebaseCurrentUser(firebaseAuth = firebaseAuth),
+            getCustomTokentUseCase = GetCusttomTokentUseCase(repository = repository)
         )
 }

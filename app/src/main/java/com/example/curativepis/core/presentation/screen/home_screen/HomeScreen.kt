@@ -1,9 +1,9 @@
 package com.example.curativepis.core.presentation.screen.home_screen
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,16 +12,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.core.navigation.MyNavGraph
 import com.example.curativepis.core.presentation.components.BottomBar
+import com.example.curativepis.core.presentation.screen.home_screen.view_model.HomeViewModel
+import com.example.curativepis.feature_auth.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.spacing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -58,7 +56,22 @@ fun HomeScreen(
         drawerShape = RoundedCornerShape(20.dp),
         drawerContent = {
 
-            Text("Drawer title", modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.height(100.dp))
+            Text("Drawer title", modifier = Modifier.padding(16.dp).clickable {
+                viewModel.onEvent(HomeScreenEvent.SignOut)
+                navController.navigate(AuthScreens.LoginScreen.route){
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                    popUpToId
+                    restoreState = true
+                }
+            })
+
+
+
+
         },
         bottomBar = {
             BottomBar(navController = navController, bottomBarSate = bottomBarState)

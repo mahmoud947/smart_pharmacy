@@ -104,7 +104,7 @@ fun NewsCardWithOutImage(
                         text = articleContent, minimizedMaxLines = 2,
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.White),
+                            .background(MaterialTheme.colors.surface),
                     )
                 }
 

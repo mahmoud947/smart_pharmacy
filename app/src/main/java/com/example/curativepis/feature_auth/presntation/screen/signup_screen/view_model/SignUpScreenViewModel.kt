@@ -38,7 +38,6 @@ class SignUpScreenViewModel @Inject constructor(
             is SignUpScreenEvent.EmailChanged->{
                 uiState=uiState.copy(
                     email = event.email
-
                 )
             }
             is SignUpScreenEvent.PhoneChanged->{

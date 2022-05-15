@@ -35,8 +35,8 @@ fun DefaultTextField(
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.primaryVariant,
             focusedLabelColor = MaterialTheme.colors.primaryVariant,
-            unfocusedLabelColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.6f),
-            unfocusedBorderColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.6f),
+            unfocusedLabelColor = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
+            unfocusedBorderColor = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
         ),
         isError = isError
     )

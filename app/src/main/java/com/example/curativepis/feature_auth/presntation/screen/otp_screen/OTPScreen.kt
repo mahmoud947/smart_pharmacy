@@ -130,7 +130,8 @@ fun OTPScreen(
                                     password = password ?: "",
                                     dob = dto ?: "",
                                     deviceToken = "",
-                                    uid = user.uid
+                                    uid = user.uid,
+                                    email = email.toString()
                                 )
                                 viewModel.onEvent(OTPScreenEvent.SignUp(userRequestObject = userRequestObject,
                                     token = token.token.toString()))
@@ -208,6 +209,7 @@ private fun send(mobileNum: String, context: Context) {
         .setCallbacks(object :
             PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+
                 Toast.makeText(context,
                     "Verification Completed",
                     Toast.LENGTH_SHORT).show()
@@ -260,7 +262,7 @@ private fun getToken(context: Context): String {
     Toast.makeText(context, phone.toString(), Toast.LENGTH_SHORT).show()
 
     val token = mAuth.currentUser?.getIdToken(true)?.addOnSuccessListener {
-        Toast.makeText(context, it.token.toString(), Toast.LENGTH_LONG).show()
+       // Toast.makeText(context, it.token.toString(), Toast.LENGTH_LONG).show()
         myToken = it.token.toString()
         Log.d("token", it.token.toString())
     }

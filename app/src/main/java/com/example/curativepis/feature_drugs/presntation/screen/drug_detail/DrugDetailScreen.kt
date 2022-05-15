@@ -23,21 +23,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
 import com.example.curativepis.core.presentation.components.ErrorView
 import com.example.curativepis.core.presentation.components.LoadingView
-import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.BottomSheetContent
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.DrugFormItem
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.components.TitleAndValueText
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.view_model.DrugDetailViewModel
 import com.example.curativepis.ui.theme.elevation
 import com.example.curativepis.ui.theme.spacing
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoilApi::class, ExperimentalMaterialApi::class)
@@ -64,15 +61,16 @@ fun DrugDetailScreen(
     })
 
 
-    LaunchedEffect(key1 = state.itemAddMessage){
+    LaunchedEffect(key1 = state.itemAddMessage) {
         if (!state.itemAddMessage.isNullOrEmpty()) {
             scaffoldState.snackbarHostState.showSnackbar(
                 message = state.itemAddMessage.toString()
             )
-            navController.navigate(HomeScreens.Cart.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                }
-            }
+            //TODO:fix navigation issue (item add message note changed)
+//            navController.navigate(HomeScreens.Cart.route) {
+//                popUpTo(navController.graph.findStartDestination().id) {
+//                }
+//            }
         }
     }
 
@@ -251,7 +249,6 @@ fun DrugDetailScreen(
                             }
 
                         }
-
 
                     }
                     else -> {

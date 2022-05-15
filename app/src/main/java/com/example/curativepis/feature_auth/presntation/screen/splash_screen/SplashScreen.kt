@@ -12,14 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_auth.presntation.screen.splash_screen.view_model.SplashScreenViewModel
 import com.example.curativepis.feature_auth.presntation.util.AuthScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun SplashScreen(
@@ -29,14 +28,16 @@ fun SplashScreen(
     viewModel: SplashScreenViewModel = hiltViewModel(),
 ) {
 
-    LaunchedEffect(key1 = true ){
+    val firebaseAuth = FirebaseAuth.getInstance()
+    LaunchedEffect(key1 = true) {
         delay(1000)
-        viewModel.actionEventChannel.collect{event->
-            when(event){
-                is SplashScreenViewModel.ActionEvent.NavigateToHome->{
-                    navController.navigate(HomeScreens.News.route){
-                        popUpTo(navController.graph.findStartDestination().id){
-                        inclusive=true
+        viewModel.actionEventChannel.collect { event ->
+            when (event) {
+                is SplashScreenViewModel.ActionEvent.NavigateToHome -> {
+
+                    navController.navigate(HomeScreens.News.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
                         }
                         launchSingleTop = true
                         popUpToId
@@ -44,15 +45,15 @@ fun SplashScreen(
 
                     }
                 }
-                is SplashScreenViewModel.ActionEvent.NavigateToLogin->{
-                    navController.navigate(AuthScreens.LoginScreen.route){
-                        popUpTo(navController.graph.findStartDestination().id){
-                            inclusive=true
+
+                is SplashScreenViewModel.ActionEvent.NavigateToLogin -> {
+                    navController.navigate(AuthScreens.LoginScreen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
                         }
                         launchSingleTop = true
                         popUpToId
                         restoreState = true
-
                     }
                 }
             }
@@ -62,7 +63,7 @@ fun SplashScreen(
         onPopBackStack()
         onNavigate(AuthScreens.LoginScreen.route)
 
-        }
+    }
 
     Box(modifier = Modifier
         .fillMaxSize()

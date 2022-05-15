@@ -16,9 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.ButtonWithElevation
 import com.example.curativepis.core.presentation.components.DefaultTextField
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_auth.presntation.screen.login_screen.view_model.LoginScreenViewModel
 import com.example.curativepis.feature_auth.presntation.util.AuthScreens
 import com.example.curativepis.ui.theme.darckGreyBackground
@@ -37,12 +39,19 @@ fun LoginScreen(
     val scrollState = rememberScrollState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
-    val state = viewModel.uiState.value
+    val state = viewModel.uiState
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is LoginScreenViewModel.ValidationEvent.Success -> {
-                       onLogin()
+                       navController.navigate(route = HomeScreens.News.route){
+                           popUpTo(navController.graph.findStartDestination().id) {
+                               inclusive = true
+                           }
+                           launchSingleTop = true
+                           popUpToId
+                           restoreState = true
+                       }
                 }
             }
         }

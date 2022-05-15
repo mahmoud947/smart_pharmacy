@@ -21,14 +21,12 @@ class SplashScreenViewModel @Inject constructor(
         navigate()
     }
 
-
-
-
     private fun navigate() {
         if (useCase.getFirebaseCurrentUser()!=null){
-        viewModelScope.launch {
-            _actionEventChannel.send(ActionEvent.NavigateToHome)
-        }
+                viewModelScope.launch {
+                    _actionEventChannel.send(ActionEvent.NavigateToHome)
+                }
+
         }else{
             viewModelScope.launch {
                 _actionEventChannel.send(ActionEvent.NavigateToLogin)

@@ -1,5 +1,6 @@
 package com.example.curativepis.di
 
+import com.example.curativepis.core.domian.use_case.SignOutCurrentUserUseCase
 import com.example.curativepis.feature_drugs.data.remote.DrugsCurativePisApi
 import com.example.curativepis.feature_drugs.data.repository.DrugsRepositoryImpl
 import com.example.curativepis.feature_drugs.domian.repository.DrugsRepository
@@ -38,6 +39,11 @@ object AppModule {
     @Singleton
     fun provideScannerRepository(api: ScannerCurativePisApi): ScannerReposetory =
         ScannerReposetoryImpl(api = api)
+
+    @Provides
+    @Singleton
+    fun provideSignOutUseCase(firebaseAuth: FirebaseAuth) =
+        SignOutCurrentUserUseCase(firebaseAuth = firebaseAuth)
 
 
     @Provides

@@ -10,5 +10,6 @@ data class AuthUseCase(
     val sendOtpMessageUseCase: SendOtpMessageUseCase,
     val verificationOtpUseCase: VerificationOtpUseCase,
     val pushNewUserUseCase: PushNewUserUseCase,
-    val getFirebaseCurrentUser: GetFirebaseCurrentUser
+    val getFirebaseCurrentUser: GetFirebaseCurrentUser,
+    val getCustomTokentUseCase: GetCusttomTokentUseCase
 )

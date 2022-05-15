@@ -2,6 +2,7 @@ package com.example.curativepis.feature_auth.data.remote.request
 
 data class UserRequestObject(
     val username: String,
+    val email:String,
     val phoneNumber: String,
     val deviceToken: String?,
     val uid: String,
