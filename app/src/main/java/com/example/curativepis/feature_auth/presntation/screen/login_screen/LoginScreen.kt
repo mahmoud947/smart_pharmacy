@@ -20,6 +20,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.ButtonWithElevation
 import com.example.curativepis.core.presentation.components.DefaultTextField
+import com.example.curativepis.core.presentation.components.LoadingView
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_auth.presntation.screen.login_screen.view_model.LoginScreenViewModel
 import com.example.curativepis.feature_auth.presntation.util.AuthScreens
@@ -75,13 +76,13 @@ fun LoginScreen(
         Spacer(modifier = Modifier.weight(2f))
         Image(painter = painterResource(id = R.drawable.app_logo), contentDescription = null)
         Spacer(modifier = Modifier.weight(3f))
-        DefaultTextField(value = state.username, label = "Username", onTextChange = {
+        DefaultTextField(value = state.email, label = "Email", onTextChange = {
             viewModel.onEvent(LoginScreenEvent.UsernameChanged(it))
-        }, isError = state.usernameErrorMessage!=null)
+        }, isError = state.emailErrorMessage!=null)
 
-        if (state.usernameErrorMessage != null) {
+        if (state.emailErrorMessage != null) {
             Text(
-                text = state.usernameErrorMessage,
+                text = state.emailErrorMessage,
                 color = MaterialTheme.colors.error,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -93,10 +94,25 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         DefaultTextField(value = state.password, label = "Password", onTextChange = {
             viewModel.onEvent(LoginScreenEvent.PasswordChanged(it))
-        }, isError = state.passwordErrorMessage!=null)
+        }, isError = state.passwordErrorMessage!=null, isPasswordTextField = true)
         if (state.passwordErrorMessage != null) {
             Text(
                 text = state.passwordErrorMessage,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = MaterialTheme.spacing.medium)
+                    .align(Alignment.End)
+            )
+        }
+
+        if (state.isLoading){
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+            LoadingView(modifier = Modifier.fillMaxWidth())
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+        }else if (state.isEmailOrPasswordError){
+            Text(
+                text = "email or password is incorrect",
                 color = MaterialTheme.colors.error,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -116,14 +132,7 @@ fun LoginScreen(
                 .padding(horizontal = MaterialTheme.spacing.large)
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-        ButtonWithElevation(
-            onClick = { /*TODO*/ },
-            text = "Sign in",
-            modifier = Modifier
-                .width(MaterialTheme.spacing.largeButtonX)
-                .height(MaterialTheme.spacing.largeButtonH)
-                .padding(horizontal = MaterialTheme.spacing.large)
-        )
+
 
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.xLarge))

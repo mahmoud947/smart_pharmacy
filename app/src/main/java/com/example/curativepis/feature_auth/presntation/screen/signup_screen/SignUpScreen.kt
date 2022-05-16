@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,24 +49,7 @@ fun SignUpScreen(
     val context = LocalContext.current
     val state = viewModel.uiState
 
-    val password= remember {
-        mutableStateOf("")
-    }
-    val email= remember {
-        mutableStateOf("")
-    }
-    val isMale= remember {
-        mutableStateOf(true)
-    }
-    val userName= remember {
-        mutableStateOf("")
-    }
-    val phone= remember {
-        mutableStateOf("")
-    }
-    val dto= remember {
-        mutableStateOf("")
-    }
+
     LaunchedEffect(key1 = viewModel.uiState) {
         viewModel.validationEvents.collect { event ->
             when (event) {
@@ -91,25 +76,29 @@ fun SignUpScreen(
             .fillMaxWidth(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            DefaultTopAppBar(navigationIcon = Icons.Default.ArrowBack, onClick = {})
+            DefaultTopAppBar(navigationIcon = Icons.Default.ArrowBack, onClick = {
+                navController.popBackStack()
+            })
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)) {
+                .fillMaxHeight()
+                .weight(1f,fill = false)) {
                 Image(painter = painterResource(id = R.drawable.ic_undraw_sign_up_image),
                     contentDescription = null,
                     modifier = Modifier.matchParentSize())
             }
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.xLarge))
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             Column(modifier = Modifier
                 .fillMaxWidth()
+                .weight(4f, fill = false)
                 .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
                 DefaultTextField(value = state.username, label = "Username", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.UsernameChanged(it))
-                    userName.value=it
+
                 }, isError = state.usernameErrorMessage!=null)
                 if (state.usernameErrorMessage != null) {
                     Text(
@@ -123,7 +112,7 @@ fun SignUpScreen(
                 }
                 DefaultTextField(value = state.email, label = "E-Mail", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.EmailChanged(it))
-                    email.value=it
+
                 }, isError = state.emailErrorMessage!=null)
                 if (state.emailErrorMessage != null) {
                     Text(
@@ -138,8 +127,8 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DefaultTextField(value =state.phone, label = "Phone number", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.PhoneChanged(it))
-                    phone.value=it
-                }, isError = state.phoneErrorMessage!=null)
+
+                }, isError = state.phoneErrorMessage!=null, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
                 if (state.phoneErrorMessage != null) {
                     Text(
                         text = state.phoneErrorMessage,
@@ -153,7 +142,7 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DefaultTextField(value = state.password, label = "Password", onTextChange = {
                     viewModel.onEvent(SignUpScreenEvent.PasswordChanged(it))
-                    password.value=it
+
                 }, isError = state.passwordErrorMessage!=null)
                 if (state.passwordErrorMessage != null) {
                     Text(
@@ -184,11 +173,11 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.regulator))
                 DataPicker(context = context, getDateValue = {
                     viewModel.onEvent(SignUpScreenEvent.BirthDateChanged(it))
-                    dto.value=it
+
                 })
                 GenderSection(isMale = {
                     viewModel.onEvent(SignUpScreenEvent.GenderChanged(it))
-                    isMale.value=it
+
                 })
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.xLarge))
                 ButtonWithElevation(
@@ -203,8 +192,6 @@ fun SignUpScreen(
                 )
             }
         }
-
-
 
     }
 

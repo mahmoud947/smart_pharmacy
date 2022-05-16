@@ -34,7 +34,7 @@ class LoginScreenViewModel @Inject constructor(
         when (event) {
             is LoginScreenEvent.UsernameChanged -> {
                 uiState = uiState.copy(
-                    username = event.username
+                    email = event.username
                 )
             }
             is LoginScreenEvent.PasswordChanged -> {
@@ -49,7 +49,7 @@ class LoginScreenViewModel @Inject constructor(
     }
 
     private fun submitData() {
-        val validatUsernameUseCase = useCase.validEmailUseCase(uiState.username)
+        val validatUsernameUseCase = useCase.validEmailUseCase(uiState.email)
         val validatPasswordUseCase = useCase.validPasswordUseCase(uiState.password)
         val hasError = listOf(
             validatUsernameUseCase,
@@ -59,13 +59,13 @@ class LoginScreenViewModel @Inject constructor(
         }
         if (hasError) {
             uiState = uiState.copy(
-                usernameErrorMessage = validatUsernameUseCase.errorMessage,
+                emailErrorMessage = validatUsernameUseCase.errorMessage,
                 passwordErrorMessage = validatPasswordUseCase.errorMessage
             )
             return
         } else {
             val getCusttomTokenRequestObject =
-                GetCustomTokenRequestObject(email = uiState.username, pass = uiState.password)
+                GetCustomTokenRequestObject(email = uiState.email.trim(), pass = uiState.password.trim())
             useCase.getCustomTokentUseCase(getCustomTokenRequestObject = getCusttomTokenRequestObject)
                 .onEach { result ->
                     when (result) {
@@ -80,10 +80,12 @@ class LoginScreenViewModel @Inject constructor(
                                     }
                             }
                         }
-                        is Resource.Error -> {
-
+                        is Resource.Loading -> {
+                            uiState=uiState.copy(isLoading = true)
                         }
-                        else -> {}
+                        is Resource.Error->{
+                            uiState=uiState.copy(isLoading = false, isEmailOrPasswordError = true)
+                        }
                     }
 
                 }.launchIn(viewModelScope)

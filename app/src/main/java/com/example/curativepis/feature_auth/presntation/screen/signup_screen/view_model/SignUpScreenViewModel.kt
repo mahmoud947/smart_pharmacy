@@ -102,7 +102,7 @@ class SignUpScreenViewModel @Inject constructor(
             uiState = uiState.copy(
                 usernameErrorMessage = validUsernameUseCase.errorMessage,
                 emailErrorMessage = validatEmailUseCase.errorMessage,
-                phoneErrorMessage = validatPasswordUseCase.errorMessage,
+                phoneErrorMessage = validatPhonelUseCase.errorMessage,
                 passwordErrorMessage = validatPasswordUseCase.errorMessage,
                 confirmPasswordErrorMessage = validatConfirmPasswordUseCase.errorMessage,
             )

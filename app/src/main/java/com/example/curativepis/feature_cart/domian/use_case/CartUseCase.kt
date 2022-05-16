@@ -4,4 +4,5 @@ data class CartUseCase(
     val getCartUseCase: GetCartUseCase,
     val getUserToken: GetUserToken,
     val deleteCartItemUseCase: DeleteCartItemUseCase,
+    val purchaseUserCarttUseCase: PurchaseUserCarttUseCase
 )

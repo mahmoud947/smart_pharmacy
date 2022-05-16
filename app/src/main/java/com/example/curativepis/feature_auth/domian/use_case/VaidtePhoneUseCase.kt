@@ -10,10 +10,10 @@ class VaidtePhoneUseCase {
             )
         }
         //TODO : Edit it and remove hard code
-        if (phone.length<10){
+        if (phone.length!=11){
             return ValidatResult(
                 isValid = false,
-                errorMessage = "phone length must be > 10"
+                errorMessage = "phone number is incorrect"
             )
         }
         return ValidatResult(

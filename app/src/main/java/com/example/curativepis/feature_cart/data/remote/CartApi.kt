@@ -18,6 +18,9 @@ interface CartApi {
         @Path("itemId") deleteCartItemId: String
     ): CartBaseResponse?
 
-
+    @POST("cart")
+    suspend fun purchaseCart(
+        @Header("Authorization") token: String,
+    ):CartBaseResponse?
 
 }

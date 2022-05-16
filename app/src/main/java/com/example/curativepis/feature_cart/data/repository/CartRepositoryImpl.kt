@@ -17,5 +17,7 @@ class CartRepositoryImpl @Inject constructor(
         deleteCartItemId: String,
     ): CartBaseResponse? =api.deleteItemFromCart(token = token, deleteCartItemId = deleteCartItemId)
 
+    override suspend fun purchaseCart(token: String): CartBaseResponse? = api.purchaseCart(token = token)
+
 
 }

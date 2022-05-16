@@ -9,16 +9,19 @@ class VaidatUsernameUseCase {
                 errorMessage = "username can't be blank"
             )
         }
-//        if (username.length<10) {
-//            return ValidatResult(
-//                isValid = false,
-//                errorMessage = "username to short"
-//            )
-//        }
-            if (!isLowerCase(username)){
+        if (username.length<7){
+            return ValidatResult(
+                isValid = false,
+                errorMessage = "username must be at least 8 characters"
+            )
+        }
+        val containsLettersInLowerCaseAndDigits = username.any { it.isDigit() } &&
+                username.any { it.isLetter()&&isLowerCase(it) }
+
+            if (!containsLettersInLowerCaseAndDigits){
                 return ValidatResult(
                     isValid = false,
-                    errorMessage = "username must be in lower case"
+                    errorMessage = "The username needs to contain letter in lower case and at least one digit"
                 )
         }
         return ValidatResult(
@@ -26,11 +29,7 @@ class VaidatUsernameUseCase {
         )
     }
 
-    private fun isLowerCase(string: String):Boolean{
-        var isLower=true
-    for (i in string)
-        isLower=i.isLowerCase()
-
-        return isLower
+    private fun isLowerCase(char: Char):Boolean{
+        return char.isLowerCase()
     }
 }

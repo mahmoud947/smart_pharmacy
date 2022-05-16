@@ -30,10 +30,10 @@ class CartViewModel @Inject constructor(
                     useCase.getCartUseCase(token = it.token.toString()).onEach { result ->
                         when (result) {
                             is Resource.Success -> {
-                                _uiState.value = result.data?.let {
+                                _uiState.value = result.data?.let {cart->
                                     uiState.value.copy(
                                         isLoading = false,
-                                        item = it
+                                        item = cart
                                     )
                                 } ?: _uiState.value
                             }
@@ -78,6 +78,27 @@ class CartViewModel @Inject constructor(
                             }
                         }
 
+                    }.launchIn(viewModelScope)
+                }
+            }
+            is CartScreenEvent.PurchaseCart->{
+                useCase.getUserToken()?.addOnSuccessListener {
+                    useCase.purchaseUserCarttUseCase(token = it.token.toString()).onEach {result->
+                        when(result){
+                            is Resource.Success -> {
+                                _uiState.value = uiState.value.copy(
+                                  isCartPruchase = true
+                                )
+                            }
+                            is Resource.Error -> {
+                                _uiState.value = uiState.value.copy(
+                                    isCartPruchase = false
+                                )
+                            }
+                            is Resource.Loading -> {
+                                //TODO:Maby i will do same thing latter but now i don't know what shoud i do in this case
+                            }
+                        }
                     }.launchIn(viewModelScope)
                 }
             }
