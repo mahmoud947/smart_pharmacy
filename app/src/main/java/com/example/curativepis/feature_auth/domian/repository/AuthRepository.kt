@@ -5,6 +5,7 @@ import com.example.curativepis.feature_auth.data.remote.request.GetCustomTokenRe
 import com.example.curativepis.feature_auth.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_auth.data.remote.response.CusttomTokenResponse
 import com.example.curativepis.feature_auth.data.remote.response.PushUserResponse
+import com.example.curativepis.feature_auth.data.remote.response.dto.CurrentUserResponseDto
 
 
 interface AuthRepository {
@@ -12,4 +13,5 @@ interface AuthRepository {
     fun getFirebaseCurrentUserToken(): Resource<String>
     suspend fun pushNewUser(userRequestObject: UserRequestObject,token:String):PushUserResponse
     suspend fun getCustomToken(getCustomTokenRequestObject: GetCustomTokenRequestObject):CusttomTokenResponse
+    suspend fun getCurrentUser(token: String):CurrentUserResponseDto?
 }

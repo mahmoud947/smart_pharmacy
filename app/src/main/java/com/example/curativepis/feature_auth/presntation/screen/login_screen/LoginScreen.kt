@@ -46,12 +46,9 @@ fun LoginScreen(
             when (event) {
                 is LoginScreenViewModel.ValidationEvent.Success -> {
                        navController.navigate(route = HomeScreens.News.route){
-                           popUpTo(navController.graph.findStartDestination().id) {
+                           popUpTo(route = AuthScreens.LoginScreen.route) {
                                inclusive = true
                            }
-                           launchSingleTop = true
-                           popUpToId
-                           restoreState = true
                        }
                 }
             }

@@ -67,6 +67,18 @@ class OTPScreenViewModel @Inject constructor(
                 useCase.pushNewUserUseCase(userRequestObject = event.userRequestObject, toke = event.token).onEach { result->
                     when(result){
                         is Resource.Success->{
+                            useCase.getCurrentUserFromServerSideUseCase(token = event.token).onEach {result2->
+                                when(result2){
+                                    is Resource.Success->{
+                                        result2.data?.let { it3 -> useCase.saveCurrenUserFromLocalUseCase(it3) }
+                                    }
+                                    is Resource.Error->{
+
+                                    }
+                                    else -> {}
+                                }
+                            }.launchIn(viewModelScope)
+
                             _uiState.value=uiState.value.copy(
                                 isLoading = false,
                                 createUserIsError = result.data?.is_error?:false,

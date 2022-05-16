@@ -55,7 +55,7 @@ fun CartScreen(
             scope.launch {
                 scaffoldState.drawerState.open()
             }
-        })
+        }, title = "Cart")
 
         Box(
             modifier = Modifier

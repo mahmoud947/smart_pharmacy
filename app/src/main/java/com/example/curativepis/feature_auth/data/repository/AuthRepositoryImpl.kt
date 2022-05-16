@@ -6,6 +6,7 @@ import com.example.curativepis.feature_auth.data.remote.request.GetCustomTokenRe
 import com.example.curativepis.feature_auth.data.remote.request.UserRequestObject
 import com.example.curativepis.feature_auth.data.remote.response.CusttomTokenResponse
 import com.example.curativepis.feature_auth.data.remote.response.PushUserResponse
+import com.example.curativepis.feature_auth.data.remote.response.dto.CurrentUserResponseDto
 import com.example.curativepis.feature_auth.domian.repository.AuthRepository
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -46,6 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getCustomToken(getCustomTokenRequestObject: GetCustomTokenRequestObject): CusttomTokenResponse =
        api.getCustomToken(getCustomTokenRequestObject = getCustomTokenRequestObject)
 
+    override suspend fun getCurrentUser(token: String): CurrentUserResponseDto? = api.getCurrentUser(token = token)
 
 
 }

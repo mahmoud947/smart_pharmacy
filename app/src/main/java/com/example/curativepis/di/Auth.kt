@@ -61,6 +61,7 @@ object Auth {
         firebaseAuth: FirebaseAuth,
         sharedPreferences: SharedPreferences,
         repository: AuthRepository,
+        gson: Gson
     ): AuthUseCase =
         AuthUseCase(
             validUsernameUseCase = VaidatUsernameUseCase(),
@@ -79,6 +80,12 @@ object Auth {
             ),
             pushNewUserUseCase = PushNewUserUseCase(repository = repository),
             getFirebaseCurrentUser = GetFirebaseCurrentUser(firebaseAuth = firebaseAuth),
-            getCustomTokentUseCase = GetCusttomTokentUseCase(repository = repository)
+            getCustomTokentUseCase = GetCusttomTokentUseCase(repository = repository),
+            getCurrentUserFromServerSideUseCase = GetCurrentUserFromServerSideUseCase(repository = repository),
+            getCurrentUserFromLocalUseCase = GetCurrenUserFromLocalUseCase(sharedPreferences = sharedPreferences, gson = gson),
+            removeCurrenFromLocalUserUseCase = RemoveCurrenFromLocalUserUseCase(sharedPreferences = sharedPreferences, gson = gson),
+            saveCurrenUserFromLocalUseCase = SaveCurrenUserFromLocalUseCase(sharedPreferences = sharedPreferences, gson = gson),
+            getFirebaseUserToken = GetFirebaseUserToken(firebaseAuth=firebaseAuth)
+
         )
 }

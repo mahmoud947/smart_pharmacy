@@ -2,7 +2,8 @@ package com.example.curativepis.core.commn
 
 object Constants {
 
-
+    // local data key
+    const val CURRENT_USER_KEY="current_user_key"
 
     // Network Constants
     const val NEWS_BASE_URL="https://newsapi.org/v2/"
