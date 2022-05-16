@@ -8,10 +8,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.curativepis.core.presentation.components.ButtonWithElevation
@@ -97,12 +100,12 @@ fun CartHistoryScreen(
 
                             when {
 
-                                state.isLoading && state.item?.isEmpty() == true -> {
+                                state.isLoading && state.item.isEmpty() -> {
                                     item {
                                         LoadingView(modifier = Modifier.fillParentMaxSize())
                                     }
                                 }
-                                !state.error.isNullOrEmpty() && state.item?.isEmpty() == true -> {
+                                !state.error.isNullOrEmpty() && state.item.isEmpty() -> {
                                     item {
                                         ErrorView(onClickRetry = {
                                             viewModel.onEvent(CartHistoryScreenEvent.GetCartHistory)
@@ -121,30 +124,45 @@ fun CartHistoryScreen(
                             .weight(1f)
                             .fillMaxSize()
                             .wrapContentSize(Alignment.TopStart)) {
-                            Text(
-                                state.item[dropDownIndex].createdAt,
-                                style = MaterialTheme.typography.subtitle1.copy(MaterialTheme.colors.onSurface),
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable(onClick = { expanded = true })
-                            )
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = !expanded },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(MaterialTheme.colors.surface)
+                                    .height(40.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceAround
                             ) {
-                                state.item.forEach { cartHistory ->
-                                    DropdownMenuItem(onClick = {
-                                        dropDownIndex=state.item.indexOf(cartHistory)
-                                        expanded=!expanded
-                                        cartIndex=state.item.indexOf(cartHistory)
-                                    }) {
-                                        Text(
-                                            text = cartHistory.createdAt,
-                                            style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.onSurface)
-                                        )
+
+                                Text(
+                                    state.item[dropDownIndex].createdAt,
+                                    style = MaterialTheme.typography.subtitle1.copy(MaterialTheme.colors.onSurface),
+                                    modifier = Modifier
+                                        .weight(2f)
+                                        .fillMaxWidth()
+                                        .clickable(onClick = { expanded = true })
+                                )
+                                Icon(imageVector = Icons.Default.ArrowDownward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colors.onSurface,
+                                modifier = Modifier.weight(1f).clickable {  expanded = !expanded })
+
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = !expanded },
+                                    modifier = Modifier
+                                        .weight(2f),
+                                ) {
+                                    state.item.forEach { cartHistory ->
+                                        DropdownMenuItem(onClick = {
+                                            dropDownIndex = state.item.indexOf(cartHistory)
+                                            expanded = !expanded
+                                            cartIndex = state.item.indexOf(cartHistory)
+                                        }, modifier = Modifier.fillMaxSize()) {
+                                            Text(
+                                                text = cartHistory.createdAt,
+                                                style = MaterialTheme.typography.subtitle1.copy(
+                                                    color = MaterialTheme.colors.onSurface)
+                                            )
+                                        }
                                     }
                                 }
                             }
