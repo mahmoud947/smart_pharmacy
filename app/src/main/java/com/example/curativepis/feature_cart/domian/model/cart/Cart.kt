@@ -1,4 +1,4 @@
-package com.example.curativepis.feature_cart.domian.model
+package com.example.curativepis.feature_cart.domian.model.cart
 
 data class Cart(
     val _id: String,

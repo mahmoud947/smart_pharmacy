@@ -1,6 +1,6 @@
 package com.example.curativepis.feature_drugs.data.remote
 
-import com.example.curativepis.feature_cart.data.remote.response.dto.CartDto
+import com.example.curativepis.feature_cart.data.remote.response.dto.cart.CartDto
 import com.example.curativepis.feature_drugs.data.remote.request.AddItemToCartReq
 import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugDto
 import com.example.curativepis.feature_drugs.data.remote.response.dto.DrugsResponseDto

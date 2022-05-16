@@ -1,6 +1,5 @@
 package com.example.curativepis.core.navigation
 
-import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -19,7 +18,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
 import com.example.curativepis.feature_auth.presntation.screen.login_screen.LoginScreen
@@ -28,7 +26,9 @@ import com.example.curativepis.feature_auth.presntation.screen.signup_screen.Sig
 import com.example.curativepis.feature_auth.presntation.screen.splash_screen.SplashScreen
 import com.example.curativepis.feature_auth.presntation.util.AuthScreenArguments
 import com.example.curativepis.feature_auth.presntation.util.AuthScreens
+import com.example.curativepis.feature_cart.presntation.cart_history_screen.CartHistoryScreen
 import com.example.curativepis.feature_cart.presntation.cart_screen.CartScreen
+import com.example.curativepis.feature_cart.presntation.util.CartScreens
 import com.example.curativepis.feature_drugs.presntation.screen.drug_detail.DrugDetailScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_list_screen.DrugScreen
 import com.example.curativepis.feature_drugs.presntation.screen.drug_search_screen.SearchScreen
@@ -130,8 +130,12 @@ fun MyNavGraph(scaffoldState: ScaffoldState,navController:NavHostController) {
         composable(route = HomeScreens.Notifications.route) {
             NotificationsScreen()
         }
+        // Cart Screens
         composable(route = HomeScreens.Cart.route) {
             CartScreen(scaffoldState = scaffoldState)
+        }
+        composable(route = CartScreens.CartHistoryScreen.route) {
+            CartHistoryScreen(navController = navController)
         }
 
         composable(route = HomeScreens.Scanner.route) {

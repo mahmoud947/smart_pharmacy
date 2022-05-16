@@ -44,6 +44,7 @@ object CartModule {
             getCartUseCase = GetCartUseCase(repository = repository),
             getUserToken = GetUserToken(firebaseAuth = firebaseAuth),
             deleteCartItemUseCase = DeleteCartItemUseCase(repository = repository),
-            purchaseUserCarttUseCase = PurchaseUserCarttUseCase(repository = repository)
+            purchaseUserCarttUseCase = PurchaseUserCarttUseCase(repository = repository),
+            getCartHistorytUseCase = GetCarHistorytUseCase(repository = repository)
         )
 }

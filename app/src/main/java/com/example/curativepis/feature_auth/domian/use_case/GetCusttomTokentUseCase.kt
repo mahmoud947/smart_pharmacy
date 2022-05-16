@@ -4,12 +4,6 @@ import com.example.curativepis.core.util.network.Resource
 import com.example.curativepis.feature_auth.data.remote.request.GetCustomTokenRequestObject
 import com.example.curativepis.feature_auth.data.remote.response.CusttomTokenResponse
 import com.example.curativepis.feature_auth.domian.repository.AuthRepository
-import com.example.curativepis.feature_cart.data.mapper.toCart
-import com.example.curativepis.feature_cart.domian.model.Cart
-import com.example.curativepis.feature_cart.domian.repository.CartRepository
-import com.example.curativepis.feature_drugs.data.mapper.toDrug
-import com.example.curativepis.feature_drugs.domian.model.Drug
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

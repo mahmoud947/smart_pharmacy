@@ -1,4 +1,4 @@
-package com.example.curativepis.feature_cart.data.remote.response.dto
+package com.example.curativepis.feature_cart.data.remote.response.dto.cart
 
 data class CartItemDto(
     val drugId: String?,

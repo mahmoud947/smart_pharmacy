@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.curativepis.R
-import com.example.curativepis.feature_cart.domian.model.CartItem
+import com.example.curativepis.feature_cart.domian.model.cart.CartItem
 import com.example.curativepis.ui.theme.elevation
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalCoilApi::class)
@@ -49,7 +49,7 @@ fun CartItemCard(
                 CartTitleAndValueText(title = "Drug name", value = cartItem.drug_name)
                 CartTitleAndValueText(title = "Quantity", value = cartItem.quantity.toString())
                 CartTitleAndValueText(title = "Price", value = cartItem.price.toString() + " L.E.")
-                CartTitleAndValueText(title = "Total", value = cartItem.drug_name)
+                CartTitleAndValueText(title = "Total", value = cartItem.total.toString())
             }
             IconButton(onClick = {
                 onDleteIconClicked()

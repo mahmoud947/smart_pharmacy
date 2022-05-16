@@ -1,6 +1,6 @@
-package com.example.curativepis.feature_cart.domian.model
+package com.example.curativepis.feature_cart.domian.model.cart_history
 
-data class CartItem(
+data class CartHistoryItem(
     val drugId: String,
     val drug_name: String,
     val image: String,

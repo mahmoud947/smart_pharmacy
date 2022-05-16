@@ -1,10 +1,7 @@
 package com.example.curativepis.feature_cart.domian.use_case
 
 import com.example.curativepis.core.util.network.Resource
-import com.example.curativepis.feature_cart.data.mapper.toCart
-import com.example.curativepis.feature_cart.data.remote.request.DeleteCartItemRequest
 import com.example.curativepis.feature_cart.data.remote.response.CartBaseResponse
-import com.example.curativepis.feature_cart.domian.model.Cart
 import com.example.curativepis.feature_cart.domian.repository.CartRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
