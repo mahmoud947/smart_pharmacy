@@ -74,7 +74,6 @@ class LoginScreenViewModel @Inject constructor(
                                 firebaseAuth.signInWithCustomToken(result.data?.token.toString())
                                     .addOnSuccessListener {
                                         viewModelScope.launch {
-
                                             validationEventChannel.send(ValidationEvent.Success)
                                         }
                                     }

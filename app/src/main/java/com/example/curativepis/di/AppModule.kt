@@ -12,6 +12,7 @@ import com.example.curativepis.feature_scanner.data.remote.ScannerCurativePisApi
 import com.example.curativepis.feature_scanner.data.repository.ScannerReposetoryImpl
 import com.example.curativepis.feature_scanner.domian.repository.ScannerReposetory
 import com.example.curativepis.feature_scanner.domian.use_case.ScannerUseCase
+import com.example.curativepis.feature_scanner.domian.use_case.UploadImageToScannerServiceUseCase
 import com.example.curativepis.feature_scanner.domian.use_case.UploadImageUseCase
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -61,7 +62,8 @@ object AppModule {
     @Singleton
     fun provideScannerUseCase(reposetory: ScannerReposetory): ScannerUseCase =
         ScannerUseCase(
-            uploadImageUseCase = UploadImageUseCase(reposetory = reposetory)
+            uploadImageUseCase = UploadImageUseCase(reposetory = reposetory),
+            uploadImageToScannerServiceUseCase = UploadImageToScannerServiceUseCase(reposetory = reposetory)
         )
 
 

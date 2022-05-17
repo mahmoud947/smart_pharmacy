@@ -10,8 +10,9 @@ object Constants {
     const val NEWS_API_KEY="3f12083ceb304284bbde3a6172612ec5"
     const val NEWS_PAGE_SIZE=10
     const val DRUGS_PAGE_SIZE=30
-    const val CURATIVE_API_BASES_URL="https://finalproject-pis.herokuapp.com/api/"
-
+    //const val CURATIVE_API_BASES_URL="https://finalproject-pis.herokuapp.com/api/"
+    const val CURATIVE_API_BASES_URL="http://192.168.1.3:8000/api/"
+    const val CURATIVE_API_SCANNER="http://192.168.1.3:8000/api/"
 
     // Screen Constants
 

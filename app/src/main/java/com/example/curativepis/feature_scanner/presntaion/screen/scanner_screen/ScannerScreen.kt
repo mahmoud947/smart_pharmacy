@@ -30,6 +30,9 @@ import coil.request.ImageRequest
 import com.example.curativepis.R
 import com.example.curativepis.core.presentation.components.ButtonWithElevation
 import com.example.curativepis.core.presentation.components.LoadingView
+import com.example.curativepis.core.presentation.screen.home_screen.util.HomeScreens
+import com.example.curativepis.feature_auth.presntation.screen.login_screen.view_model.LoginScreenViewModel
+import com.example.curativepis.feature_auth.presntation.util.AuthScreens
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.ScannerTopAppBar
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.components.TextBetweenDivider
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.view_model.ScannerScreenViewModel
@@ -72,6 +75,18 @@ fun ScannerScreen(
     val permissionState = rememberPermissionState(
         android.Manifest.permission.READ_EXTERNAL_STORAGE
     )
+
+
+
+    LaunchedEffect(key1 = context) {
+        viewModel.validationEvents.collect { event ->
+            when (event) {
+                is ScannerScreenViewModel.ValidationEvent.Success -> {
+                    navController.navigate(route = ScannerScreens.ScannerResultScreen.route)
+                }
+            }
+        }
+    }
 
 
     Box(modifier = Modifier
@@ -178,8 +193,8 @@ fun ScannerScreen(
                 permissionState.launchPermissionRequest()
                 val filePath= state.imageUri?.let { uriPathHelper.getPath(context = context, it) }
                 viewModel.onEvent(ScannerScreenEvent.UploadImage(filePath = filePath.toString()))
-                if (state.drugs!=null){
-                    Log.d("drugsResp",state.drugs.toString())
+                if (state.scannerresponse!=null){
+                    Log.d("drugsResp",state.scannerresponse.toString())
                 }
             },
             modifier = Modifier

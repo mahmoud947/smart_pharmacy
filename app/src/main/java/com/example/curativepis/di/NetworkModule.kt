@@ -49,12 +49,9 @@ object NetworkModule {
     @Singleton
     fun provideScannerCurativePisApi(client: OkHttpClient): ScannerCurativePisApi =
         Retrofit.Builder()
-            .baseUrl("http://192.168.1.3:3000/")
+            .baseUrl(Constants.CURATIVE_API_SCANNER)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ScannerCurativePisApi::class.java)
-
-
-
 }

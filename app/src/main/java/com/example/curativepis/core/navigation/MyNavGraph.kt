@@ -36,8 +36,11 @@ import com.example.curativepis.feature_drugs.presntation.util.DrugScreenArgument
 import com.example.curativepis.feature_drugs.presntation.util.DrugsScreens
 import com.example.curativepis.feature_news.presntaion.screen.news_list_screen.NewsScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.camera_screen.CameraScreen
+import com.example.curativepis.feature_scanner.presntaion.screen.scanner_result_screen.ScannerResultScreen
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.ScannerScreen
+import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreenArg
 import com.example.curativepis.feature_scanner.presntaion.util.ScannerScreens
+import com.google.gson.Gson
 
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
@@ -143,6 +146,9 @@ fun MyNavGraph(scaffoldState: ScaffoldState,navController:NavHostController) {
         }
         composable(route = ScannerScreens.CameraScreen.route) {
             CameraScreen()
+        }
+        composable(route = ScannerScreens.ScannerResultScreen.route){
+            ScannerResultScreen(scaffoldState = scaffoldState)
         }
         composable(route = HomeScreens.Drugs.route) {
             DrugScreen(scaffoldState = scaffoldState, navController = navController)
