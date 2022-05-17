@@ -1,6 +1,5 @@
 package com.example.curativepis.feature_scanner.presntaion.screen.scanner_result_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,22 +14,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.curativepis.RunTimeCash
 import com.example.curativepis.core.presentation.components.DefaultTopAppBar
-import com.example.curativepis.feature_cart.presntation.cart_screen.components.CartItemCard
-import com.example.curativepis.feature_scanner.domian.model.ScannerResponse
 import com.example.curativepis.feature_scanner.presntaion.screen.scanner_result_screen.components.ScannerResultItemCard
-import com.example.curativepis.feature_scanner.presntaion.screen.scanner_screen.view_model.ScannerScreenViewModel
+import com.example.curativepis.feature_scanner.presntaion.screen.scanner_result_screen.view_model.ScannerResultScreenlViewModel
 import com.example.curativepis.ui.theme.spacing
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ScannerResultScreen(
     scaffoldState: ScaffoldState,
+    viewModel: ScannerResultScreenlViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val item=RunTimeCash.arr
+    val itemCashed=RunTimeCash.arr
+    val drugs = remember { mutableStateOf(itemCashed) }
+    val state=viewModel.uiState.value
 
     Column(
         modifier = Modifier
@@ -41,7 +40,6 @@ fun ScannerResultScreen(
         DefaultTopAppBar(onClick = {
             scope.launch {
                 scaffoldState.drawerState.open()
-                Toast.makeText(context,item.toString(),Toast.LENGTH_LONG).show()
             }
         }, title = "Scanner Result")
 
@@ -51,13 +49,17 @@ fun ScannerResultScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = MaterialTheme.spacing.large),
         ) {
-            items(items = item) { item ->
+            items(items = drugs.value) { item ->
                 ScannerResultItemCard(modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = MaterialTheme.spacing.small),
                     scannerResponse = item,
                     onAddToCartIconClicked = {
+                        viewModel.onEvent(ScannerResultScreenEvent.AddItemToCart(drugId = item._id))
 
+                        if (state.isItemAddToCart){
+                            drugs.value=drugs.value.filter { it._id!=item._id }
+                        }
                     },
                     onClick = {
 
