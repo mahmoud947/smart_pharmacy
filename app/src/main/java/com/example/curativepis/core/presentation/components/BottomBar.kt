@@ -38,7 +38,7 @@ fun BottomBar(navController: NavHostController, bottomBarSate: MutableState<Bool
         HomeScreens.Drugs,
         HomeScreens.Scanner,
         HomeScreens.Cart,
-        HomeScreens.Notifications,
+      //  HomeScreens.Notifications,
     )
 
 

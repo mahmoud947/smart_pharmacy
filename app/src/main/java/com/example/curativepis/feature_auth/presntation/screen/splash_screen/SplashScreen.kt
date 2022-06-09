@@ -39,6 +39,15 @@ fun SplashScreen(
 
     val firebaseAuth = FirebaseAuth.getInstance()
     LaunchedEffect(key1 = true) {
+
+
+
+
+
+
+
+
+
         delay(1000)
         viewModel.actionEventChannel.collect { event ->
             when (event) {
