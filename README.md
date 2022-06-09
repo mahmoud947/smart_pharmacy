@@ -65,4 +65,4 @@ Below you can find the docs for each technology that is used in this app:
 [16]: https://firebase.google.com/docs/analytics
 [17]: https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState
 [18]: https://square.github.io/okhttp/
-[17]: https://square.github.io/retrofit/
+[19]: https://square.github.io/retrofit/
