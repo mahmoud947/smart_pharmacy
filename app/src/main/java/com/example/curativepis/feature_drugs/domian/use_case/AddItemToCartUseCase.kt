@@ -14,8 +14,8 @@ class AddItemToCartUseCase(
     private val repository: DrugsRepository
 ) {
     operator fun invoke(token:String,addItemToCartReq: AddItemToCartReq): Flow<Resource<Cart>> = flow {
+          emit(Resource.Loading())
         try {
-            emit(Resource.Loading())
             val response = repository.addItemToCart(token = token, addItemToCartReq = addItemToCartReq)?.toCart()
             emit(Resource.Success<Cart>(data = response))
         } catch (e: HttpException) {
