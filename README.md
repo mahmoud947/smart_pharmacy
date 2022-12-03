@@ -51,7 +51,6 @@ Below you can find the docs for each technology that is used in this app:
 [2]: https://firebase.google.com/docs/firestore
 [3]: https://developer.android.com/topic/libraries/architecture
 [4]: https://developer.android.com/topic/libraries/architecture/livedata
-[5]: https://developer.android.com/topic/libraries/architecture/viewmodel
 [6]: https://developer.android.com/training/dependency-injection/hilt-android
 [7]: https://kotlinlang.org/docs/coroutines-overview.html
 [8]: https://kotlinlang.org/docs/flow.html
@@ -66,3 +65,59 @@ Below you can find the docs for each technology that is used in this app:
 [17]: https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState
 [18]: https://square.github.io/okhttp/
 [19]: https://square.github.io/retrofit/
+
+# Screensout
+
+### Signin
+![Alt text](./screenshot/login.jfif "a Login screen")
+
+### SignUp
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/SignUp.jfif "a Login screen") | ![Alt text](./screenshot/signUp_dark.jfif "a Login screen")  |
+
+### OTP
+![Alt text](./screenshot/otp_n_dark.jfif "a Login screen")
+
+### products
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/drags.jfif "a Login screen") | ![Alt text](./screenshot/drags_dark.jfif "a Login screen")  |
+
+### product details
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/det.jfif "a Login screen") | ![Alt text](./screenshot/product_with_pan_dark.jfif "a Login screen")  |
+
+### OCR
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/ocr.jfif "a Login screen") | ![Alt text](./screenshot/ocr_dark.jfif "a Login screen")  |
+
+### OCR Result
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/scanner.jfif "a Login screen") | ![Alt text](./screenshot/scanner_dark.jfif "a Login screen")  |
+
+
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/pan.jfif "a Login screen") | ![Alt text](./screenshot/pan_dark.jfif "a Login screen")  |
+
+### Cart
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/cart.jfif "a Login screen") | ![Alt text](./screenshot/cart_dark.jfif "a Login screen")  |
+
+### History
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/hes.jfif "a Login screen") | ![Alt text](./screenshot/hes_dark.jfif "a Login screen")  |
+
+### Search
+| light mode   | dark mode |
+| ------------- | ------------- |
+|![Alt text](./screenshot/search.jfif "a Login screen") | ![Alt text](./screenshot/search_dark.jfif "a Login screen")  |
+
+
+
